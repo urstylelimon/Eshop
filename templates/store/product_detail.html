@@ -23,7 +23,7 @@
         <p>{{ product.description }}</p>
         <h3>${{ product.price }}</h3>
 
-        <form method="POST" action="#">
+        <form method="POST" action="{% url 'addtocart' product.id %}">
             {% csrf_token %}
             <button type="submit">Add to Cart</button>
         </form>
