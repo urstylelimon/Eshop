@@ -1,32 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{ product.name }}</title>
-    <style>
-        .product-box {
-            width: 50%;
-            margin: auto;
-            border: 1px solid #ccc;
-            padding: 20px;
-            text-align: center;
-        }
-        img {
-            width: 300px;
-            height: auto;
-        }
-    </style>
+    <title>{{ product.title }}</title>
 </head>
 <body>
-    <div class="product-box">
-        <h1>{{ product.name }}</h1>
-        <img src="{{ product.image.url }}" alt="{{ product.name }}">
-        <p>{{ product.description }}</p>
-        <h3>${{ product.price }}</h3>
+    <h1>{{ product.title }}</h1>
+    <img src="{{ product.image.url }}" alt="{{ product.title }}" width="300">
+    <p>{{ product.description }}</p>
+    <p><strong>Price:</strong> ${{ product.price }}</p>
 
-        <form method="POST" action="{% url 'addtocart' product.id %}">
-            {% csrf_token %}
-            <button type="submit">Add to Cart</button>
-        </form>
-    </div>
+    <!-- Show success message -->
+    {% if messages %}
+        <div style="background-color: #d4edda; color: #155724; padding: 10px; border-radius: 5px;">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- Add to Cart -->
+    <form action="{% url 'add_to_cart' product.pk %}" method="post">
+        {% csrf_token %}
+        <button type="submit">🛒 Add to Cart</button>
+    </form>
+
+    <hr>
+
+    <a href="{% url 'view_cart' %}">🛒 View Cart</a>
 </body>
 </html>
