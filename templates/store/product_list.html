@@ -1,6 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
+{% extends 'base.html' %}
+{% block content %}
     <title>Our Products</title>
     <style>
         body {
@@ -46,10 +45,16 @@
         {% for product in products %}
             <div class="product-card">
                 <div class="product-image">
-                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                    <a href="{% url 'single_product' product.id %}"><img src="{{ product.image.url }}" alt="{{ product.name }}"></a>
                 </div>
-                <div class="product-name">{{ product.name }}</div>
-                <div class="product-price">${{ product.price }}</div>
+                <div class="product-name">
+                    <a href="{% url 'single_product' product.id %}">{{ product.name }}</a>
+
+                </div>
+                <div class="product-price">
+                    <a href="{% url 'single_product' product.id %}">${{ product.price }}</a>
+
+                </div>
             </div>
         {% empty %}
             <p>No products available.</p>
@@ -57,3 +62,5 @@
     </div>
 </body>
 </html>
+
+{% endblock %}

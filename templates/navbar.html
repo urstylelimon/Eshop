@@ -1,0 +1,51 @@
+<!-- your_app/templates/your_app/includes/navbar.html -->
+{% load static %}
+
+<nav class="navbar">
+    <a href="" class="logo">
+        <i class="fas fa-shopping-bag"></i>
+        ShopEase
+    </a>
+
+    <ul class="nav-links">
+        <li><a href="">Home</a></li>
+        <li><a href="">Shop</a></li>
+        <li><a href="">Categories</a></li>
+        <li><a href="">New Arrivals</a></li>
+        <li><a href="">Sale</a></li>
+        <li><a href="">About</a></li>
+        <li><a href="">Contact</a></li>
+    </ul>
+
+    <div class="search-box">
+        <form action="" method="GET">
+            <input type="text" name="q" placeholder="Search products...">
+            <button type="submit"><i class="fas fa-search"></i></button>
+        </form>
+    </div>
+
+    <div class="nav-icons">
+        {% if user.is_authenticated %}
+            <a href=""><i class="far fa-user"></i></a>
+        {% else %}
+            <a href=""><i class="far fa-user"></i></a>
+        {% endif %}
+        <a href=""><i class="far fa-heart"></i></a>
+        <a href="">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-count"></span>
+        </a>
+        <div class="hamburger">
+            <i class="fas fa-bars"></i>
+        </div>
+    </div>
+</nav>
+
+<!-- Include Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<!-- Include CSS -->
+<link rel="stylesheet" href="{% static 'navbar.css' %}">
+
+<!-- Include JS -->
+<script src="{% static 'navbar.js' %}"></script>

@@ -8,9 +8,9 @@ def products_list(request):
     products = Product.objects.all()
     return render(request,'store/product_list.html',{'products':products})
 
-def product_detail(request,pk):
+def single_product(request,pk):
     product = Product.objects.get(id=pk)
-    return render(request, 'store/product_detail.html', {'product': product})
+    return render(request, 'store/single_product.html', {'product': product})
 
 def add_to_cart(request,pk):
     product = Product.objects.get(id=pk)
