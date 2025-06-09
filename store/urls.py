@@ -4,12 +4,10 @@ from . import views
 urlpatterns = [
     path('',views.products_list,name='products_list'),
     path('product/<int:pk>',views.product_detail,name='product_detail'),
-    path('addtocart/<int:pk>/', views.add_to_cart, name='add_to_cart'),
-    path('cart/', views.view_cart, name='view_cart'),
+    path('cart_view/',views.cart_view,name='cart_view'),
+    path('add_to_cart/<int:pk>',views.add_to_cart,name='add_to_cart'),
+
 ]
-
-
-
 
 
 from django.conf import settings

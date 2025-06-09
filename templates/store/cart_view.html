@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Your Shopping Cart</h2>
+
+{% if cart_items %}
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in cart_items %}
+            <tr>
+                 <td>
+                    {% if item.product.image %}
+                        <img src="{{ item.product.image.url }}" alt="Loading" width="100">
+                    {% else %}
+                        No Image
+                    {% endif %}
+                 </td>
+                <td>{{ item.product.name }}</td>
+                <td>${{ item.product.price }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>${{ item.item_total }}</td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4">Grand Total</td>
+                <td>${{ total_amount }}</td>
+            </tr>
+        </tfoot>
+    </table>
+{% else %}
+    <p>Your cart is empty. Please add some products.</p>
+{% endif %}
+
+<a href="{% url 'products_list' %}">Continue Shopping</a>
+</body>
+</html>
