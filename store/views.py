@@ -4,9 +4,9 @@ from django.contrib import messages
 # Create your views here.
 
 
-def products_list(request):
+def home(request):
     products = Product.objects.all()
-    return render(request,'store/product_list.html',{'products':products})
+    return render(request, 'store_app/index.html', {'products':products})
 
 def single_product(request,pk):
     product = Product.objects.get(id=pk)
