@@ -6,7 +6,7 @@ from django.contrib import messages
 
 def home(request):
     products = Product.objects.all()
-    return render(request, 'store_app/index.html', {'products':products})
+    return render(request, 'store/home.html', {'products':products})
 
 def single_product(request,pk):
     product = Product.objects.get(id=pk)
@@ -55,3 +55,44 @@ def cart_view(request):
     }
 
     return render(request, 'store/cart_view.html', context)
+
+
+
+
+
+
+from django.shortcuts import render, redirect
+from django.contrib import messages
+
+def confirm_order(request):
+    cart = request.session.get('cart', {})
+    if not cart:
+        messages.warning(request, "Your cart is empty.")
+        return redirect('cart')
+
+    if request.method == 'POST':
+        full_name = request.POST.get('full_name')
+        contact_number = request.POST.get('contact_number')
+        location = request.POST.get('location')
+        address = request.POST.get('address')
+
+        # ✅ Do something with the data (e.g., save to DB, send email, print)
+        print("Order Info:")
+        print("Name:", full_name)
+        print("Phone:", contact_number)
+        print("Location:", location)
+        print("Address:", address)
+        print("Cart:", cart)
+
+        # Clear cart after successful order
+        request.session['cart'] = {}
+        messages.success(request, "Order placed successfully!")
+
+        return redirect('home')
+
+    total_price = 20000
+    return render(request, 'store/confirm_order.html', {
+        'cart': cart,
+        'total_price': total_price
+    })
+
