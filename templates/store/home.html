@@ -1,66 +1,165 @@
 {% extends 'base.html' %}
+{% load static %}
+
 {% block content %}
-    <title>Our Products</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        .product-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-            padding: 20px;
-        }
-        .product-card {
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            width: 250px;
-            padding: 15px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-        }
-        .product-card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-        .product-image img {
-            width: 100%;
-            border-radius: 10px;
-        }
-        .product-name {
-            font-size: 18px;
-            margin: 10px 0 5px;
-            font-weight: bold;
-        }
-        .product-price {
-            color: green;
-            font-size: 16px;
-        }
-    </style>
-</head>
-<body>
-    <h1 style="text-align:center;">Our Products</h1>
-    <div class="product-container">
-        {% for product in products %}
-            <div class="product-card">
-                <div class="product-image">
-                    <a href="{% url 'single_product' product.id %}"><img src="{{ product.image.url }}" alt="{{ product.name }}"></a>
-                </div>
-                <div class="product-name">
-                    <a href="{% url 'single_product' product.id %}">{{ product.name }}</a>
-
-                </div>
-                <div class="product-price">
-                    <a href="{% url 'single_product' product.id %}">${{ product.price }}</a>
-
+<div class="ecommerce-home">
+    <!-- Hero Slider -->
+    <div class="hero-slider">
+        <div class="slider-container">
+            <div class="slide active" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('{% static 'images/slider_1.jpg' %}')">
+                <div class="slide-content">
+                    <h2>Summer Collection 2023</h2>
+                    <p>Discover our new arrivals with up to 40% discount</p>
+                    <a href="" class="btn btn-primary">Shop Now</a>
                 </div>
             </div>
-        {% empty %}
-            <p>No products available.</p>
-        {% endfor %}
+            <div class="slide" style="background-image:linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('{% static 'images/slider2.jpg' %}')">
+                <div class="slide-content">
+                    <h2>Limited Time Offer</h2>
+                    <p>Special deals on selected items this week only</p>
+                    <a href="" class="btn btn-primary">View Deals</a>
+                </div>
+            </div>
+            <div class="slide" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('{% static 'images/slider3.jpg' %}')">
+                <div class="slide-content">
+                    <h2>Premium Quality</h2>
+                    <p>Handcrafted products with sustainable materials</p>
+                    <a href="" class="btn btn-primary">Explore</a>
+                </div>
+            </div>
+            <button class="slider-btn prev-btn">&#10094;</button>
+            <button class="slider-btn next-btn">&#10095;</button>
+            <div class="slider-dots">
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+        </div>
     </div>
-</body>
-</html>
 
+    <!-- Featured Categories -->
+    <section class="featured-categories">
+        <h2 class="section-title">Shop by Category</h2>
+        <div class="categories-grid">
+            {% for category in categories %}
+            <a href="#" class="category-card">
+                <img src="{{ category.image.url }}" alt="{{ category.name }}">
+                <div class="category-overlay">
+                    <h3>{{ category.name }}</h3>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="featured-products">
+        <div class="section-header">
+            <h2 class="section-title">Featured Products</h2>
+            <a href="" class="view-all">View All</a>
+        </div>
+        <div class="products-grid">
+            {% for product in featured_products %}
+            <div class="product-card">
+                {% if product.is_new %}
+                <div class="product-badge">New</div>
+                {% elif product.discount_price %}
+                <div class="product-badge">Sale</div>
+                {% endif %}
+                <div class="product-image">
+                    <a href="{% url 'single_product' product.id %}">
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}" loading="lazy">
+                        <div class="quick-view">Quick View</div>
+                    </a>
+                </div>
+                <div class="product-info">
+                    <div class="product-category">{{ product.category.name }}</div>
+                    <h3 class="product-name">
+                        <a href="{% url 'single_product' product.id %}">{{ product.name|truncatechars:30 }}</a>
+                    </h3>
+                    <div class="product-rating">
+                        <span class="stars">★★★★★</span>
+                        <span class="review-count">(</span>
+                    </div>
+                    <div class="product-price">
+                        {% if product.discount_price %}
+                        <span class="original-price">${{ product.price }}</span>
+{#                        <span class="discounted-price">${{ product.discount_price }}</span>#}
+                        {% else %}
+                        <span>${{ product.price }}</span>
+                        {% endif %}
+                    </div>
+                    <button class="add-to-cart" data-product-id="{{ product.id }}">
+                        <i class="fas fa-shopping-cart"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- All Products -->
+    <section class="all-products">
+        <div class="section-header">
+            <h2 class="section-title">Our Products</h2>
+            <div class="product-sort">
+                <span>Sort by:</span>
+                <select id="sort-products">
+                    <option value="popular">Most Popular</option>
+                    <option value="newest">Newest First</option>
+                    <option value="price-low">Price: Low to High</option>
+                    <option value="price-high">Price: High to Low</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="products-grid">
+            {% for product in products %}
+            <div class="product-card">
+                {% if product.is_created %}
+                <div class="product-badge">New</div>
+                {% elif product.discount_price %}
+                <div class="product-badge">Sale</div>
+                {% endif %}
+                <div class="product-image">
+                    <a href="{% url 'single_product' product.id %}">
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}" loading="lazy">
+                    </a>
+                </div>
+                <div class="product-info">
+                    <div class="product-category">{{ product.category.name }}</div>
+                    <h3 class="product-name">
+                        <a href="{% url 'single_product' product.id %}">{{ product.name|truncatechars:30 }}</a>
+                    </h3>
+                    <div class="product-price">
+                        {% if product.discount_price %}
+                        <span class="original-price">${{ product.price }}</span>
+{#                        <span class="discounted-price">${{ product.discount_price }}</span>#}
+                        {% else %}
+                        <span>${{ product.price }}</span>
+                        {% endif %}
+                    </div>
+                    <button class="add-to-cart" data-product-id="{{ product.id }}">
+                        <i class="fas fa-shopping-cart"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+            {% empty %}
+            <div class="no-products">
+                <img src="{% static 'images/no-products.png' %}" alt="No products">
+                <h3>No products available at the moment</h3>
+                <p>Check back later for new arrivals</p>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'store/home.css' %}">
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'store/home.js' %}"></script>
 {% endblock %}

@@ -1,21 +1,55 @@
-<!-- your_app/templates/your_app/base.html -->
-{% load static %}
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}ShopEase{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}{% endblock %}">
+    <meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
 
+    <title>{% block title %}E-Commerce Site{% endblock %}</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Base CSS -->
+{#    <link rel="stylesheet" href="{% static 'css/base.css' %}">#}
+
+    {% block extra_css %}{% endblock %}
+
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token }}">
 </head>
 <body>
+    <!-- Messages/Notifications -->
+    {% if messages %}
+    <div class="messages-container">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+            <span class="close-message">&times;</span>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
     {% include 'navbar.html' %}
 
-    <main>
+    <!-- Main Content Block -->
+    <main class="main-content">
         {% block content %}
-
+        <!-- Content will be injected here from child templates -->
         {% endblock %}
     </main>
 
+    <!-- Base JavaScript -->
+{#    <script src="{% static 'js/base.js' %}"></script>#}
+    {% block extra_js %}{% endblock %}
 </body>
 </html>

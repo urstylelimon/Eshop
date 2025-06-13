@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce Navbar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'navbar.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="{% static 'images/logo.png' %}" alt="Logo">
+                <h1>ShopEase</h1>
+            </div>
+
+            <div class="nav-links">
+                <a href="">Home</a>
+                <a href="">Shop</a>
+                <a href="">Categories</a>
+                <a href="">New Arrivals</a>
+                <a href="">Sale</a>
+                <a href="">About</a>
+                <a href="">Contact</a>
+            </div>
+
+            <div class="nav-icons">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search products...">
+                </div>
+                <i class="far fa-user"></i>
+                <i class="far fa-heart"></i>
+                <i class="fas fa-shopping-cart">
+                    <span class="cart-count">3</span>
+                </i>
+                <div class="hamburger">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <script src="{% static 'navbar.js' %}"></script>
+</body>
+</html>

@@ -1,13 +1,17 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Product
+from .models import Category,Product
 from django.contrib import messages
 # Create your views here.
 
 
 def home(request):
     products = Product.objects.all()
-    print(products)
-    return render(request, 'store/home.html', {'products':products})
+    categories = Category.objects.all()
+    context = {
+        'categories': categories,
+        'products': products
+    }
+    return render(request, 'store/home.html', context)
 
 def single_product(request,pk):
     product = Product.objects.get(id=pk)
