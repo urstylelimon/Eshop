@@ -6,6 +6,7 @@ from django.contrib import messages
 
 def home(request):
     products = Product.objects.all()
+    print(products)
     return render(request, 'store/home.html', {'products':products})
 
 def single_product(request,pk):
