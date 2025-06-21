@@ -31,7 +31,7 @@ def add_to_cart(request,pk):
         request.session['cart'] = cart
     print(cart)
 
-    return redirect('cart_view')
+    return redirect('home')
 
 def cart_view(request):
     cart = request.session.get('cart',{})
