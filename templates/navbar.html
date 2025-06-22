@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-Commerce Navbar</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="{% static 'navbar.css' %}">
 </head>
 <body>
@@ -33,15 +34,47 @@
                 </div>
                 <i class="far fa-user"></i>
                 <i class="far fa-heart"></i>
-                <i class="fas fa-shopping-cart">
-                    <span class="cart-count">{{ cart_item_count }}</span>
-                </i>
+                <a href="#" onclick="toggleCartSidebar()" class="cart-icon">
+                    <i class="fas fa-shopping-cart">
+                        <span class="cart-count">{{ cart_item_count }}</span>
+                    </i>
+                </a>
                 <div class="hamburger">
                     <i class="fas fa-bars"></i>
                 </div>
             </div>
         </div>
     </nav>
+
+    <!-- Cart Sidebar -->
+                <div id="cartSidebar" class="cart-sidebar">
+                <div class="cart-sidebar-content">
+                    <span class="close-btn" onclick="toggleCartSidebar()">×</span>
+                    <h3>Your Cart</h3>
+
+                    {% if cart_items %}
+                    <ul class="cart-items">
+
+                        {% for item in cart_items %}
+                            <li class="cart-item">
+                                <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="cart-item-image">
+                                <div class="cart-item-details">
+                                <strong>{{ item.product.name }}</strong><br>
+                                Quantity: 5 <br>
+                                Price: {{ item.item_total }}৳
+                                </div>
+                            </li>
+                        {% endfor %}
+                        <hr>
+                        <strong>Total: {{ total_amount }} ৳</strong>
+                    </ul>
+                    {% else %}
+                    <p>Your cart is empty.</p>
+                    {% endif %}
+                </div>
+                </div>
+                 <!-- End Cart Sidebar -->
+
 
     <script src="{% static 'navbar.js' %}"></script>
 </body>

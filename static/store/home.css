@@ -337,21 +337,25 @@
 }
 
 .add-to-cart {
+    display: inline-block;
     width: 100%;
     padding: 0.4rem;
     background: #6c5ce7;
     color: white;
+    text-align: center;
     border: none;
     border-radius: 3px;
     font-weight: 500;
     font-size: 0.75rem;
     cursor: pointer;
     transition: all 0.2s ease;
+    text-decoration: none;
 }
 
 .add-to-cart:hover {
     background: #5649c0;
 }
+
 
 /* Grid Layout */
 .products-grid {

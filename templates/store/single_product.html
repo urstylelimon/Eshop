@@ -1,25 +1,477 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>{{ product.title }}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ product.title }} - {{ site_name }}</title>
+    <style>
+        :root {
+            --primary-color: #f57224;
+            --secondary-color: #2874f0;
+            --dark-color: #212121;
+            --light-color: #f1f3f6;
+            --success-color: #388e3c;
+            --danger-color: #d32f2f;
+            --border-color: #e0e0e0;
+            --text-primary: #212121;
+            --text-secondary: #878787;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header Styles */
+        .header {
+            background-color: white;
+            box-shadow: 0 1px 4px 0 rgba(0,0,0,.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            display: flex;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-right: 30px;
+        }
+
+        .search-bar {
+            flex-grow: 1;
+            display: flex;
+            margin-right: 30px;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 2px 0 0 2px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .search-bar button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0 20px;
+            border-radius: 0 2px 2px 0;
+            cursor: pointer;
+        }
+
+        .user-actions {
+            display: flex;
+            gap: 20px;
+        }
+
+        .user-actions a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 14px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            padding: 15px 0;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .breadcrumb a {
+            color: var(--text-secondary);
+            text-decoration: none;
+        }
+
+        /* Product Section */
+        .product-section {
+            background-color: white;
+            border-radius: 4px;
+            margin: 20px 0;
+            padding: 20px;
+            box-shadow: 0 1px 4px 0 rgba(0,0,0,.1);
+        }
+
+        .product-container {
+            display: flex;
+            gap: 30px;
+        }
+
+        .product-gallery {
+            width: 40%;
+        }
+
+        .main-image {
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .main-image img {
+            max-width: 100%;
+            height: 350px;
+            object-fit: contain;
+        }
+
+        .thumbnail-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        .thumbnail {
+            border: 1px solid var(--border-color);
+            padding: 5px;
+            cursor: pointer;
+            width: 60px;
+            height: 60px;
+        }
+
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .product-details {
+            width: 60%;
+        }
+
+        .product-title {
+            font-size: 22px;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .product-meta {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .rating {
+            color: white;
+            background-color: var(--success-color);
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+        }
+
+        .price-container {
+            background-color: #fef4e8;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .current-price {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .original-price {
+            text-decoration: line-through;
+            color: var(--text-secondary);
+            margin-left: 10px;
+            font-size: 16px;
+        }
+
+        .discount {
+            color: var(--success-color);
+            font-weight: 500;
+            margin-left: 10px;
+        }
+
+        .delivery-info {
+            margin-bottom: 20px;
+        }
+
+        .delivery-info p {
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .delivery-info i {
+            color: var(--success-color);
+            margin-right: 5px;
+        }
+
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .quantity-selector button {
+            width: 30px;
+            height: 30px;
+            background-color: var(--light-color);
+            border: 1px solid var(--border-color);
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .quantity-selector input {
+            width: 50px;
+            height: 30px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            border-left: none;
+            border-right: none;
+            outline: none;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 500;
+            border-radius: 2px;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #e5671d;
+        }
+
+        .btn-secondary {
+            background-color: white;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: #fff5ee;
+        }
+
+        .product-tabs {
+            margin-top: 40px;
+        }
+
+        .tab-header {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            padding: 12px 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--text-secondary);
+            position: relative;
+        }
+
+        .tab-btn.active {
+            color: var(--primary-color);
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary-color);
+        }
+
+        .tab-content {
+            padding: 20px 0;
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .product-container {
+                flex-direction: column;
+            }
+
+            .product-gallery, .product-details {
+                width: 100%;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>{{ product.title }}</h1>
-    <img src="{{ product.image.url }}" alt="{{ product.title }}" width="300">
-    <p>{{ product.description }}</p>
-    <p><strong>Price:</strong> ${{ product.price }}</p>
 
-    <!-- Show success message -->
-    {% if messages %}
-        <div style="background-color: #d4edda; color: #155724; padding: 10px; border-radius: 5px;">
-            {% for message in messages %}
-                {{ message }}
-            {% endfor %}
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+            <a href="#">Home</a> > <a href="#">Category</a> > <a href="#">Subcategory</a> > {{ product.title }}
         </div>
-    {% endif %}
 
-    <!-- Add to Cart -->
-   <a href="{% url 'add_to_cart' product.id %}">Add to Cart</a>
+        <!-- Product Section -->
+        <section class="product-section">
+            <div class="product-container">
+                <!-- Product Gallery -->
+                <div class="product-gallery">
+                    <div class="main-image">
+                        <img src="{{ product.image.url }}" alt="{{ product.title }}">
+                    </div>
+                    <div class="thumbnail-container">
+                        <div class="thumbnail">
+                            <img src="{{ product.image.url }}" alt="Thumbnail 1">
+                        </div>
+                        <div class="thumbnail">
+                            <img src="{{ product.image.url }}" alt="Thumbnail 2">
+                        </div>
+                        <div class="thumbnail">
+                            <img src="{{ product.image.url }}" alt="Thumbnail 3">
+                        </div>
+                        <div class="thumbnail">
+                            <img src="{{ product.image.url }}" alt="Thumbnail 4">
+                        </div>
+                    </div>
+                </div>
 
+                <!-- Product Details -->
+                <div class="product-details">
+                    <h1 class="product-title">{{ product.title }}</h1>
+                    <div class="product-meta">
+                        <span class="rating">4.5 ★</span>
+                        <span>142 Ratings</span>
+                        <span>1.2k Sold</span>
+                    </div>
+
+                    <div class="price-container">
+                        <span class="current-price">৳{{ product.price }}</span>
+                        <span class="original-price">৳{{ product.original_price }}</span>
+                        <span class="discount">20% OFF</span>
+                    </div>
+
+                    <div class="delivery-info">
+                        <p><i>✓</i> Delivery: Dhaka - 1-2 days, Outside Dhaka - 3-5 days</p>
+                        <p><i>✓</i> Cash on Delivery Available</p>
+                        <p><i>✓</i> 7 Days Returns Policy</p>
+                    </div>
+
+                    <div class="quantity-selector">
+                        <button>-</button>
+                        <input type="text" value="1">
+                        <button>+</button>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn btn-primary">Buy Now</button>
+                        <button class="btn btn-secondary">Add to Cart</button>
+                    </div>
+
+                    <div class="product-tabs">
+                        <div class="tab-header">
+                            <button class="tab-btn active">Description</button>
+                            <button class="tab-btn">Specifications</button>
+                            <button class="tab-btn">Reviews</button>
+                        </div>
+
+                        <div class="tab-content active">
+                            <p>{{ product.description }}</p>
+                        </div>
+
+                        <div class="tab-content">
+                            <p>Product specifications will appear here.</p>
+                        </div>
+
+                        <div class="tab-content">
+                            <p>Customer reviews will appear here.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Simple tab functionality
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabBtns.forEach((btn, index) => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons and contents
+                tabBtns.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+
+                // Add active class to clicked button and corresponding content
+                btn.classList.add('active');
+                tabContents[index].classList.add('active');
+            });
+        });
+
+        // Quantity selector functionality
+        const minusBtn = document.querySelector('.quantity-selector button:first-child');
+        const plusBtn = document.querySelector('.quantity-selector button:last-child');
+        const quantityInput = document.querySelector('.quantity-selector input');
+
+        minusBtn.addEventListener('click', () => {
+            let value = parseInt(quantityInput.value);
+            if (value > 1) {
+                quantityInput.value = value - 1;
+            }
+        });
+
+        plusBtn.addEventListener('click', () => {
+            let value = parseInt(quantityInput.value);
+            quantityInput.value = value + 1;
+        });
+    </script>
 </body>
 </html>
