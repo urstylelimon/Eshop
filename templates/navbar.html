@@ -66,7 +66,28 @@
                         {% endfor %}
                         <hr>
                         <strong>Total: {{ total_amount }} ৳</strong>
+                    <div class="confirm_order" style="
+                        display: block;
+                        width: 100%;
+                        background-color: #28a745;
+                        padding: 12px 0;
+                        text-align: center;
+                        margin-top: 15px;
+                        border-radius: 5px;
+                        cursor: pointer;
+                        font-weight: bold;">
+
+                        <a href="{% url "cart_view" %}" style="
+                            display: block;
+                            width: 100%;
+                            color: white;
+                            text-decoration: none;">
+                            Confirm Order
+                        </a>
+                    </div>
+
                     </ul>
+
                     {% else %}
                     <p>Your cart is empty.</p>
                     {% endif %}
