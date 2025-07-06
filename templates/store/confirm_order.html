@@ -18,9 +18,9 @@
     <label>Full Address:</label>
     <textarea name="address" required></textarea><br><br>
 
-    <h3>Your Cart:</h3>
+    <h3>Your Product:</h3>
     <ul>
-        {% for item in cart.values %}
+        {% for item in product_list.values %}
         <li>{{ item.name }} - {{ item.quantity }} x {{ item.price }}</li>
         {% endfor %}
     </ul>
