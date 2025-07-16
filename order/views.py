@@ -7,6 +7,11 @@ from django.contrib import messages
 
 from store.views import single_product
 
+
+
+def order_home(request):
+    return render(request,'orders/order_home.html')
+
 def create_confirm_order(request):
     cart = request.session.get('cart', {})
     print(cart)
