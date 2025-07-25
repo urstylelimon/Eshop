@@ -8,9 +8,8 @@ from django.contrib import messages
 from store.views import single_product
 
 
+# For User
 
-def order_home(request):
-    return render(request,'orders/order_home.html')
 
 def create_confirm_order(request):
     cart = request.session.get('cart', {})
@@ -89,12 +88,19 @@ def create_single_order(request, pk):
 
 
 
+#For Admin
+
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from .models import Order
 
 # Show all orders for the employee/admin panel
+
+
+def order_home(request):
+    return render(request,'orders/order_home.html')
+
 def order_list(request):
     orders = Order.objects.all().order_by('-created_at')  # Most recent first
     return render(request, 'orders/order_list.html', {'orders': orders})
