@@ -103,7 +103,31 @@ def order_home(request):
 
 def order_list(request):
     orders = Order.objects.all().order_by('-created_at')  # Most recent first
-    return render(request, 'orders/order_list.html', {'orders': orders})
+    details = []
+    for order in orders:
+        products = []
+        for key,value in order.cart.items():
+            print(key,value)
+            product = Product.objects.get(id = key)
+            print(product.name, value)
+            products.append({'name': product.name, 'price': product.price, 'quantity': value})
+        details.append({
+            'full_name': order.full_name,
+            'contact_number': order.contact_number,
+            'location': order.location,
+            'address': order.address,
+            'total_price': order.total_price,
+            'is_cancelled': order.is_cancelled,
+            'is_confirmed': order.is_confirmed,
+            'created_at': order.created_at,
+            'id': order.id,
+            'products': products
+
+        })
+
+
+
+    return render(request, 'orders/order_list.html', {'orders': details})
 
 # Confirm an order
 def confirm_order(request, order_id):
