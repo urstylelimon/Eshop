@@ -1,101 +1,270 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Commerce Navbar</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="{% static 'navbar.css' %}">
+  <meta charset="UTF-8">
+  <title>ShopEase - Professional E-commerce Navigation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Professional animations and effects */
+    .nav-link {
+      position: relative;
+    }
+    .nav-link:after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -4px;
+      left: 0;
+      background-color: #4f46e5;
+      transition: width 0.3s ease;
+    }
+    .nav-link:hover:after {
+      width: 100%;
+    }
+
+    /* Enhanced cart badge */
+    .cart-count {
+      position: absolute;
+      top: -8px;
+      right: -12px;
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      color: white;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 9999px;
+      min-width: 20px;
+      text-align: center;
+      line-height: 1;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .cart-count:hover {
+      transform: scale(1.1);
+      box-shadow: 0 3px 8px rgba(79, 70, 229, 0.3);
+    }
+
+    /* Professional icon interactions */
+    .nav-icon {
+      color: #4b5563;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+    }
+    .nav-icon:hover {
+      color: #4f46e5;
+      transform: translateY(-2px);
+    }
+
+    /* Search bar enhancements */
+    .search-container {
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    .search-container:focus-within {
+      transform: scale(1.02);
+    }
+    .search-input {
+      transition: all 0.3s ease;
+      padding-left: 2.5rem;
+    }
+    .search-input:focus {
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+    }
+    .search-icon {
+      transition: color 0.3s ease;
+    }
+    .search-input:focus + .search-icon {
+      color: #4f46e5;
+    }
+
+    /* Mobile menu button */
+    .mobile-menu-button {
+      transition: all 0.3s ease;
+    }
+    .mobile-menu-button:hover {
+      color: #4f46e5;
+    }
+
+    /* Dropdown menu */
+    .dropdown-menu {
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: all 0.3s ease;
+    }
+    .dropdown:hover .dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    /* Sticky navbar effect */
+    .navbar {
+      transition: all 0.3s ease;
+    }
+    .navbar.scrolled {
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+  </style>
 </head>
-<body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="logo">
-                <img src="{% static 'images/logo.png' %}" alt="Logo">
-                <h1>ShopEase</h1>
+<body class="bg-gray-50 font-sans">
+
+  <!-- Navbar -->
+  <nav class="navbar bg-white sticky top-0 z-50 border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16 items-center">
+
+        <!-- Left section (Logo + Desktop menu) -->
+        <div class="flex items-center">
+          <!-- Logo -->
+          <div class="flex-shrink-0">
+            <a href="/" class="flex items-center">
+              <svg class="h-8 w-8 text-indigo-600" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm0 14a6 6 0 110-12 6 6 0 010 12z" />
+                <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+              </svg>
+              <span class="ml-2 text-xl font-bold text-gray-900">ShopEase</span>
+            </a>
+          </div>
+
+          <!-- Desktop Menu -->
+          <div class="hidden md:ml-10 md:flex md:space-x-8">
+            <div class="dropdown relative">
+              <button class="nav-link text-gray-700 hover:text-indigo-600 px-3 py-2 text-sm font-medium flex items-center">
+                Shop <i class="fas fa-chevron-down ml-1 text-xs"></i>
+              </button>
+              <div class="dropdown-menu absolute z-10 left-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 py-1">
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">All Products</a>
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Featured</a>
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Bestsellers</a>
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Discounts</a>
+              </div>
             </div>
 
-            <div class="nav-links">
-                <a href="">Home</a>
-                <a href="">Shop</a>
-                <a href="">Categories</a>
-                <a href="">New Arrivals</a>
-                <a href="">Sale</a>
-                <a href="">About</a>
-                <a href="">Contact</a>
+            <div class="dropdown relative">
+              <button class="nav-link text-gray-700 hover:text-indigo-600 px-3 py-2 text-sm font-medium flex items-center">
+                Categories <i class="fas fa-chevron-down ml-1 text-xs"></i>
+              </button>
+              <div class="dropdown-menu absolute z-10 left-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 py-1">
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Electronics</a>
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Fashion</a>
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Home & Garden</a>
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Beauty</a>
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sports</a>
+              </div>
             </div>
 
-            <div class="nav-icons">
-                <div class="search-bar">
-                    <i class="fas fa-search"></i>
-                    <input type="text" placeholder="Search products...">
-                </div>
-                <i class="far fa-user"></i>
-                <i class="far fa-heart"></i>
-                <a href="#" onclick="toggleCartSidebar()" class="cart-icon">
-                    <i class="fas fa-shopping-cart">
-                        <span class="cart-count">{{ cart_item_count }}</span>
-                    </i>
-                </a>
-                <div class="hamburger">
-                    <i class="fas fa-bars"></i>
-                </div>
-            </div>
+            <a href="#" class="nav-link text-gray-700 hover:text-indigo-600 px-3 py-2 text-sm font-medium">New Arrivals</a>
+            <a href="#" class="nav-link text-gray-700 hover:text-indigo-600 px-3 py-2 text-sm font-medium">Deals</a>
+            <a href="#" class="nav-link text-gray-700 hover:text-indigo-600 px-3 py-2 text-sm font-medium">About</a>
+          </div>
         </div>
-    </nav>
 
-    <!-- Cart Sidebar -->
-                <div id="cartSidebar" class="cart-sidebar">
-                <div class="cart-sidebar-content">
-                    <span class="close-btn" onclick="toggleCartSidebar()">×</span>
-                    <h3>Your Cart</h3>
+        <!-- Right section (Search + Icons) -->
+        <div class="flex items-center">
+          <!-- Search Bar -->
+          <div class="search-container hidden md:block mr-4">
+            <div class="relative">
+              <input
+                type="text"
+                placeholder="Search products..."
+                class="search-input w-64 pl-10 pr-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:border-indigo-500 text-sm"
+                aria-label="Search products"
+              />
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <i class="fas fa-search search-icon text-gray-400"></i>
+              </div>
+            </div>
+          </div>
 
-                    {% if cart_items %}
-                    <ul class="cart-items">
+          <!-- Icons -->
+          <div class="flex items-center space-x-5">
+            <a href="#" class="nav-icon" aria-label="Account" title="Account">
+              <i class="far fa-user text-lg"></i>
+            </a>
 
-                        {% for item in cart_items %}
-                            <li class="cart-item">
-                                <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="cart-item-image">
-                                <div class="cart-item-details">
-                                <strong>{{ item.product.name }}</strong><br>
-                                Quantity: 5 <br>
-                                Price: {{ item.item_total }}৳
-                                </div>
-                            </li>
-                        {% endfor %}
-                        <hr>
-                        <strong>Total: {{ total_amount }} ৳</strong>
-                    <div class="confirm_order" style="
-                        display: block;
-                        width: 100%;
-                        background-color: #28a745;
-                        padding: 12px 0;
-                        text-align: center;
-                        margin-top: 15px;
-                        border-radius: 5px;
-                        cursor: pointer;
-                        font-weight: bold;">
+            <a href="#" class="nav-icon" aria-label="Wishlist" title="Wishlist">
+              <i class="far fa-heart text-lg"></i>
+              <span class="absolute -top-1 -right-1 bg-pink-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">3</span>
+            </a>
 
-                        <a href="{% url "cart_view" %}" style="
-                            display: block;
-                            width: 100%;
-                            color: white;
-                            text-decoration: none;">
-                            Confirm Order
-                        </a>
-                    </div>
+            <a href="{% url 'create_confirm_order' %}" class="nav-icon relative" aria-label="Shopping Cart" title="Cart">
+              <i class="fas fa-shopping-cart text-lg"></i>
+              <span class="cart-count">{{ cart_item_count }}</span>
+            </a>
+          </div>
 
-                    </ul>
+          <!-- Mobile menu button -->
+          <div class="md:hidden ml-4">
+            <button class="mobile-menu-button inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-indigo-600 focus:outline-none">
+              <i class="fas fa-bars text-xl"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
 
-                    {% else %}
-                    <p>Your cart is empty.</p>
-                    {% endif %}
-                </div>
-                </div>
-                 <!-- End Cart Sidebar -->
+    <!-- Mobile menu (hidden by default) -->
+    <div class="md:hidden hidden">
+      <div class="pt-2 pb-3 space-y-1 px-4">
+        <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-indigo-600 hover:bg-gray-50">Shop</a>
+        <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-indigo-600 hover:bg-gray-50">Categories</a>
+        <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-indigo-600 hover:bg-gray-50">New Arrivals</a>
+        <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-indigo-600 hover:bg-gray-50">Deals</a>
+        <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-indigo-600 hover:bg-gray-50">About</a>
+      </div>
+      <div class="pt-4 pb-3 border-t border-gray-200 px-4">
+        <div class="flex items-center px-3 mb-4">
+          <input
+            type="text"
+            placeholder="Search products..."
+            class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:border-indigo-500 text-sm"
+          />
+          <div class="absolute left-7 top-1/2 transform -translate-y-1/2">
+            <i class="fas fa-search text-gray-400"></i>
+          </div>
+        </div>
+        <div class="flex space-x-4 px-3">
+          <a href="#" class="text-gray-700 hover:text-indigo-600">
+            <i class="far fa-user text-xl"></i>
+          </a>
+          <a href="#" class="text-gray-700 hover:text-indigo-600">
+            <i class="far fa-heart text-xl"></i>
+          </a>
+          <a href="#" class="text-gray-700 hover:text-indigo-600 relative">
+            <i class="fas fa-shopping-cart text-xl"></i>
+            <span class="absolute -top-1 -right-1 bg-indigo-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">5</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
 
+  <script>
+    // Add scroll effect to navbar
+    window.addEventListener('scroll', function() {
+      const navbar = document.querySelector('.navbar');
+      if (window.scrollY > 10) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
 
-    <script src="{% static 'navbar.js' %}"></script>
+    // Mobile menu toggle
+    const mobileMenuButton = document.querySelector('.mobile-menu-button');
+    const mobileMenu = document.querySelector('.md\\:hidden.hidden');
+
+    mobileMenuButton.addEventListener('click', function() {
+      mobileMenu.classList.toggle('hidden');
+    });
+  </script>
 </body>
 </html>
