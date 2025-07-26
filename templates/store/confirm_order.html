@@ -1,31 +1,268 @@
-<h2>Confirm Your Order</h2>
+{% extends 'base.html' %}
+{% load static %}
 
-<form method="post">
-    {% csrf_token %}
+{% block title %}Checkout - ShopEase{% endblock %}
 
-    <label>Full Name:</label>
-    <input type="text" name="full_name" required><br><br>
+{% block extra_css %}
+<style>
+    :root {
+        --primary: #6c5ce7;
+        --dark: #2d3436;
+        --light: #f5f6fa;
+    }
+    body {
+        background-color: #d8d5d5 !important; /* Added background color */
+    }
 
-    <label>Contact Number:</label>
-    <input type="text" name="contact_number" required><br><br>
+    .checkout-container {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        overflow: hidden;
+        margin: 7rem auto;
+        max-width: 1000px;
+    }
 
-    <label>Location:</label>
-    <select name="location" required>
-        <option value="inside">Inside Dhaka</option>
-        <option value="outside">Outside Dhaka</option>
-    </select><br><br>
+    .checkout-header {
+        background: var(--primary);
+        color: white;
+        padding: 15px 20px;
+        text-align: center;
+    }
 
-    <label>Full Address:</label>
-    <textarea name="address" required></textarea><br><br>
+    .checkout-header h2 {
+        font-size: 1.3rem;
+    }
 
-    <h3>Your Product:</h3>
-    <ul>
-        {% for item in product_list.values %}
-        <li>{{ item.name }} - {{ item.quantity }} x {{ item.price }}</li>
-        {% endfor %}
-    </ul>
+    .checkout-progress {
+        display: flex;
+        justify-content: center;
+        padding: 10px;
+        background: #f1f1f1;
+    }
 
-    <p><strong>Total Price:</strong> {{ total_price }}</p>
+    .step {
+        padding: 5px 15px;
+        position: relative;
+        color: #888;
+        font-size: 0.9rem;
+    }
 
-    <button type="submit">Place Order</button>
-</form>
+    .step.active {
+        color: var(--primary);
+        font-weight: bold;
+    }
+
+    .step:not(:last-child):after {
+        content: "›";
+        position: absolute;
+        right: -3px;
+    }
+
+    .checkout-body {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 20px;
+    }
+
+    @media (min-width: 768px) {
+        .checkout-body {
+            grid-template-columns: 1.5fr 1fr;
+        }
+    }
+
+    .form-section {
+        margin-bottom: 20px;
+    }
+
+    .form-section h3 {
+        font-size: 1.1rem;
+        margin-bottom: 15px;
+        color: var(--dark);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-size: 0.9rem;
+        color: #555;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 0.9rem;
+    }
+
+    .form-group textarea {
+        min-height: 80px;
+    }
+
+    .order-summary {
+        background: #fafafa;
+        border-radius: 8px;
+        padding: 15px;
+    }
+
+    .order-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+        border-bottom: 1px solid #eee;
+        font-size: 0.9rem;
+    }
+
+    .order-totals {
+        margin-top: 15px;
+        padding-top: 15px;
+        border-top: 2px solid #eee;
+    }
+
+    .total-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+    }
+
+    .grand-total {
+        font-weight: bold;
+        font-size: 1.1rem;
+    }
+
+    .checkout-actions {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+        gap: 10px;
+    }
+
+    .btn {
+        padding: 10px 15px;
+        border-radius: 5px;
+        font-size: 0.9rem;
+        cursor: pointer;
+        flex: 1;
+        text-align: center;
+    }
+
+    .btn-back {
+        background: #f1f1f1;
+        color: #555;
+        border: 1px solid #ddd;
+    }
+
+    .btn-confirm {
+        background: var(--primary);
+        color: white;
+        border: none;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="checkout-container">
+    <div class="checkout-header">
+        <h2><i class="fas fa-shopping-bag"></i> Confirm Your Order</h2>
+    </div>
+
+    <div class="checkout-progress">
+        <span class="step active">Cart</span>
+        <span class="step active">Details</span>
+        <span class="step">Payment</span>
+    </div>
+
+    <div class="checkout-body">
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-section">
+                <h3><i class="fas fa-user"></i> Personal Info</h3>
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" name="full_name" required>
+                </div>
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="tel" name="contact_number" required>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3><i class="fas fa-truck"></i> Delivery</h3>
+                <div class="form-group">
+                    <label>Location</label>
+                    <select name="location" required>
+                        <option value="">Select area</option>
+                        <option value="inside Dhaka">Inside Dhaka (+৳60)</option>
+                        <option value="outside Dhaka">Outside Dhaka (+৳120)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Full Address</label>
+                    <textarea name="address" required></textarea>
+                </div>
+            </div>
+
+            <div class="checkout-actions">
+                <a href="#" class="btn btn-back"><i class="fas fa-arrow-left"></i> Back</a>
+                <button type="submit" class="btn btn-confirm">Continue <i class="fas fa-arrow-right"></i></button>
+            </div>
+        </form>
+
+        <div class="order-summary">
+            <h3><i class="fas fa-receipt"></i> Order Summary</h3>
+            {% for item in cart_items %}
+            <div class="order-item">
+                <span>{{ item.product.name }}</span>
+                <span>{{ item.quantity }} × ৳{{ item.product.price }}</span>
+            </div>
+            {% endfor %}
+
+            <div class="order-totals">
+                <div class="total-row">
+                    <span>Subtotal:</span>
+                    <span>৳{{ subtotal }}</span>
+                </div>
+                <div class="total-row">
+                    <span>Delivery:</span>
+                    <span id="delivery-charge">৳60</span>
+                </div>
+                <div class="total-row grand-total">
+                    <span>Total:</span>
+                    <span id="grand-total">৳{{ total }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const locationSelect = document.querySelector('select[name="location"]');
+        const deliveryCharge = document.getElementById('delivery-charge');
+        const grandTotal = document.getElementById('grand-total');
+        const subtotal = {{ subtotal }};
+
+        if (locationSelect) {
+            locationSelect.addEventListener('change', function() {
+                const charge = this.value === 'inside Dhaka' ? 60 : 120;
+                deliveryCharge.textContent = '৳' + charge;
+                grandTotal.textContent = '৳' + (subtotal + charge);
+            });
+        }
+    });
+</script>
+{% endblock %}
