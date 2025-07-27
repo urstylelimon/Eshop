@@ -9,8 +9,6 @@ from store.views import single_product
 
 
 # For User
-
-
 def create_confirm_order(request):
     cart = request.session.get('cart', {})
     print(cart)
@@ -79,12 +77,11 @@ def create_single_order(request, pk):
 
     product_list[1] = {'name': single_product.name, 'price': single_product.price, 'quantity': 1}
 
+
     return render(request,'store/confirm_order.html',{
         'product_list': product_list,
         'total_price': total_price,
     })
-
-
 
 
 
