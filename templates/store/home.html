@@ -120,7 +120,7 @@
       {% for product in products %}
       <div class="product-card bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 group">
         <div class="relative overflow-hidden h-32 sm:h-48 md:h-56">
-          <img src="{{ product.image_url }}" alt="{{ product.name }}"
+          <img src="{{ product.image.url }}" alt="{{ product.name }}"
                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
           {% if product.is_new %}
           <div class="absolute top-2 left-2 bg-gray-800 text-white px-2 py-0.5 rounded-full text-xs font-bold">NEW</div>
@@ -140,7 +140,7 @@
           </div>
           <div class="flex items-center justify-between">
             <span class="text-sm sm:text-lg font-bold text-gray-900">${{ product.price }}</span>
-            <a href="#" class="add-to-cart bg-gray-800 hover:bg-gray-900 text-white px-2 py-1 sm:px-3 sm:py-2 rounded-lg transition-colors text-xs sm:text-sm flex items-center">
+            <a href="{% url 'add_to_cart' product.id %}" class="add-to-cart bg-gray-800 hover:bg-gray-900 text-white px-2 py-1 sm:px-3 sm:py-2 rounded-lg transition-colors text-xs sm:text-sm flex items-center">
               <i class="fas fa-shopping-cart mr-1"></i> Add
             </a>
           </div>
@@ -263,7 +263,7 @@
         // Add to cart functionality
         document.querySelectorAll('.add-to-cart').forEach(button => {
             button.addEventListener('click', function(e) {
-                e.preventDefault();
+
                 // In a real implementation, this would make an AJAX call to your server
                 console.log('Product added to cart!');
 
