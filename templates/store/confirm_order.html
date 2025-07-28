@@ -204,8 +204,8 @@
                     <label>Location</label>
                     <select name="location" required>
                         <option value="">Select area</option>
-                        <option value="inside Dhaka">Inside Dhaka (+৳60)</option>
-                        <option value="outside Dhaka">Outside Dhaka (+৳120)</option>
+                        <option value="inside Dhaka" selected >Inside Dhaka (+৳60)</option>
+                        <option value="outside Dhaka">Outside Dhaka (+৳60)</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -232,7 +232,7 @@
             <div class="order-totals">
                 <div class="total-row">
                     <span>Subtotal:</span>
-                    <span>৳{{ subtotal }}</span>
+                    <span>৳{{ total_price }}</span>
                 </div>
                 <div class="total-row">
                     <span>Delivery:</span>
@@ -240,29 +240,10 @@
                 </div>
                 <div class="total-row grand-total">
                     <span>Total:</span>
-                    <span id="grand-total">৳{{ total }}</span>
+                    <span id="grand-total">৳{{ all_price }}</span>
                 </div>
             </div>
         </div>
     </div>
 </div>
-{% endblock %}
-
-{% block extra_js %}
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const locationSelect = document.querySelector('select[name="location"]');
-        const deliveryCharge = document.getElementById('delivery-charge');
-        const grandTotal = document.getElementById('grand-total');
-        const subtotal = {{ subtotal }};
-
-        if (locationSelect) {
-            locationSelect.addEventListener('change', function() {
-                const charge = this.value === 'inside Dhaka' ? 60 : 120;
-                deliveryCharge.textContent = '৳' + charge;
-                grandTotal.textContent = '৳' + (subtotal + charge);
-            });
-        }
-    });
-</script>
 {% endblock %}
