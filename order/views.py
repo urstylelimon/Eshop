@@ -91,7 +91,6 @@ def create_single_order(request, pk):
 
 #For Admin
 
-
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from .models import Order
@@ -108,9 +107,9 @@ def order_list(request):
     for order in orders:
         products = []
         for key,value in order.cart.items():
-            print(key,value)
+
             product = Product.objects.get(id = key)
-            print(product.name, value)
+
             products.append({'name': product.name, 'price': product.price, 'quantity': value})
         details.append({
             'full_name': order.full_name,
@@ -131,10 +130,19 @@ def order_list(request):
     return render(request, 'orders/order_list.html', {'orders': details})
 
 # Confirm an order
+
+from  InventoryLog.models import InventoryLog
 def confirm_order(request, order_id):
     single_order = Order.objects.get(id = order_id)
     single_order.is_confirmed = True
     single_order.save()
+
+    # Automatic Update Inventory by Confirm Order
+    for pk,value in single_order.cart.items():
+        single_inventory = InventoryLog.objects.get(id=pk)
+        single_inventory.quantity -= value
+        single_inventory.save()
+
 
     return redirect('order_list')
 
