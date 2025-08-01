@@ -35,7 +35,7 @@
         </div>
 
         {% for order in orders %}
-        <div class="border-b-2 border-gray-200 last:border-b-0 {% if order.is_confirmed %}bg-green-50{% elif order.is_cancelled %}bg-rose-50{% endif %}">
+        <div class="border-b-2 border-gray-200 last:border-b-0 {% if order.is_confirmed %}bg-green-100{% elif order.is_cancelled %}bg-red-200{% endif %}">
             <div class="grid grid-cols-12 gap-4 p-6">
                 <!-- Customer Column -->
                 <div class="col-span-12 md:col-span-3 lg:col-span-2 border-r-2 border-gray-200 pr-4">
