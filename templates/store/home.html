@@ -2,12 +2,12 @@
 {% load static %}
 
 {% block content %}
-<div class="ecommerce-home bg-gray-50 pt-16"> <!-- Added pt-16 to account for fixed navbar -->
+<div class="ecommerce-home bg-gray-50 pt-10"> <!-- Added pt-16 to account for fixed navbar -->
     <!-- Hero Slider - Made more mobile-friendly -->
     <div class="hero-slider relative h-64 sm:h-80 md:h-[500px] overflow-hidden w-full">
-        <div class="slider-container relative h-full">
+        <div class="slider-container relative h-full w-full md:w-11/12 lg:w-5/6 xl:w-5/6 mx-auto">
             <!-- Slide 1 -->
-            <div class="slide absolute inset-0 bg-cover bg-center flex items-center transition-opacity duration-1000 ease-in-out"
+            <div class="slide absolute inset-0 bg-cover bg-center flex items-center transition-opacity duration-1000 ease-in-out md:rounded-xl md:mx-4"
                  style="background-image: linear-gradient(rgba(75,85,99,0.7), rgba(75,85,99,0.7)), url('https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2080&q=80')">
                 <div class="container mx-auto px-4 text-center">
                     <div class="max-w-2xl mx-auto text-white transform transition-all duration-200">
@@ -21,7 +21,7 @@
             </div>
 
             <!-- Slide 2 -->
-            <div class="slide absolute inset-0 bg-cover bg-center flex items-center opacity-0 transition-opacity duration-1000 ease-in-out"
+            <div class="slide absolute inset-0 bg-cover bg-center flex items-center opacity-0 transition-opacity duration-1000 ease-in-out md:rounded-xl md:mx-4"
                  style="background-image: linear-gradient(rgba(75,85,99,0.7), rgba(75,85,99,0.7)), url('https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')">
                 <div class="container mx-auto px-4 text-center">
                     <div class="max-w-2xl mx-auto text-white transform transition-all duration-200">
@@ -35,7 +35,7 @@
             </div>
 
             <!-- Slide 3 -->
-            <div class="slide absolute inset-0 bg-cover bg-center flex items-center opacity-0 transition-opacity duration-1000 ease-in-out"
+            <div class="slide absolute inset-0 bg-cover bg-center flex items-center opacity-0 transition-opacity duration-1000 ease-in-out md:rounded-xl md:mx-4"
                  style="background-image: linear-gradient(rgba(75,85,99,0.7), rgba(75,85,99,0.7)), url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')">
                 <div class="container mx-auto px-4 text-center">
                     <div class="max-w-2xl mx-auto text-white transform transition-all duration-200">
@@ -221,6 +221,22 @@
         right: 0;
         z-index: 1000;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Custom animation classes */
+    @keyframes fade-in {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fade-out {
+        from { opacity: 1; transform: translateY(0); }
+        to { opacity: 0; transform: translateY(10px); }
+    }
+    .animate-fade-in {
+        animation: fade-in 0.3s ease-out forwards;
+    }
+    .animate-fade-out {
+        animation: fade-out 0.3s ease-out forwards;
     }
 </style>
 {% endblock %}
