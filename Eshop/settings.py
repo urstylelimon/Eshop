@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'store',
     'order',
     'InventoryLog',
+    'accounts',
 ]
 
 MIDDLEWARE = [

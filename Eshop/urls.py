@@ -6,4 +6,5 @@ urlpatterns = [
     path('',include('store.urls')),
     path('order/',include('order.urls')),
     path('inventory/',include('InventoryLog.urls')),
+    path('accounts/',include('accounts.urls'))
 ]
