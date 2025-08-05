@@ -1,65 +1,224 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Accounts Overview</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Accounts Overview</title>
+  <style>
+    /* Reset some basics */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f9fafb;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #2c3e50;
+    }
+    h2 {
+      border-bottom: 2px solid #2980b9;
+      padding-bottom: 6px;
+      color: #2980b9;
+      margin-top: 40px;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    /* Container */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background-color: white;
+      padding: 30px 40px;
+      border-radius: 10px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    }
+
+    /* Summary Boxes */
+    .summary-boxes {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    .box {
+      flex: 1 1 250px;
+      background: #ecf0f1;
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+      box-shadow: inset 0 0 10px #d1d8dd;
+      transition: background-color 0.3s ease;
+    }
+    .box:hover {
+      background-color: #d6e6fb;
+    }
+    .box p.amount {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin: 10px 0 0 0;
+      color: #27ae60;
+    }
+
+    /* Form styling */
+    form {
+      background: #f0f4f8;
+      padding: 20px 25px;
+      border-radius: 8px;
+      box-shadow: inset 0 0 10px #cfd8dc;
+      max-width: 400px;
+      margin: 0 auto 40px;
+    }
+    form label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #34495e;
+    }
+    form input[type="number"],
+    form textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 5px;
+      border: 1.5px solid #bdc3c7;
+      font-size: 1rem;
+      margin-bottom: 20px;
+      resize: vertical;
+      transition: border-color 0.3s ease;
+    }
+    form input[type="number"]:focus,
+    form textarea:focus {
+      outline: none;
+      border-color: #2980b9;
+      background-color: #eaf4fd;
+    }
+    form input[type="submit"] {
+      background-color: #2980b9;
+      color: white;
+      font-weight: 600;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: background-color 0.3s ease;
+      width: 100%;
+    }
+    form input[type="submit"]:hover {
+      background-color: #1c5980;
+    }
+
+    /* Table styling */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+      background: white;
+    }
+    th, td {
+      padding: 14px 20px;
+      text-align: left;
+      border-bottom: 1px solid #ecf0f1;
+      font-size: 1rem;
+      color: #2c3e50;
+    }
+    thead {
+      background-color: #2980b9;
+      color: white;
+      font-weight: 600;
+    }
+    tbody tr:hover {
+      background-color: #f1f8ff;
+    }
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Responsive */
+    @media(max-width: 600px) {
+      .summary-boxes {
+        flex-direction: column;
+      }
+      form {
+        max-width: 100%;
+      }
+    }
+  </style>
 </head>
 <body>
+  <div class="container">
 
-    <h1>Accounts Section</h1>
+    <h1>Accounts Overview</h1>
 
-    <!-- Total Revenue -->
-    <h2> Total order {{ count }} </h2>
-    <h2>Total Revenue</h2>
-    <p id="total-revenue">৳ {{ total_price }}</p>
+    <div class="summary-boxes">
+      <div class="box">
+        <h2>Total Orders</h2>
+        <p class="amount">{{ total_order }}</p>
+      </div>
 
-    <!-- Shipping Adjustment -->
-    <h2>Shipping Adjustment</h2>
-    <p id="shipping-adjustment">৳ 0.00</p>
+      <div class="box">
+        <h2>Total Revenue</h2>
+        <p class="amount">৳ {{ total_amount|floatformat:2 }}</p>
+      </div>
 
-    <!-- Extra Cost Form -->
+      <div class="box">
+        <h2>Delivery Cost</h2>
+        <p class="amount">৳ {{ delevery_cost|floatformat:2 }}</p>
+      </div>
+
+      <div class="box">
+        <h2>Net Profit</h2>
+        <p class="amount">৳ {{ net_amount|floatformat:2 }}</p>
+      </div>
+    </div>
+
     <h2>Add Extra Cost</h2>
-    <form method="POST" action="/add-extra-cost/">
-        <!-- Include {% csrf_token %} if using Django -->
-        <label for="amount">Amount:</label>
-        <input type="number" name="amount" id="amount" step="0.01" required><br><br>
+    <form method="POST" action="">
+      {% csrf_token %}
+      <label for="amount">Amount:</label>
+      <input type="number" name="amount" id="amount" step="0.01" min="0" required />
 
-        <label for="remarks">Remarks:</label><br>
-        <textarea name="remarks" id="remarks" rows="3" cols="40" required></textarea><br><br>
+      <label for="remarks">Remarks:</label>
+      <textarea name="remarks" id="remarks" rows="3" required></textarea>
 
-        <input type="submit" value="Submit">
+      <input type="submit" value="Submit" />
     </form>
 
-    <!-- Total Profit -->
-    <h2>Total Profit</h2>
-    <p id="total-profit">৳ 0.00</p>
-
-    <!-- Extra Cost Table -->
     <h2>Extra Cost History</h2>
-    <table border="1" cellpadding="5" cellspacing="0">
-        <thead>
-            <tr>
-                <th>SL</th>
-                <th>Amount (৳)</th>
-                <th>Remarks</th>
-                <th>Date</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Example rows; replace with loop in Django template -->
-            <tr>
-                <td>1</td>
-                <td>200.00</td>
-                <td>Packaging materials</td>
-                <td>2025-08-04</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>150.00</td>
-                <td>Courier tip</td>
-                <td>2025-08-03</td>
-            </tr>
-        </tbody>
+    <table>
+      <thead>
+        <tr>
+          <th>SL</th>
+          <th>Amount (৳)</th>
+          <th>Remarks</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for account in accounts_list %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ account.amount|floatformat:2 }}</td>
+            <td>{{ account.remarks }}</td>
+            <td>{{ cost.created_at|date:"Y-m-d" }}</td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="4" style="text-align:center; color:#888;">No extra cost entries found.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
     </table>
 
+  </div>
 </body>
 </html>
