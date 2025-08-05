@@ -1,16 +1,34 @@
+from itertools import count
+
 from django.shortcuts import render
 from order.models import Order
 # Create your views here.
 
 def home(request):
 
-    all_order = Order.objects.values('total_price')
-    print(all_order)
+    all_order = Order.objects.filter(is_confirmed=True)
 
-    total_price = 0
     count = 0
-    for i in all_order:
+    total_price = 0
+    for order in all_order:
         count += 1
-        total_price += i['total_price']
+        total_price += order.total_price
 
-    return render(request, 'accounts/accounts_home.html',{'total_price': total_price,'count':count})
+
+    #Calculate cost for outside order
+    outside_order = all_order.filter(location='outside').count()
+    delevery_cost = 60 * outside_order
+
+    print("outside order:",delevery_cost)
+
+
+    context = {
+        'total_price': total_price,
+        'count': count,
+        'outside_order': outside_order,
+        'delevery_cost': delevery_cost,
+    }
+
+
+
+    return render(request, 'accounts/accounts_home.html', context)
