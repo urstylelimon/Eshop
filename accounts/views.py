@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from order.models import Order
 from . models import Accounts
 # Create your views here.
@@ -28,9 +28,12 @@ def home(request):
             amount = amount,
             remarks = remarks
         )
+        return redirect('accounts_home')
 
     all_amount = Accounts.objects.values('amount')
     all_accounts = Accounts.objects.all().order_by('-created_at')
+
+    print(all_accounts.values('created_at'))
 
     miscellaneous_cost  = 0
     for amount in all_amount:
