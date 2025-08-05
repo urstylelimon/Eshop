@@ -1,18 +1,17 @@
-from itertools import count
-
 from django.shortcuts import render
 from order.models import Order
+from . models import Accounts
 # Create your views here.
 
 def home(request):
 
     all_order = Order.objects.filter(is_confirmed=True)
 
-    count = 0
-    total_price = 0
+    total_order = 0
+    total_amount = 0
     for order in all_order:
-        count += 1
-        total_price += order.total_price
+        total_order += 1
+        total_amount += order.total_price
 
 
     #Calculate cost for outside order
@@ -21,12 +20,33 @@ def home(request):
 
     print("outside order:",delevery_cost)
 
+    if request.method == 'POST':
+        amount = request.POST.get('amount')
+        remarks = request.POST.get('remarks')
+
+        Accounts.objects.create(
+            amount = amount,
+            remarks = remarks
+        )
+
+    all_amount = Accounts.objects.values('amount')
+    all_accounts = Accounts.objects.all().order_by('-created_at')
+
+    miscellaneous_cost  = 0
+    for amount in all_amount:
+        miscellaneous_cost += amount['amount']
+
+    # Net profit
+    net_amount = total_amount - (miscellaneous_cost+delevery_cost)
 
     context = {
-        'total_price': total_price,
-        'count': count,
+        'total_amount': total_amount,
+        'total_order': total_order,
+
         'outside_order': outside_order,
         'delevery_cost': delevery_cost,
+        'net_amount' : net_amount,
+        'accounts_list': all_accounts,
     }
 
 
