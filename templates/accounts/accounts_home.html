@@ -1,11 +1,65 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Accounts Overview</title>
 </head>
 <body>
-    <h1>Total Order {{ count }} </h1>
-    <h1>Total Price {{ total_price }}</h1>
+
+    <h1>Accounts Section</h1>
+
+    <!-- Total Revenue -->
+    <h2> Total order {{ count }} </h2>
+    <h2>Total Revenue</h2>
+    <p id="total-revenue">৳ {{ total_price }}</p>
+
+    <!-- Shipping Adjustment -->
+    <h2>Shipping Adjustment</h2>
+    <p id="shipping-adjustment">৳ 0.00</p>
+
+    <!-- Extra Cost Form -->
+    <h2>Add Extra Cost</h2>
+    <form method="POST" action="/add-extra-cost/">
+        <!-- Include {% csrf_token %} if using Django -->
+        <label for="amount">Amount:</label>
+        <input type="number" name="amount" id="amount" step="0.01" required><br><br>
+
+        <label for="remarks">Remarks:</label><br>
+        <textarea name="remarks" id="remarks" rows="3" cols="40" required></textarea><br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+
+    <!-- Total Profit -->
+    <h2>Total Profit</h2>
+    <p id="total-profit">৳ 0.00</p>
+
+    <!-- Extra Cost Table -->
+    <h2>Extra Cost History</h2>
+    <table border="1" cellpadding="5" cellspacing="0">
+        <thead>
+            <tr>
+                <th>SL</th>
+                <th>Amount (৳)</th>
+                <th>Remarks</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Example rows; replace with loop in Django template -->
+            <tr>
+                <td>1</td>
+                <td>200.00</td>
+                <td>Packaging materials</td>
+                <td>2025-08-04</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>150.00</td>
+                <td>Courier tip</td>
+                <td>2025-08-03</td>
+            </tr>
+        </tbody>
+    </table>
+
 </body>
 </html>
