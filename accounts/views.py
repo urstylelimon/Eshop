@@ -36,6 +36,7 @@ def home(request):
     print(all_accounts.values('created_at'))
 
     miscellaneous_cost  = 0
+
     for amount in all_amount:
         miscellaneous_cost += amount['amount']
 
