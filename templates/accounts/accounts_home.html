@@ -1,670 +1,212 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Financial Dashboard | Accounts Overview</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <style>
-    :root {
-      --primary: #4f46e5;
-      --primary-light: #e0e7ff;
-      --primary-dark: #3730a3;
-      --secondary: #10b981;
-      --secondary-light: #d1fae5;
-      --secondary-dark: #059669;
-      --danger: #ef4444;
-      --danger-light: #fee2e2;
-      --danger-dark: #dc2626;
-      --warning: #f59e0b;
-      --warning-light: #fef3c7;
-      --warning-dark: #d97706;
-      --info: #3b82f6;
-      --info-light: #dbeafe;
-      --dark: #1f2937;
-      --darker: #111827;
-      --light: #f9fafb;
-      --lighter: #ffffff;
-      --gray: #6b7280;
-      --light-gray: #f3f4f6;
-      --border-radius: 12px;
-      --border-radius-sm: 8px;
-      --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-      --box-shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.12);
-      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    }
+{% extends "orders/base.html" %}
+{% block title %}Financial Dashboard | Accounts Overview{% endblock %}
 
-    /* Reset and base styles */
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: var(--light-gray);
-      margin: 0;
-      padding: 20px;
-      color: var(--dark);
-      line-height: 1.6;
-    }
-    h1 {
-      text-align: center;
-      margin-bottom: 30px;
-      color: var(--darker);
-      font-weight: 700;
-      font-size: 2.5rem;
-      position: relative;
-      padding-bottom: 15px;
-    }
-    h1::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100px;
-      height: 4px;
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
-      border-radius: 2px;
-    }
-    h2 {
-      color: var(--darker);
-      margin-top: 40px;
-      margin-bottom: 20px;
-      font-weight: 600;
-      font-size: 1.6rem;
-      display: flex;
-      align-items: center;
-    }
-    h2 svg {
-      margin-right: 12px;
-      color: var(--primary);
-    }
+{% block content %}
+<div class="max-w-7xl mx-auto bg-white p-10 rounded-lg shadow-lg relative">
 
-    /* Container */
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      background-color: white;
-      padding: 40px;
-      border-radius: var(--border-radius);
-      box-shadow: var(--box-shadow);
-      position: relative;
-    }
+  <h1 class="text-4xl font-bold text-indigo-900 mb-8 text-center relative pb-4">
+    Financial Dashboard
+    <span class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-24 h-1 rounded bg-gradient-to-r from-indigo-600 to-green-500"></span>
+  </h1>
 
-    /* Enhanced Summary Boxes */
-    .summary-boxes {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 25px;
-      margin-bottom: 50px;
-    }
-    .box {
-      background: var(--lighter);
-      padding: 25px;
-      border-radius: var(--border-radius);
-      box-shadow: var(--box-shadow);
-      transition: var(--transition);
-      position: relative;
-      overflow: hidden;
-      border: none;
-      display: flex;
-      flex-direction: column;
-      background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.95) 100%);
-      backdrop-filter: blur(5px);
-      border: 1px solid rgba(255,255,255,0.3);
-    }
-    .box::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, var(--primary), var(--primary-dark));
-    }
-    .box:nth-child(2)::before {
-      background: linear-gradient(90deg, var(--secondary), var(--secondary-dark));
-    }
-    .box:nth-child(3)::before {
-      background: linear-gradient(90deg, var(--warning), var(--warning-dark));
-    }
-    .box:nth-child(4)::before {
-      background: linear-gradient(90deg, var(--danger), var(--danger-dark));
-    }
-    .box:hover {
-      transform: translateY(-5px);
-      box-shadow: var(--box-shadow-lg);
-      border-color: rgba(255,255,255,0.5);
-    }
-    .box h3 {
-      font-size: 1rem;
-      color: var(--gray);
-      margin-bottom: 15px;
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      font-weight: 600;
-    }
-    .box .icon-container {
-      width: 48px;
-      height: 48px;
-      border-radius: var(--border-radius-sm);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 20px;
-      background: rgba(79, 70, 229, 0.1);
-      color: var(--primary);
-      font-size: 1.2rem;
-      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.1);
-    }
-    .box:nth-child(2) .icon-container {
-      background: rgba(16, 185, 129, 0.1);
-      color: var(--secondary);
-      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.1);
-    }
-    .box:nth-child(3) .icon-container {
-      background: rgba(245, 158, 11, 0.1);
-      color: var(--warning);
-      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.1);
-    }
-    .box:nth-child(4) .icon-container {
-      background: rgba(239, 68, 68, 0.1);
-      color: var(--danger);
-      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.1);
-    }
-    .box .amount-container {
-      display: flex;
-      align-items: flex-end;
-      margin-bottom: 10px;
-    }
-    .box p.amount {
-      font-size: 2.2rem;
-      font-weight: 700;
-      margin: 0;
-      color: var(--darker);
-      line-height: 1;
-      font-feature-settings: "tnum";
-      font-variant-numeric: tabular-nums;
-    }
-    .box p.currency {
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: var(--gray);
-      margin: 0 0 5px 5px;
-    }
-    .box .trend {
-      margin-top: 10px;
-      font-size: 0.85rem;
-      display: flex;
-      align-items: center;
-      color: var(--gray);
-      font-weight: 500;
-    }
-    .box .trend i {
-      margin-right: 6px;
-      font-size: 0.9rem;
-    }
-    .box .trend.up {
-      color: var(--secondary-dark);
-      background: var(--secondary-light);
-      padding: 4px 8px;
-      border-radius: 20px;
-      display: inline-flex;
-      align-items: center;
-    }
-    .box .trend.down {
-      color: var(--danger-dark);
-      background: var(--danger-light);
-      padding: 4px 8px;
-      border-radius: 20px;
-      display: inline-flex;
-      align-items: center;
-    }
-
-    /* Button styling */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 12px 24px;
-      border-radius: var(--border-radius);
-      font-weight: 600;
-      cursor: pointer;
-      transition: var(--transition);
-      text-decoration: none;
-      border: none;
-      font-size: 1rem;
-    }
-    .btn-primary {
-      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-      color: white;
-      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
-    }
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(79, 70, 229, 0.3);
-      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
-    }
-    .btn-primary i {
-      margin-right: 8px;
-    }
-
-    /* Modal styling */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
-      z-index: 1000;
-      justify-content: center;
-      align-items: center;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-    .modal.show {
-      display: flex;
-      opacity: 1;
-    }
-    .modal-content {
-      background-color: white;
-      width: 100%;
-      max-width: 500px;
-      border-radius: var(--border-radius);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-      transform: translateY(-20px);
-      transition: transform 0.3s ease;
-      overflow: hidden;
-    }
-    .modal.show .modal-content {
-      transform: translateY(0);
-    }
-    .modal-header {
-      padding: 20px 25px;
-      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-      color: white;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .modal-header h3 {
-      font-size: 1.4rem;
-      font-weight: 600;
-      margin: 0;
-    }
-    .modal-header .close {
-      background: none;
-      border: none;
-      color: white;
-      font-size: 1.5rem;
-      cursor: pointer;
-      padding: 5px;
-    }
-    .modal-body {
-      padding: 25px;
-    }
-
-    /* Form styling */
-    .form-group {
-      margin-bottom: 20px;
-    }
-    .form-group label {
-      display: block;
-      font-weight: 500;
-      margin-bottom: 8px;
-      color: var(--dark);
-    }
-    .form-control {
-      width: 100%;
-      padding: 14px 16px;
-      border-radius: var(--border-radius-sm);
-      border: 1px solid #e5e7eb;
-      font-size: 1rem;
-      transition: var(--transition);
-      background-color: white;
-    }
-    .form-control:focus {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
-    }
-    textarea.form-control {
-      min-height: 120px;
-      resize: vertical;
-    }
-    .form-footer {
-      display: flex;
-      justify-content: flex-end;
-      gap: 15px;
-      margin-top: 30px;
-    }
-    .btn-secondary {
-      background-color: white;
-      color: var(--gray);
-      border: 1px solid #e5e7eb;
-    }
-    .btn-secondary:hover {
-      background-color: #f9fafb;
-    }
-
-    /* Table styling */
-    .table-section {
-      margin-top: 50px;
-    }
-    .table-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-    .table-container {
-      overflow-x: auto;
-      border-radius: var(--border-radius);
-      box-shadow: var(--box-shadow);
-      margin-bottom: 30px;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 600px;
-    }
-    th, td {
-      padding: 16px 24px;
-      text-align: left;
-      border-bottom: 1px solid #f3f4f6;
-    }
-    thead {
-      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-      color: white;
-      font-weight: 600;
-    }
-    th {
-      padding: 18px 24px;
-    }
-    th:first-child {
-      border-top-left-radius: var(--border-radius);
-    }
-    th:last-child {
-      border-top-right-radius: var(--border-radius);
-    }
-    tbody tr:nth-child(even) {
-      background-color: #f9fafb;
-    }
-    tbody tr:hover {
-      background-color: var(--primary-light);
-    }
-    .badge {
-      display: inline-block;
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-size: 0.85rem;
-      font-weight: 500;
-    }
-    .badge-success {
-      background-color: #d1fae5;
-      color: #065f46;
-    }
-    .badge-warning {
-      background-color: #fef3c7;
-      color: #92400e;
-    }
-
-    /* Responsive */
-    @media(max-width: 992px) {
-      .container {
-        padding: 30px;
-      }
-    }
-    @media(max-width: 768px) {
-      .container {
-        padding: 20px;
-      }
-      h1 {
-        font-size: 2rem;
-      }
-      .box {
-        padding: 20px;
-      }
-      .box p.amount {
-        font-size: 2rem;
-      }
-    }
-    @media(max-width: 576px) {
-      .summary-boxes {
-        grid-template-columns: 1fr;
-      }
-      .modal-content {
-        margin: 0 15px;
-      }
-      th, td {
-        padding: 12px 15px;
-      }
-      .table-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 15px;
-      }
-    }
-
-    /* Animation */
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .container > * {
-      animation: fadeIn 0.6s ease-out forwards;
-    }
-    .container > *:nth-child(2) {
-      animation-delay: 0.1s;
-    }
-    .container > *:nth-child(3) {
-      animation-delay: 0.2s;
-    }
-    .container > *:nth-child(4) {
-      animation-delay: 0.3s;
-    }
-
-    /* Utility classes */
-    .text-center {
-      text-align: center;
-    }
-    .text-muted {
-      color: var(--gray);
-    }
-    .mt-4 {
-      margin-top: 1.5rem;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-
-    <h1>Financial Dashboard</h1>
-
-    <div class="summary-boxes">
-      <div class="box">
-        <div class="icon-container">
-          <i class="fas fa-shopping-cart"></i>
+  <!-- Enhanced Summary Boxes -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+    <!-- Box 1 - Total Orders -->
+    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 group">
+      <div class="flex justify-between items-start">
+        <div>
+          <p class="text-sm font-medium text-gray-500 uppercase tracking-wider">Total Orders</p>
+          <h3 class="text-3xl font-bold text-gray-800 mt-2">{{ total_order }}</h3>
         </div>
-        <h3>Total Orders</h3>
-        <div class="amount-container">
-          <p class="amount">{{ total_order }}</p>
-        </div>
-        <div class="trend up">
-          <i class="fas fa-arrow-up"></i> 12% from last month
+        <div class="p-3 rounded-lg bg-indigo-50 text-indigo-600 group-hover:bg-indigo-100 transition">
+          <i class="fas fa-shopping-cart text-xl"></i>
         </div>
       </div>
-
-      <div class="box">
-        <div class="icon-container">
-          <i class="fas fa-money-bill-wave"></i>
-        </div>
-        <h3>Total Revenue</h3>
-        <div class="amount-container">
-          <p class="amount">{{ total_amount|floatformat:2 }}</p>
-          <p class="currency">৳</p>
-        </div>
-        <div class="trend up">
-          <i class="fas fa-arrow-up"></i> 8% from last month
-        </div>
-      </div>
-
-      <div class="box">
-        <div class="icon-container">
-          <i class="fas fa-truck"></i>
-        </div>
-        <h3>Delivery Cost</h3>
-        <div class="amount-container">
-          <p class="amount">{{ delevery_cost|floatformat:2 }}</p>
-          <p class="currency">৳</p>
-        </div>
-        <div class="trend down">
-          <i class="fas fa-arrow-down"></i> 5% from last month
-        </div>
-      </div>
-
-      <div class="box">
-        <div class="icon-container">
-          <i class="fas fa-chart-line"></i>
-        </div>
-        <h3>Net Profit</h3>
-        <div class="amount-container">
-          <p class="amount">{{ net_amount|floatformat:2 }}</p>
-          <p class="currency">৳</p>
-        </div>
-        <div class="trend up">
-          <i class="fas fa-arrow-up"></i> 15% from last month
-        </div>
+      <div class="mt-6 pt-4 border-t border-gray-100 flex items-center">
+        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800">
+          <i class="fas fa-arrow-up mr-1 text-xs"></i> 12%
+        </span>
+        <span class="ml-2 text-sm text-gray-500">from last month</span>
       </div>
     </div>
 
-    <div class="table-section">
-      <div class="table-header">
-        <h2>
-          <i class="fas fa-file-invoice-dollar"></i>
-          Expense History
-        </h2>
-        <button class="btn btn-primary" id="openModalBtn">
-          <i class="fas fa-plus"></i> Add Extra Cost
-        </button>
+    <!-- Box 2 - Total Revenue -->
+    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 group">
+      <div class="flex justify-between items-start">
+        <div>
+          <p class="text-sm font-medium text-gray-500 uppercase tracking-wider">Total Revenue</p>
+          <h3 class="text-3xl font-bold text-gray-800 mt-2">৳ {{ total_amount|floatformat:2 }}</h3>
+        </div>
+        <div class="p-3 rounded-lg bg-green-50 text-green-600 group-hover:bg-green-100 transition">
+          <i class="fas fa-money-bill-wave text-xl"></i>
+        </div>
       </div>
-
-      <div class="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Amount (৳)</th>
-              <th>Description</th>
-              <th>Date</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for account in accounts_list %}
-              <tr>
-                <td>{{ forloop.counter }}</td>
-                <td><strong>{{ account.amount|floatformat:2 }}</strong></td>
-                <td>{{ account.remarks }}</td>
-                <td>{{ account.created_at|date:"M d, Y" }}</td>
-                <td><span class="badge badge-success">Recorded</span></td>
-              </tr>
-            {% empty %}
-              <tr>
-                <td colspan="5" class="text-center text-muted" style="padding: 40px;">
-                  <i class="fas fa-file-excel fa-3x" style="opacity: 0.3; margin-bottom: 15px;"></i>
-                  <p class="mt-4">No expense records found</p>
-                </td>
-              </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+      <div class="mt-6 pt-4 border-t border-gray-100 flex items-center">
+        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800">
+          <i class="fas fa-arrow-up mr-1 text-xs"></i> 8%
+        </span>
+        <span class="ml-2 text-sm text-gray-500">from last month</span>
       </div>
     </div>
 
-  </div>
-
-  <!-- Modal Form -->
-  <div class="modal" id="costModal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3>
-          <i class="fas fa-plus-circle"></i>
-          Add Extra Cost
-        </h3>
-        <button class="close">&times;</button>
+    <!-- Box 3 - Delivery Cost -->
+    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 group">
+      <div class="flex justify-between items-start">
+        <div>
+          <p class="text-sm font-medium text-gray-500 uppercase tracking-wider">Delivery Cost</p>
+          <h3 class="text-3xl font-bold text-gray-800 mt-2">৳ {{ delevery_cost|floatformat:2 }}</h3>
+        </div>
+        <div class="p-3 rounded-lg bg-yellow-50 text-yellow-600 group-hover:bg-yellow-100 transition">
+          <i class="fas fa-truck text-xl"></i>
+        </div>
       </div>
-      <div class="modal-body">
-        <form method="POST" action="" id="cost-form" autocomplete="off">
-          {% csrf_token %}
-          <div class="form-group">
-            <label for="amount">Amount (৳)</label>
-            <input type="number" class="form-control" name="amount" id="amount" step="0.01" min="0" required placeholder="Enter amount">
-          </div>
-          <div class="form-group">
-            <label for="remarks">Description</label>
-            <textarea class="form-control" name="remarks" id="remarks" rows="3" required placeholder="Enter description"></textarea>
-          </div>
-          <div class="form-footer">
-            <button type="button" class="btn btn-secondary close-btn">Cancel</button>
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </div>
-        </form>
+      <div class="mt-6 pt-4 border-t border-gray-100 flex items-center">
+        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-800">
+          <i class="fas fa-arrow-down mr-1 text-xs"></i> 5%
+        </span>
+        <span class="ml-2 text-sm text-gray-500">from last month</span>
+      </div>
+    </div>
+
+    <!-- Box 4 - Net Profit -->
+    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 group">
+      <div class="flex justify-between items-start">
+        <div>
+          <p class="text-sm font-medium text-gray-500 uppercase tracking-wider">Net Profit</p>
+          <h3 class="text-3xl font-bold text-gray-800 mt-2">৳ {{ net_amount|floatformat:2 }}</h3>
+        </div>
+        <div class="p-3 rounded-lg bg-purple-50 text-purple-600 group-hover:bg-purple-100 transition">
+          <i class="fas fa-chart-line text-xl"></i>
+        </div>
+      </div>
+      <div class="mt-6 pt-4 border-t border-gray-100 flex items-center">
+        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800">
+          <i class="fas fa-arrow-up mr-1 text-xs"></i> 15%
+        </span>
+        <span class="ml-2 text-sm text-gray-500">from last month</span>
       </div>
     </div>
   </div>
 
-  <script>
-    // Modal functionality
-    const modal = document.getElementById('costModal');
-    const openModalBtn = document.getElementById('openModalBtn');
-    const closeModalBtns = document.querySelectorAll('.close, .close-btn');
+  <!-- Expense Table Section -->
+  <div>
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="flex items-center text-2xl font-semibold text-gray-800">
+        <i class="fas fa-file-invoice-dollar text-indigo-600 mr-3"></i> Expense History
+      </h2>
+      <button id="openModalBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 rounded-lg shadow flex items-center transition">
+        <i class="fas fa-plus mr-2"></i> Add Extra Cost
+      </button>
+    </div>
 
-    // Open modal
-    openModalBtn.addEventListener('click', () => {
-      modal.classList.add('show');
-      document.body.style.overflow = 'hidden';
-    });
+    <div class="overflow-x-auto rounded-lg shadow-lg mb-10">
+      <table class="min-w-full border-collapse table-auto">
+        <thead class="bg-indigo-600 text-white font-semibold">
+          <tr>
+            <th class="px-6 py-3 rounded-tl-lg">#</th>
+            <th class="px-6 py-3">Amount (৳)</th>
+            <th class="px-6 py-3">Description</th>
+            <th class="px-6 py-3">Date</th>
+            <th class="px-6 py-3 rounded-tr-lg">Status</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-100">
+          {% for account in accounts_list %}
+          <tr class="hover:bg-indigo-50 transition">
+            <td class="px-6 py-4">{{ forloop.counter }}</td>
+            <td class="px-6 py-4 font-semibold">৳ {{ account.amount|floatformat:2 }}</td>
+            <td class="px-6 py-4">{{ account.remarks }}</td>
+            <td class="px-6 py-4">{{ account.created_at|date:"M d, Y" }}</td>
+            <td class="px-6 py-4">
+              <span class="inline-block px-3 py-1 rounded-full bg-green-100 text-green-800 text-xs font-semibold">Recorded</span>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="5" class="text-center text-gray-400 py-10">
+              <i class="fas fa-file-excel fa-3x mb-4 opacity-30"></i><br>
+              No expense records found
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 
-    // Close modal
-    closeModalBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        modal.classList.remove('show');
-        document.body.style.overflow = 'auto';
-      });
-    });
+<!-- Modal -->
+<div id="costModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+  <div class="bg-white rounded-lg shadow-lg max-w-md w-full transform -translate-y-10 opacity-0 transition duration-300 ease-in-out">
+    <div class="bg-gradient-to-r from-indigo-600 to-indigo-800 p-5 flex justify-between items-center rounded-t-lg text-white">
+      <h3 class="text-lg font-semibold flex items-center gap-2">
+        <i class="fas fa-plus-circle"></i> Add Extra Cost
+      </h3>
+      <button id="closeModalBtn" class="text-white text-2xl font-bold focus:outline-none">&times;</button>
+    </div>
+    <div class="p-6">
+      <form method="POST" action="" id="cost-form" autocomplete="off">
+        {% csrf_token %}
+        <div class="mb-5">
+          <label for="amount" class="block font-medium text-gray-700 mb-2">Amount (৳)</label>
+          <input type="number" id="amount" name="amount" step="0.01" min="0" required
+            class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Enter amount" />
+        </div>
+        <div class="mb-5">
+          <label for="remarks" class="block font-medium text-gray-700 mb-2">Description</label>
+          <textarea id="remarks" name="remarks" rows="3" required
+            class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Enter description"></textarea>
+        </div>
+        <div class="flex justify-end gap-4">
+          <button type="button" id="cancelBtn" class="px-6 py-2 rounded-md border border-gray-300 text-gray-600 hover:bg-gray-100">Cancel</button>
+          <button type="submit" class="px-6 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 
-    // Close modal when clicking outside
-    window.addEventListener('click', (e) => {
-      if (e.target === modal) {
-        modal.classList.remove('show');
-        document.body.style.overflow = 'auto';
-      }
-    });
+{% endblock %}
 
-    // Clear form after submission
-    document.getElementById('cost-form').addEventListener('submit', function(e) {
-      // You can add form validation here if needed
+{% block scripts %}
+<script>
+  const modal = document.getElementById('costModal');
+  const openBtn = document.getElementById('openModalBtn');
+  const closeBtn = document.getElementById('closeModalBtn');
+  const cancelBtn = document.getElementById('cancelBtn');
 
-      // For demo purposes, we'll just clear the form and close the modal
-      setTimeout(function() {
-        document.getElementById('amount').value = '';
-        document.getElementById('remarks').value = '';
-        modal.classList.remove('show');
-        document.body.style.overflow = 'auto';
+  openBtn.addEventListener('click', () => {
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+      modal.querySelector('div').classList.remove('opacity-0', '-translate-y-10');
+    }, 10);
+    document.body.style.overflow = 'hidden';
+  });
 
-        // In a real application, you would redirect after form submission
-        // window.location.reload();
-      }, 100);
-    });
-  </script>
-</body>
-</html>
+  function closeModal() {
+    modal.querySelector('div').classList.add('opacity-0', '-translate-y-10');
+    setTimeout(() => {
+      modal.classList.add('hidden');
+      document.body.style.overflow = 'auto';
+    }, 300);
+  }
+
+  closeBtn.addEventListener('click', closeModal);
+  cancelBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+
+  document.getElementById('cost-form').addEventListener('submit', function(e) {
+    // You can add form validation here
+
+    // Demo: reset form and close modal after short delay
+    setTimeout(() => {
+      this.reset();
+      closeModal();
+    }, 100);
+  });
+</script>
+{% endblock %}
