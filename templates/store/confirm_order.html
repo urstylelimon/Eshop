@@ -5,245 +5,438 @@
 
 {% block extra_css %}
 <style>
+    /*
+     * Professional & Responsive Checkout Page
+     */
     :root {
-        --primary: #6c5ce7;
-        --dark: #2d3436;
-        --light: #f5f6fa;
+        --primary: #5b3699;
+        --primary-light: #7a5eb2;
+        --secondary: #cccccc;
+        --text-primary: #1a202c;
+        --text-secondary: #4a5568;
+        --bg-light: #f7fafc;
+        --bg-dark: #edf2f7;
+        --border-color: #e2e8f0;
+        --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        --transition: all 0.3s ease;
     }
+
     body {
-        background-color: #d8d5d5 !important; /* Added background color */
+        background-color: var(--bg-dark);
+        font-family: 'Inter', sans-serif;
+    }
+
+    .checkout-wrapper {
+        display: flex;
+        justify-content: center;
+        padding: 1rem; /* Reduced padding */
     }
 
     .checkout-container {
-        background: white;
-        border-radius: 10px;
-        box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        background: var(--bg-light);
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+        width: 100%;
+        max-width: 900px; /* Reduced max-width for a more compact feel */
+        display: flex;
+        flex-direction: column;
         overflow: hidden;
-        margin: 7rem auto;
-        max-width: 1000px;
     }
 
     .checkout-header {
         background: var(--primary);
         color: white;
-        padding: 15px 20px;
+        padding: 15px 20px; /* Adjusted padding */
         text-align: center;
     }
 
     .checkout-header h2 {
-        font-size: 1.3rem;
+        font-size: 1.5rem; /* Adjusted font size */
+        margin: 0;
+        font-weight: 600;
+        letter-spacing: -0.5px;
     }
 
     .checkout-progress {
         display: flex;
         justify-content: center;
-        padding: 10px;
-        background: #f1f1f1;
+        padding: 10px; /* Adjusted padding */
+        background: #f1f5f9;
+        border-bottom: 1px solid var(--border-color);
     }
 
     .step {
-        padding: 5px 15px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
         position: relative;
-        color: #888;
-        font-size: 0.9rem;
+        color: var(--text-secondary);
+        font-size: 0.9rem; /* Adjusted font size */
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
     }
 
     .step.active {
         color: var(--primary);
-        font-weight: bold;
+        font-weight: 700;
     }
 
     .step:not(:last-child):after {
-        content: "›";
-        position: absolute;
-        right: -3px;
+        content: "—";
+        margin-left: 10px; /* Adjusted margin */
+        color: var(--text-secondary);
     }
 
     .checkout-body {
         display: grid;
         grid-template-columns: 1fr;
-        gap: 20px;
-        padding: 20px;
+        gap: 1.5rem; /* Reduced gap */
+        padding: 1.5rem; /* Reduced padding */
     }
 
-    @media (min-width: 768px) {
+    @media (min-width: 992px) {
         .checkout-body {
-            grid-template-columns: 1.5fr 1fr;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
         }
     }
 
+    .checkout-form {
+        display: flex;
+        flex-direction: column;
+    }
+
     .form-section {
-        margin-bottom: 20px;
+        background: white;
+        padding: 1.2rem; /* Reduced padding */
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        margin-bottom: 1rem; /* Reduced margin */
     }
 
     .form-section h3 {
-        font-size: 1.1rem;
-        margin-bottom: 15px;
-        color: var(--dark);
+        font-size: 1.1rem; /* Adjusted font size */
+        margin-bottom: 1rem;
+        color: var(--text-primary);
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 8px; /* Adjusted gap */
+        font-weight: 600;
     }
 
     .form-group {
-        margin-bottom: 15px;
+        margin-bottom: 1rem; /* Reduced margin */
     }
 
     .form-group label {
         display: block;
-        margin-bottom: 5px;
-        font-size: 0.9rem;
-        color: #555;
+        margin-bottom: 0.4rem; /* Adjusted margin */
+        font-size: 0.85rem; /* Adjusted font size */
+        color: var(--text-secondary);
+        font-weight: 500;
     }
 
     .form-group input,
     .form-group select,
     .form-group textarea {
         width: 100%;
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        font-size: 0.9rem;
+        padding: 10px; /* Reduced padding for smaller height */
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        font-size: 0.9rem; /* Adjusted font size */
+        color: var(--text-primary);
+        background: var(--bg-light);
+        transition: border-color var(--transition);
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+        outline: none;
+        border-color: var(--primary-light);
     }
 
     .form-group textarea {
-        min-height: 80px;
+        min-height: 80px; /* Reduced min-height */
+        resize: vertical;
     }
 
     .order-summary {
-        background: #fafafa;
+        background: white;
         border-radius: 8px;
-        padding: 15px;
+        padding: 1.2rem; /* Reduced padding */
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    @media (min-width: 992px) {
+        .order-summary {
+            position: sticky;
+            top: 1rem; /* Adjusted sticky position */
+            height: fit-content;
+        }
+    }
+
+    .order-summary h3 {
+        font-size: 1.1rem; /* Adjusted font size */
+        margin-bottom: 1.2rem; /* Adjusted margin */
+        color: var(--text-primary);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 600;
+    }
+
+    .summary-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
     }
 
     .order-item {
         display: flex;
         justify-content: space-between;
-        padding: 10px 0;
-        border-bottom: 1px solid #eee;
-        font-size: 0.9rem;
+        align-items: center;
+        padding: 10px 0; /* Reduced padding */
+        border-bottom: 1px solid var(--border-color);
+        font-size: 0.9rem; /* Adjusted font size */
+        color: var(--text-primary);
+    }
+
+    .order-item:last-child {
+        border-bottom: none;
+    }
+
+    .item-info {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .item-name {
+        font-weight: 500;
+    }
+
+    .item-qty {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
     }
 
     .order-totals {
-        margin-top: 15px;
-        padding-top: 15px;
-        border-top: 2px solid #eee;
+        margin-top: 1.2rem; /* Reduced margin */
+        padding-top: 1.2rem; /* Reduced padding */
+        border-top: 2px solid var(--border-color);
     }
 
     .total-row {
         display: flex;
         justify-content: space-between;
-        margin-bottom: 8px;
+        margin-bottom: 8px; /* Reduced margin */
+        font-size: 0.95rem; /* Adjusted font size */
+        color: var(--text-primary);
+    }
+
+    .total-row span:first-child {
+        color: var(--text-secondary);
     }
 
     .grand-total {
-        font-weight: bold;
-        font-size: 1.1rem;
+        font-weight: 700;
+        font-size: 1.2rem; /* Adjusted font size */
+        color: var(--primary);
     }
 
     .checkout-actions {
         display: flex;
-        justify-content: space-between;
-        margin-top: 20px;
-        gap: 10px;
+        justify-content: flex-end;
+        margin-top: 1.5rem; /* Reduced margin */
+        gap: 0.75rem; /* Reduced gap */
     }
 
     .btn {
-        padding: 10px 15px;
-        border-radius: 5px;
-        font-size: 0.9rem;
+        padding: 10px 20px; /* Reduced padding */
+        border-radius: 8px;
+        font-size: 0.9rem; /* Adjusted font size */
         cursor: pointer;
-        flex: 1;
+        font-weight: 600;
         text-align: center;
+        transition: var(--transition);
+        border: none;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
     }
 
     .btn-back {
-        background: #f1f1f1;
-        color: #555;
-        border: 1px solid #ddd;
+        background: var(--secondary);
+        color: var(--text-primary);
+    }
+
+    .btn-back:hover {
+        background: #c0c0c0;
     }
 
     .btn-confirm {
         background: var(--primary);
         color: white;
-        border: none;
+    }
+
+    .btn-confirm:hover {
+        background: var(--primary-light);
+    }
+
+    /* Mobile-specific adjustments */
+    @media (max-width: 576px) {
+        .checkout-header h2 {
+            font-size: 1.3rem;
+        }
+
+        .checkout-body {
+            padding: 1rem;
+            gap: 1rem;
+        }
+
+        .form-section, .order-summary {
+            padding: 1rem;
+        }
+
+        .form-section h3, .order-summary h3 {
+            font-size: 1rem;
+        }
+
+        .btn {
+            width: 100%;
+        }
+
+        .checkout-actions {
+            flex-direction: column-reverse;
+            gap: 0.75rem;
+            position: sticky; /* Make buttons sticky on mobile */
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 1rem;
+            background-color: white;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+            margin-top: 0;
+        }
     }
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="checkout-container">
-    <div class="checkout-header">
-        <h2><i class="fas fa-shopping-bag"></i> Confirm Your Order</h2>
-    </div>
+<div class="checkout-wrapper">
+    <div class="checkout-container">
+        <div class="checkout-header">
+            <h2><i class="fas fa-shopping-bag"></i> Confirm Your Order</h2>
+        </div>
 
-    <div class="checkout-progress">
-        <span class="step active">Cart</span>
-        <span class="step active">Details</span>
-        <span class="step">Payment</span>
-    </div>
+        <div class="checkout-progress">
+            <span class="step active">Cart</span>
+            <i class="fas fa-chevron-right" style="color: #ccc; margin: 0 5px;"></i>
+            <span class="step active">Details</span>
+            <i class="fas fa-chevron-right" style="color: #ccc; margin: 0 5px;"></i>
+            <span class="step">Payment</span>
+        </div>
 
-    <div class="checkout-body">
-        <form method="post">
-            {% csrf_token %}
-            <div class="form-section">
-                <h3><i class="fas fa-user"></i> Personal Info</h3>
-                <div class="form-group">
-                    <label>Full Name</label>
-                    <input type="text" name="full_name" required>
+        <div class="checkout-body">
+            <form method="post" class="checkout-form">
+                {% csrf_token %}
+                <div class="form-section">
+                    <h3><i class="fas fa-user-circle"></i> Personal Information</h3>
+                    <div class="form-group">
+                        <label for="full_name">Full Name</label>
+                        <input type="text" id="full_name" name="full_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact_number">Phone Number</label>
+                        <input type="tel" id="contact_number" name="contact_number" required>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>Phone Number</label>
-                    <input type="tel" name="contact_number" required>
-                </div>
-            </div>
 
-            <div class="form-section">
-                <h3><i class="fas fa-truck"></i> Delivery</h3>
-                <div class="form-group">
-                    <label>Location</label>
-                    <select name="location" required>
-                        <option value="">Select area</option>
-                        <option value="inside" selected >Inside Dhaka (+৳60)</option>
-                        <option value="outside">Outside Dhaka (+৳60)</option>
-                    </select>
+                <div class="form-section">
+                    <h3><i class="fas fa-truck"></i> Delivery Address</h3>
+                    <div class="form-group">
+                        <label for="location">Location</label>
+                        <select id="location" name="location" required>
+                            <option value="inside" selected>Inside Dhaka (+৳60)</option>
+                            <option value="outside">Outside Dhaka (+৳120)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Full Address</label>
+                        <textarea id="address" name="address" required></textarea>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>Full Address</label>
-                    <textarea name="address" required></textarea>
-                </div>
-            </div>
 
-            <div class="checkout-actions">
-                <a href="#" class="btn btn-back"><i class="fas fa-arrow-left"></i> Back</a>
-                <button type="submit" class="btn btn-confirm">Continue <i class="fas fa-arrow-right"></i></button>
-            </div>
-        </form>
-
-        <div class="order-summary">
-            <h3><i class="fas fa-receipt"></i> Order Summary</h3>
-            {% for item in cart_items %}
-            <div class="order-item">
-                <span>{{ item.product.name }}</span>
-                <span>{{ item.quantity }} × ৳{{ item.product.price }}</span>
-            </div>
-            {% endfor %}
-
-            <div class="order-totals">
-                <div class="total-row">
-                    <span>Subtotal:</span>
-                    <span>৳{{ total_price }}</span>
+                <div class="checkout-actions">
+                    <a href="#" class="btn btn-back"><i class="fas fa-arrow-left"></i> Back to Cart</a>
+                    <button type="submit" class="btn btn-confirm">Continue to Payment <i class="fas fa-arrow-right"></i></button>
                 </div>
-                <div class="total-row">
-                    <span>Delivery:</span>
-                    <span id="delivery-charge">৳60</span>
-                </div>
-                <div class="total-row grand-total">
-                    <span>Total:</span>
-                    <span id="grand-total">৳{{ all_price }}</span>
+            </form>
+
+            <div class="order-summary">
+                <h3><i class="fas fa-receipt"></i> Order Summary</h3>
+                <ul class="summary-list">
+                    {% for item in cart_items %}
+                    <li class="order-item">
+                        <div class="item-info">
+                            <span class="item-name">{{ item.product.name }}</span>
+                            <span class="item-qty">Qty: {{ item.quantity }}</span>
+                        </div>
+                        <span>৳{{ item.product.price|floatformat:2 }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+
+                <div class="order-totals">
+                    <div class="total-row">
+                        <span>Subtotal:</span>
+                        <span>৳{{ total_price|floatformat:2 }}</span>
+                    </div>
+                    <div class="total-row">
+                        <span>Delivery Charge:</span>
+                        <span id="delivery-charge">৳60</span>
+                    </div>
+                    <div class="total-row grand-total">
+                        <span>Grand Total:</span>
+                        <span id="grand-total">৳{{ all_price|floatformat:2 }}</span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const locationSelect = document.getElementById('location');
+        const deliveryChargeSpan = document.getElementById('delivery-charge');
+        const grandTotalSpan = document.getElementById('grand-total');
+
+        const subtotal = parseFloat('{{ total_price }}');
+
+        const deliveryCharges = {
+            'inside': 60,
+            'outside': 120
+        };
+
+        function updateTotals() {
+            const selectedLocation = locationSelect.value;
+            const deliveryCharge = deliveryCharges[selectedLocation] || 60;
+            const grandTotal = subtotal + deliveryCharge;
+
+            deliveryChargeSpan.textContent = `৳${deliveryCharge}`;
+            grandTotalSpan.textContent = `৳${grandTotal.toFixed(2)}`;
+        }
+
+        locationSelect.addEventListener('change', updateTotals);
+
+        // Initial update when the page loads
+        updateTotals();
+    });
+</script>
 {% endblock %}
