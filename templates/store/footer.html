@@ -1,0 +1,151 @@
+{# In your base.html, place this footer right before the closing </body> tag #}
+
+<footer class="main-footer">
+    <div class="footer-container">
+        <div class="footer-section footer-about">
+            <h4 class="footer-heading">ShopEase</h4>
+            <p>Your one-stop shop for all your needs. We offer a wide range of products with fast delivery and excellent customer service.</p>
+        </div>
+        <div class="footer-section footer-links">
+            <h4 class="footer-heading">Quick Links</h4>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'shop' %}">Shop</a></li>
+                <li><a href="{% url 'about' %}">About Us</a></li>
+                <li><a href="{% url 'contact' %}">Contact Us</a></li>
+            </ul>
+        </div>
+        <div class="footer-section footer-social">
+            <h4 class="footer-heading">Follow Us</h4>
+            <div class="social-icons">
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; {% now "Y" %} ShopEase. All rights reserved.</p>
+    </div>
+</footer>
+
+<style>
+    /* Add this CSS to your base.html's {% block extra_css %} or your main CSS file */
+    .main-footer {
+        background-color: var(--text-primary); /* Dark background for a professional look */
+        color: var(--bg-light); /* Light text on dark background */
+        padding: 2.5rem 1rem;
+        font-family: 'Inter', sans-serif;
+        border-top: 5px solid var(--primary); /* A line of your brand color */
+    }
+
+    .main-footer .footer-container {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap; /* Allow wrapping on smaller screens */
+        justify-content: space-between;
+        gap: 2rem; /* Spacing between sections */
+    }
+
+    .main-footer .footer-section {
+        flex: 1; /* Distribute space evenly */
+        min-width: 250px; /* Minimum width before wrapping */
+    }
+
+    .main-footer .footer-heading {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 1.2rem;
+        color: white; /* Ensure headings stand out */
+    }
+
+    .main-footer p {
+        font-size: 0.9rem;
+        line-height: 1.6;
+        color: var(--secondary);
+    }
+
+    .main-footer .footer-links ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .main-footer .footer-links li {
+        margin-bottom: 0.7rem;
+    }
+
+    .main-footer .footer-links a {
+        color: var(--secondary);
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: color 0.3s ease;
+    }
+
+    .main-footer .footer-links a:hover {
+        color: var(--primary-light);
+    }
+
+    .main-footer .social-icons {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .main-footer .social-icons a {
+        color: var(--bg-light);
+        font-size: 1.3rem;
+        transition: color 0.3s ease;
+    }
+
+    .main-footer .social-icons a:hover {
+        color: var(--primary-light);
+    }
+
+    .main-footer .footer-bottom {
+        text-align: center;
+        margin-top: 2rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .main-footer .footer-bottom p {
+        font-size: 0.8rem;
+        color: var(--secondary);
+    }
+
+    /* Responsive adjustments for mobile */
+    @media (max-width: 768px) {
+        .main-footer {
+            padding: 2rem 0.8rem;
+        }
+        .main-footer .footer-container {
+            flex-direction: column; /* Stack sections vertically */
+            align-items: center; /* Center items */
+            text-align: center;
+            gap: 1.5rem;
+        }
+        .main-footer .footer-section {
+            min-width: unset; /* Remove min-width to allow full width stacking */
+            width: 100%;
+            max-width: 300px; /* Constrain width for better readability on narrow screens */
+        }
+        .main-footer .footer-links ul {
+            display: flex; /* Make links inline for a compact look */
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.8rem; /* Spacing between inline links */
+        }
+        .main-footer .footer-links li {
+            margin-bottom: 0; /* Remove vertical margin */
+        }
+        .main-footer .social-icons {
+            justify-content: center; /* Center social icons */
+        }
+        .main-footer .footer-bottom {
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+        }
+    }
+</style>
