@@ -57,9 +57,9 @@ def create_confirm_order(request):
     delevery = 60
     total_price = 0
     for key, value in cart.items():
-        single_product = Product.objects.get(id=key)
-        product_list[key] = {'name': single_product.name, 'price': single_product.price, 'quantity': value}
-        total_price += single_product.price * value
+        s_product = Product.objects.get(id=key)
+        product_list[key] = {'name': s_product.name, 'price': s_product.price, 'quantity': value}
+        total_price += s_product.price * value
     all_price = total_price + delevery
 
     return render(request, 'store/confirm_order.html', {
@@ -75,11 +75,11 @@ def create_single_order(request, pk):
     product_list = {}
 
 
-    single_product = Product.objects.get(id=pk)
+    one_product = Product.objects.get(id=pk)
 
-    total_price = single_product.price
+    total_price = one_product.price
 
-    product_list[1] = {'name': single_product.name, 'price': single_product.price, 'quantity': 1}
+    product_list[1] = {'name': one_product.name, 'price': one_product.price, 'quantity': 1}
 
 
     return render(request,'store/confirm_order.html',{

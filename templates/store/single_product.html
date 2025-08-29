@@ -740,7 +740,8 @@
                 <a href="{% url 'create_single_order' product.id %}" class="btn btn-primary" id="buy-now-btn">
                     <i class="fas fa-shopping-bag"></i> Buy Now
                 </a>
-                <button class="btn btn-secondary" id="add-to-cart">
+                <button class="btn btn-secondary" id="add-to-cart"
+                    onclick="window.location.href='{% url 'add_to_cart' product.id %}'">
                     <i class="fas fa-shopping-cart"></i> Add to Cart
                 </button>
             </div>
