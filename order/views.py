@@ -72,6 +72,7 @@ def create_single_order(request, pk):
 
     product_list[1] = {'name': one_product.name, 'price': one_product.price, 'quantity': 1}
 
+    total_price += 60
 
     if request.method == 'POST':
         full_name = request.POST.get('full_name')
