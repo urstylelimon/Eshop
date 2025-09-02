@@ -22,27 +22,17 @@ def create_confirm_order(request):
         location = request.POST.get('location')
         address = request.POST.get('address')
 
-        # ✅ Do something with the data (e.g., save to DB, send email, print)
-        print("Order Info:")
-        print("Name:", full_name)
-        print("Phone:", contact_number)
-        print("Location:", location)
-        print("Address:", address)
-        print("Cart:", cart)
-
-
         total_price = 60
         for key,value in cart.items():
             single_product = Product.objects.get(id=key)
             total_price += single_product.price * value
 
-        print(total_price)
         # Save order
         Order.objects.create(
             full_name =full_name,
             contact_number=contact_number,
             location=location,
-            cart=cart,  # ✅ Save dict directly
+            cart=cart,
             address=address,
             total_price= total_price
         )
@@ -78,8 +68,33 @@ def create_single_order(request, pk):
     one_product = Product.objects.get(id=pk)
 
     total_price = one_product.price
+    quantity = 1
 
     product_list[1] = {'name': one_product.name, 'price': one_product.price, 'quantity': 1}
+
+
+    if request.method == 'POST':
+        full_name = request.POST.get('full_name')
+        contact_number = request.POST.get('contact_number')
+        location = request.POST.get('location')
+        address = request.POST.get('address')
+        cart = {one_product.id: quantity}
+
+        # Save order
+        Order.objects.create(
+            full_name =full_name,
+            contact_number=contact_number,
+            location=location,
+            cart=cart,
+            address=address,
+            total_price= total_price
+        )
+
+        messages.success(request, "Order placed successfully!")
+
+        return redirect('home')
+
+
 
 
     return render(request,'store/confirm_order.html',{
