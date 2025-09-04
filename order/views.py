@@ -62,15 +62,13 @@ def create_confirm_order(request):
 
 def create_single_order(request, pk):
 
-    product_list = {}
-
-
+    product_list = []
     one_product = Product.objects.get(id=pk)
 
     total_price = one_product.price
     quantity = 1
 
-    product_list[1] = {'name': one_product.name, 'price': one_product.price, 'quantity': 1}
+    product_list.append(one_product)
 
     total_price += 60
 
@@ -94,9 +92,6 @@ def create_single_order(request, pk):
         messages.success(request, "Order placed successfully!")
 
         return redirect('home')
-
-
-
 
     return render(request,'store/confirm_order.html',{
         'product_list': product_list,
