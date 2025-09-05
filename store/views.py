@@ -20,8 +20,6 @@ def single_product(request,pk):
 def add_to_cart(request,pk):
     product = Product.objects.get(id=pk)
     cart = request.session.get('cart',{})
-    print("My name is Limon")
-    print(cart)
 
     if str(product.id) in cart:
         cart[str(product.id)] += 1
@@ -31,7 +29,7 @@ def add_to_cart(request,pk):
         request.session['cart'] = cart
     print(cart)
 
-    return redirect('home')
+    return redirect(f'/single_product/{product.id}')
 
 # def cart_view(request):
 #     cart = request.session.get('cart',{})
