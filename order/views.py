@@ -43,20 +43,25 @@ def create_confirm_order(request):
 
         return redirect('home')
 
-    product_list = {}
-    delevery = 60
-    total_price = 0
-    for key, value in cart.items():
-        s_product = Product.objects.get(id=key)
-        product_list[key] = {'name': s_product.name, 'price': s_product.price, 'quantity': value}
-        total_price += s_product.price * value
-    all_price = total_price + delevery
+    cart_item_count = 0
+    product_list = []
+    total_amount = 0
 
-    return render(request, 'store/confirm_order.html', {
+    for item, value in cart.items():
+        cart_item_count += value
+        product = Product.objects.get(id=item)
+
+        item_total = product.price * value
+        product_list.append({
+            'product': product,
+            'quantity': value,
+            'item_total': item_total,
+        })
+        total_amount += item_total
+
+    return render(request,'store/confirm_order.html',{
         'product_list': product_list,
-        'total_price': total_price,
-        'all_price': all_price,
-
+        'total_price': total_amount,
     })
 
 
