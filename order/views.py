@@ -63,21 +63,23 @@ def create_confirm_order(request):
 def create_single_order(request, pk):
 
     product_list = []
-    one_product = Product.objects.get(id=pk)
+    product = Product.objects.get(id=pk)
 
-    total_price = one_product.price
+    total_price = product.price
     quantity = 1
 
-    product_list.append(one_product)
-
-    total_price += 60
+    product_list.append({
+        "product": product,
+        "quantity": quantity,
+    })
+    print(product_list)
 
     if request.method == 'POST':
         full_name = request.POST.get('full_name')
         contact_number = request.POST.get('contact_number')
         location = request.POST.get('location')
         address = request.POST.get('address')
-        cart = {one_product.id: quantity}
+        cart = {product.id: quantity}
 
         # Save order
         Order.objects.create(
