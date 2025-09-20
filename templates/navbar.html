@@ -320,10 +320,10 @@
                 Shop <i class="fas fa-chevron-down ml-1 text-xs"></i>
               </button>
               <div class="dropdown-menu absolute z-10 left-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 py-1">
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">All Products</a>
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Featured</a>
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Bestsellers</a>
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Discounts</a>
+                <a href="#products" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">All Products</a>
+                <a href="#products" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Featured</a>
+                <a href="#products" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Bestsellers</a>
+                <a href="#products" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Discounts</a>
               </div>
             </div>
 
@@ -332,17 +332,17 @@
                 Categories <i class="fas fa-chevron-down ml-1 text-xs"></i>
               </button>
               <div class="dropdown-menu absolute z-10 left-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 py-1">
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Electronics</a>
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Fashion</a>
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Home & Garden</a>
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Beauty</a>
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sports</a>
+                <a href="#products" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Electronics</a>
+                <a href="#products" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Fashion</a>
+                <a href="#products" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Home & Garden</a>
+                <a href="#products" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Beauty</a>
+                <a href="#products" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sports</a>
               </div>
             </div>
 
-            <a href="#" class="nav-link text-gray-700 hover:text-indigo-600 px-3 py-2 text-sm font-medium">New Arrivals</a>
-            <a href="#" class="nav-link text-gray-700 hover:text-indigo-600 px-3 py-2 text-sm font-medium">Deals</a>
-            <a href="#" class="nav-link text-gray-700 hover:text-indigo-600 px-3 py-2 text-sm font-medium">About</a>
+            <a href="#products" class="nav-link text-gray-700 hover:text-indigo-600 px-3 py-2 text-sm font-medium">New Arrivals</a>
+            <a href="#products" class="nav-link text-gray-700 hover:text-indigo-600 px-3 py-2 text-sm font-medium">Deals</a>
+            <a href="#products" class="nav-link text-gray-700 hover:text-indigo-600 px-3 py-2 text-sm font-medium">About</a>
           </div>
         </div>
 
@@ -365,19 +365,34 @@
 
           <!-- Icons -->
           <div class="flex items-center space-x-5">
-            <a href="#" class="nav-icon" aria-label="Account" title="Account">
+            <a href="#products" class="nav-icon" aria-label="Account" title="Account">
               <i class="far fa-user text-lg"></i>
             </a>
 
-            <a href="#" class="nav-icon relative" aria-label="Wishlist" title="Wishlist">
+            <a href="#products" class="nav-icon relative" aria-label="Wishlist" title="Wishlist">
               <i class="far fa-heart text-lg"></i>
-              <span class="cart-count">3</span>
+              <span class="cart-count">0</span>
             </a>
 
-            <a href="{% url 'create_confirm_order' %}" class="nav-icon relative" aria-label="Shopping Cart" title="Cart">
-              <i class="fas fa-shopping-cart text-lg"></i>
-              <span class="cart-count">{{ cart_item_count }}</span>
+              <a href="{% if cart_item_count > 0 %}{% url 'create_confirm_order' %}{% else %}#{% endif %}"
+               class="nav-icon relative"
+               aria-label="Shopping Cart"
+               title="Cart"
+               onclick="{% if cart_item_count == 0 %}desktopshowEmptyCartMessage(); return false;{% endif %}">
+                <i class="fas fa-shopping-cart text-lg"></i>
+                <span class="cart-count">{{ cart_item_count|default:0 }}</span>
             </a>
+
+            <!-- Hidden toast message -->
+            <div id="desktop-cart-message"
+                 style="display:none; position:fixed; top:20px; right:20px; background:#f56565;
+                        color:white; padding:12px 18px; border-radius:8px; font-size:14px;
+                        font-weight:500; box-shadow:0 4px 10px rgba(0,0,0,0.2);
+                        z-index:2000; opacity:0; transition:opacity 0.5s ease;">
+              <i class="fas fa-info-circle mr-2"></i> Your cart is empty, please add items first.
+            </div>
+
+
           </div>
 
           <!-- Mobile menu button -->
@@ -400,14 +415,28 @@
         <i class="fas fa-search"></i>
         <span>Search</span>
       </a>
-      <a href="{% url 'create_confirm_order' %}" class="mobile-bottom-nav-item">
+
+
+    <a href="{% if cart_item_count > 0 %}{% url 'create_confirm_order' %}{% else %}#{% endif %}"
+       class="mobile-bottom-nav-item"
+       onclick="{% if cart_item_count == 0 %}showEmptyCartMessage(); return false;{% endif %}">
         <i class="fas fa-shopping-cart"></i>
         <span>Cart</span>
         {% if cart_item_count > 0 %}
         <span class="mobile-bottom-badge">{{ cart_item_count }}</span>
         {% endif %}
-      </a>
-      <a href="#" class="mobile-bottom-nav-item">
+    </a>
+
+    <!-- Toast-style popup message -->
+    <div id="cart-message"
+         style="display:none; position:fixed; bottom:80px; left:50%; transform:translateX(-50%);
+                background:#f56565; color:white; padding:10px 15px; border-radius:20px;
+                font-size:14px; box-shadow:0 2px 6px rgba(0,0,0,0.2); z-index:1000;">
+      Your cart is empty, please add items first.
+    </div>
+
+
+      <a href="#products" class="mobile-bottom-nav-item">
         <i class="far fa-heart"></i>
         <span>Wishlist</span>
         <span class="mobile-bottom-badge">3</span>
@@ -464,7 +493,7 @@
             <span>My Account</span>
             <i class="fas fa-chevron-right text-sm"></i>
           </a>
-          <a href="#" class="mobile-menu-link">
+          <a href="#products" class="mobile-menu-link">
             <span>Wishlist</span>
             <i class="fas fa-chevron-right text-sm"></i>
           </a>
@@ -538,6 +567,32 @@
         closeMobileMenu();
       }
     });
+
+    function desktopshowEmptyCartMessage() {
+        let msg = document.getElementById("desktop-cart-message");
+        msg.style.display = "block";
+
+        // Trigger fade-in
+        setTimeout(() => {
+            msg.style.opacity = "1";
+        }, 50);
+
+        // Hide after 3s with fade-out
+        setTimeout(() => {
+            msg.style.opacity = "0";
+            setTimeout(() => { msg.style.display = "none"; }, 500);
+        }, 3000);
+    }
+
+    function showEmptyCartMessage() {
+    let msg = document.getElementById("cart-message");
+    msg.style.display = "block";
+    setTimeout(() => {
+        msg.style.display = "none";
+    }, 3000); // hide after 3 seconds
+}
+
+
   </script>
 </body>
 </html>

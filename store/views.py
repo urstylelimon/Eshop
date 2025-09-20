@@ -31,32 +31,4 @@ def add_to_cart(request,pk):
 
     return redirect(f'/single_product/{product.id}')
 
-# def cart_view(request):
-#     cart = request.session.get('cart',{})
-#     print("I am form cart view")
-#     print(cart)
-#
-#     cart_items = []
-#     total_amount = 0
-#
-#     for item, value in cart.items():
-#         print(item)
-#         print(value)
-#         product = Product.objects.get(id=item)
-#
-#         item_total = product.price * value
-#         cart_items.append({
-#             'product': product,
-#             'quantity': value,
-#             'item_total': item_total,
-#         })
-#         total_amount += item_total
-#
-#     context = {
-#         'cart_items': cart_items,
-#         'total_amount': total_amount,
-#     }
-#
-#     return render(request, 'store/cart_view.html', context)
-
 
