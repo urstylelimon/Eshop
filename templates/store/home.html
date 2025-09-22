@@ -334,24 +334,6 @@
             }
         }
 
-        // Add to cart functionality with better mobile UX
-        document.querySelectorAll('.add-to-cart').forEach(button => {
-            button.addEventListener('click', function(e) {
-                // In a real implementation, this would make an AJAX call to your server
-                console.log('Product added to cart!');
-
-                // Show a temporary notification
-                const notification = document.createElement('div');
-                notification.className = 'fixed top-16 sm:top-20 right-4 bg-gray-800 text-white px-4 py-2 sm:px-6 sm:py-3 rounded-lg shadow-lg z-50 flex items-center text-sm sm:text-base animate-fade-in';
-                notification.innerHTML = '<i class="fas fa-check-circle mr-2"></i> Product added to cart!';
-                document.body.appendChild(notification);
-
-                setTimeout(() => {
-                    notification.classList.add('animate-fade-out');
-                    setTimeout(() => notification.remove(), 300);
-                }, 3000);
-            });
-        });
 
         // Wishlist functionality
         document.querySelectorAll('.wishlist-btn').forEach(button => {
