@@ -740,8 +740,7 @@
                 <a href="{% url 'create_single_order' product.id %}" class="btn btn-primary" id="buy-now-btn">
                     <i class="fas fa-shopping-bag"></i> Buy Now
                 </a>
-                <button class="btn btn-secondary" id="add-to-cart"
-                    onclick="window.location.href='{% url 'add_to_cart' product.id %}'">
+                <button class="btn btn-secondary" id="add-to-cart">
                     <i class="fas fa-shopping-cart"></i> Add to Cart
                 </button>
             </div>
@@ -880,11 +879,23 @@
         });
 
         // Add to Cart Button Functionality
-        addToCartBtn.addEventListener('click', function() {
-            const quantity = quantityInput.value;
-            // Here you would make an AJAX call to add the item to the cart
-            // For now, we'll just show a success toast
-            showToast(`${quantity} item(s) added to cart!`);
+        document.getElementById('add-to-cart').addEventListener('click', function() {
+            const quantity = 2;
+            console.log("Button clicked!");
+
+            fetch(`/add_to_cart/${productId}/?quantity=${quantity}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showToast(`${quantity} item(s) added to cart!`);
+                    } else {
+                        alert("Error: " + data.error);
+                    }
+                })
+                .catch(error => {
+                    console.error("Fetch error:", error);
+                });
+
         });
 
         // Helper function for toast notifications
@@ -898,5 +909,9 @@
             }, 4000); // Hide toast after 4 seconds
         }
     });
+
+
+
+
 </script>
 {% endblock %}

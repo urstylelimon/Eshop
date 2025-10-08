@@ -18,14 +18,16 @@ def single_product(request,pk):
     return render(request, 'store/single_product.html', {'product': product})
 
 def add_to_cart(request,pk):
+    quantity = int(request.GET.get('quantity'))
+
     product = Product.objects.get(id=pk)
     cart = request.session.get('cart',{})
 
     if str(product.id) in cart:
-        cart[str(product.id)] += 1
+        cart[str(product.id)] += quantity
         request.session['cart'] = cart
     else:
-        cart[str(product.id)] = 1
+        cart[str(product.id)] = quantity
         request.session['cart'] = cart
     print(cart)
 
