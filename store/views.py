@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Category,Product
 from django.contrib import messages
@@ -19,6 +20,7 @@ def single_product(request,pk):
 
 def add_to_cart(request,pk):
     quantity = int(request.GET.get('quantity'))
+    print(quantity)
 
     product = Product.objects.get(id=pk)
     cart = request.session.get('cart',{})
@@ -31,6 +33,8 @@ def add_to_cart(request,pk):
         request.session['cart'] = cart
     print(cart)
 
-    return redirect(f'/single_product/{product.id}')
+    return JsonResponse({
+        'success': True
+    })
 
 
