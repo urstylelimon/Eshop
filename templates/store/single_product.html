@@ -802,115 +802,49 @@
 
 {% block extra_js %}
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const mainImage = document.getElementById('main-product-image');
-        const thumbnails = document.querySelectorAll('.thumbnail');
-        const quantityInput = document.getElementById('quantity');
-        const increaseBtn = document.getElementById('increase-qty');
-        const decreaseBtn = document.getElementById('decrease-qty');
-        const tabBtns = document.querySelectorAll('.tab-btn');
-        const wishlistBtn = document.getElementById('wishlist-toggle');
-        const addToCartBtn = document.getElementById('add-to-cart');
-        const toastContainer = document.getElementById('toast-container');
-        const isProductInStock = '{{ product.in_stock|lower }}' === 'true';
+        document.addEventListener("DOMContentLoaded", () => {
+            const toastContainer = document.getElementById('toast-container');
+            const button = document.getElementById('add-to-cart');
 
-        // Image Gallery Functionality
-        thumbnails.forEach(thumbnail => {
-            thumbnail.addEventListener('click', function() {
-                const imageUrl = this.dataset.image;
+            // ✅ Helper function for toast notifications
+            function showToast(message) {
+                const toast = document.createElement('div');
+                toast.className = 'toast';
+                toast.textContent = message;
+                toastContainer.appendChild(toast);
+                setTimeout(() => {
+                    toast.remove();
+                }, 4000); // Hide toast after 4 seconds
+            }
 
-                // Remove 'active' from all thumbnails
-                thumbnails.forEach(t => t.classList.remove('active'));
-                this.classList.add('active');
 
-                // Add a 'loading' class to the main image for a fade effect
-                mainImage.classList.add('loading');
-                mainImage.src = imageUrl;
-                mainImage.onload = () => {
-                    mainImage.classList.remove('loading');
-                };
+
+            // Example button click
+             button.addEventListener("click", () => {
+                const productId = {{ product.id }};  // Add this line
+                const quantity = 2;
+                fetch(`/add_to_cart/${productId}/?quantity=${quantity}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            showToast("Data not fetched");
+
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.success) {
+                            showToast("Item added to cart successfully!");
+                        } else {
+                            showToast("Failed to add item to cart");
+                        }
+                    })
+
             });
-        });
 
-        // Quantity Selector Functionality
-        increaseBtn.addEventListener('click', function() {
-            let currentQty = parseInt(quantityInput.value);
-            let maxQty = parseInt(quantityInput.max);
-            if (currentQty < maxQty) {
-                quantityInput.value = currentQty + 1;
-            }
-        });
 
-        decreaseBtn.addEventListener('click', function() {
-            let currentQty = parseInt(quantityInput.value);
-            if (currentQty > 1) {
-                quantityInput.value = currentQty - 1;
-            }
-        });
 
-        // Tabs Functionality
-        tabBtns.forEach(button => {
-            button.addEventListener('click', function() {
-                // Deactivate all tabs and content
-                tabBtns.forEach(btn => btn.classList.remove('active'));
-                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-
-                // Activate the selected tab and content
-                this.classList.add('active');
-                const targetTabId = this.getAttribute('data-tab');
-                document.getElementById(targetTabId + '-tab').classList.add('active');
-            });
-        });
-
-        // Wishlist Toggle Functionality
-        wishlistBtn.addEventListener('click', function() {
-            const icon = this.querySelector('i');
-            const isAdded = icon.classList.contains('fas');
-
-            if (isAdded) {
-                icon.classList.remove('fas');
-                icon.classList.add('far');
-                showToast('Product removed from wishlist!');
-            } else {
-                icon.classList.remove('far');
-                icon.classList.add('fas');
-                showToast('Product added to wishlist!');
-            }
-        });
-
-        // Add to Cart Button Functionality
-        document.getElementById('add-to-cart').addEventListener('click', function() {
-            const quantity = 2;
-            console.log("Button clicked!");
-
-            fetch(`/add_to_cart/${productId}/?quantity=${quantity}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        showToast(`${quantity} item(s) added to cart!`);
-                    } else {
-                        alert("Error: " + data.error);
-                    }
-                })
-                .catch(error => {
-                    console.error("Fetch error:", error);
-                });
 
         });
-
-        // Helper function for toast notifications
-        function showToast(message) {
-            const toast = document.createElement('div');
-            toast.className = 'toast';
-            toast.textContent = message;
-            toastContainer.appendChild(toast);
-            setTimeout(() => {
-                toast.remove();
-            }, 4000); // Hide toast after 4 seconds
-        }
-    });
-
-
 
 
 </script>
