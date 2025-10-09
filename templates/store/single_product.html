@@ -732,7 +732,7 @@
 
             <div class="quantity-selector">
                 <button id="decrease-qty" aria-label="Decrease quantity"><i class="fas fa-minus"></i></button>
-                <input type="text" id="quantity" value="1" min="1" max="{{ product.stock|default:'10' }}" aria-label="Quantity" readonly>
+                <input type="text" id="quantity" value="1" aria-label="Quantity" readonly>
                 <button id="increase-qty" aria-label="Increase quantity"><i class="fas fa-plus"></i></button>
             </div>
 
@@ -803,8 +803,35 @@
 {% block extra_js %}
 <script>
         document.addEventListener("DOMContentLoaded", () => {
+
             const toastContainer = document.getElementById('toast-container');
-            const button = document.getElementById('add-to-cart');
+
+
+
+            //Quantity Selector
+            const decreaseBtn = document.getElementById('decrease-qty');
+            const increaseBtn = document.getElementById('increase-qty');
+            const quantityInput = document.getElementById('quantity');
+
+            let quantity = parseInt(quantityInput.value);
+
+            // Decrease quantity
+            decreaseBtn.addEventListener('click', function() {
+
+                if (quantity > 1) {
+                    quantity--;
+                    quantityInput.value = quantity;
+                }
+
+            });
+
+            // Increase quantity
+            increaseBtn.addEventListener('click', function() {
+                quantity++;
+                quantityInput.value = quantity;
+            });
+
+
 
             // ✅ Helper function for toast notifications
             function showToast(message) {
@@ -820,9 +847,10 @@
 
 
             // Example button click
+             const button = document.getElementById('add-to-cart');
              button.addEventListener("click", () => {
                 const productId = {{ product.id }};  // Add this line
-                const quantity = 2;
+
                 fetch(`/add_to_cart/${productId}/?quantity=${quantity}`)
                     .then(response => {
                         if (!response.ok) {
@@ -838,7 +866,6 @@
                             showToast("Failed to add item to cart");
                         }
                     })
-
             });
 
 

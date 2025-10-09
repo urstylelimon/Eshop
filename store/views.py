@@ -22,6 +22,7 @@ def add_to_cart(request,pk):
     quantity = int(request.GET.get('quantity'))
     print(quantity)
 
+
     product = Product.objects.get(id=pk)
     cart = request.session.get('cart',{})
 
@@ -36,5 +37,4 @@ def add_to_cart(request,pk):
     return JsonResponse({
         'success': True
     })
-
 
