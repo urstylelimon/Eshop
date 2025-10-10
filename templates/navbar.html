@@ -374,11 +374,11 @@
               <span class="cart-count">0</span>
             </a>
 
-              <a href="{% if cart_item_count > 0 %}{% url 'create_confirm_order' %}{% else %}#{% endif %}"
+            <a href="{% url 'create_confirm_order' %}"
                class="nav-icon relative"
                aria-label="Shopping Cart"
                title="Cart"
-               onclick="{% if cart_item_count == 0 %}desktopshowEmptyCartMessage(); return false;{% endif %}">
+               onclick="return checkCartAndNavigate(event)">
                 <i class="fas fa-shopping-cart text-lg"></i>
                 <span class="cart-count">{{ cart_item_count|default:0 }}</span>
             </a>
@@ -391,7 +391,6 @@
                         z-index:2000; opacity:0; transition:opacity 0.5s ease;">
               <i class="fas fa-info-circle mr-2"></i> Your cart is empty, please add items first.
             </div>
-
 
           </div>
 
@@ -416,25 +415,23 @@
         <span>Search</span>
       </a>
 
+      <a href="{% url 'create_confirm_order' %}"
+         class="mobile-bottom-nav-item"
+         onclick="return checkCartAndNavigate(event)">
+          <i class="fas fa-shopping-cart"></i>
+          <span>Cart</span>
+          {% if cart_item_count > 0 %}
+          <span class="mobile-bottom-badge">{{ cart_item_count }}</span>
+          {% endif %}
+      </a>
 
-    <a href="{% if cart_item_count > 0 %}{% url 'create_confirm_order' %}{% else %}#{% endif %}"
-       class="mobile-bottom-nav-item"
-       onclick="{% if cart_item_count == 0 %}showEmptyCartMessage(); return false;{% endif %}">
-        <i class="fas fa-shopping-cart"></i>
-        <span>Cart</span>
-        {% if cart_item_count > 0 %}
-        <span class="mobile-bottom-badge">{{ cart_item_count }}</span>
-        {% endif %}
-    </a>
-
-    <!-- Toast-style popup message -->
-    <div id="cart-message"
-         style="display:none; position:fixed; bottom:80px; left:50%; transform:translateX(-50%);
-                background:#f56565; color:white; padding:10px 15px; border-radius:20px;
-                font-size:14px; box-shadow:0 2px 6px rgba(0,0,0,0.2); z-index:1000;">
-      Your cart is empty, please add items first.
-    </div>
-
+      <!-- Toast-style popup message -->
+      <div id="cart-message"
+           style="display:none; position:fixed; bottom:80px; left:50%; transform:translateX(-50%);
+                  background:#f56565; color:white; padding:10px 15px; border-radius:20px;
+                  font-size:14px; box-shadow:0 2px 6px rgba(0,0,0,0.2); z-index:1000;">
+        Your cart is empty, please add items first.
+      </div>
 
       <a href="#products" class="mobile-bottom-nav-item">
         <i class="far fa-heart"></i>
@@ -497,7 +494,7 @@
             <span>Wishlist</span>
             <i class="fas fa-chevron-right text-sm"></i>
           </a>
-          <a href="{% url 'create_confirm_order' %}" class="mobile-menu-link">
+          <a href="{% url 'create_confirm_order' %}" class="mobile-menu-link" onclick="return checkCartAndNavigate(event)">
             <span>Shopping Cart</span>
             <i class="fas fa-chevron-right text-sm"></i>
           </a>
@@ -585,13 +582,64 @@
     }
 
     function showEmptyCartMessage() {
-    let msg = document.getElementById("cart-message");
-    msg.style.display = "block";
-    setTimeout(() => {
-        msg.style.display = "none";
-    }, 3000); // hide after 3 seconds
-}
+        let msg = document.getElementById("cart-message");
+        msg.style.display = "block";
+        setTimeout(() => {
+            msg.style.display = "none";
+        }, 3000); // hide after 3 seconds
+    }
 
+    // Check cart and navigate function
+    function checkCartAndNavigate(event) {
+        // Get the current cart count from the DOM (updated by our cartUpdate event)
+        const cartCountElement = document.querySelector('a[aria-label="Shopping Cart"] .cart-count');
+        const currentCartCount = parseInt(cartCountElement.textContent) || 0;
+
+        if (currentCartCount === 0) {
+            // Prevent navigation and show message
+            event.preventDefault();
+            event.stopPropagation();
+
+            // Show appropriate message based on device
+            if (window.innerWidth >= 768) {
+                desktopshowEmptyCartMessage();
+            } else {
+                showEmptyCartMessage();
+            }
+            return false;
+        }
+        // If cart has items, allow normal navigation
+        return true;
+    }
+
+    // Listen for cart updates from any page
+    window.addEventListener('cartUpdate', function(event) {
+        const newCount = event.detail.count;
+
+        // Update ONLY cart counts (not wishlist)
+        const cartIcons = document.querySelectorAll('a[aria-label="Shopping Cart"] .cart-count');
+        cartIcons.forEach(element => {
+            element.textContent = newCount;
+        });
+
+        // Update mobile bottom nav CART badge only
+        const mobileCartItem = document.querySelector('.mobile-bottom-nav-item:nth-child(3)');
+        let mobileCartBadge = mobileCartItem.querySelector('.mobile-bottom-badge');
+
+        if (newCount > 0) {
+            if (!mobileCartBadge) {
+                // Create badge if it doesn't exist
+                mobileCartBadge = document.createElement('span');
+                mobileCartBadge.className = 'mobile-bottom-badge';
+                mobileCartItem.appendChild(mobileCartBadge);
+            }
+            mobileCartBadge.textContent = newCount;
+            mobileCartBadge.style.display = 'flex';
+        } else if (mobileCartBadge) {
+            // Hide badge if count is 0
+            mobileCartBadge.style.display = 'none';
+        }
+    });
 
   </script>
 </body>
