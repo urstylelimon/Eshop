@@ -1,146 +1,286 @@
-{# In your base.html, place this footer right before the closing </body> tag #}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loriva - Premium Shopping Experience</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
-<footer class="main-footer">
-    <div class="footer-container">
-        <div class="footer-section footer-about">
-            <h4 class="footer-heading">ShopEase</h4>
-            <p>Your one-stop shop for all your needs. We offer a wide range of products with fast delivery and excellent customer service.</p>
-        </div>
-        <div class="footer-section footer-links">
-            <h4 class="footer-heading">Quick Links</h4>
-            <ul>
-                <li><a href="{% url 'home' %}">Home</a></li>
-                <li><a href="{% url 'shop' %}">Shop</a></li>
-                <li><a href="{% url 'about' %}">About Us</a></li>
-                <li><a href="{% url 'contact' %}">Contact Us</a></li>
-            </ul>
-        </div>
-        <div class="footer-section footer-social">
-            <h4 class="footer-heading">Follow Us</h4>
-            <div class="social-icons">
-                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .footer-gradient {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        }
+
+        .hover-lift {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-2px);
+        }
+
+        .social-icon {
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .payment-method {
+            filter: grayscale(100%);
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+
+        .payment-method:hover {
+            filter: grayscale(0%);
+            opacity: 1;
+        }
+
+        .store-card {
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.1) 0%, rgba(124, 58, 237, 0.1) 100%);
+            border: 1px solid rgba(79, 70, 229, 0.2);
+        }
+
+        /* Mobile-specific WhatsApp positioning */
+        @media (max-width: 767px) {
+            .whatsapp-mobile {
+                bottom: 150px !important;
+                right: 20px !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+
+    <!-- Main Footer -->
+    <footer class="footer-gradient text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Top Section -->
+            <div class="py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+                <!-- Brand Column -->
+                <div class="lg:col-span-1">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center mr-4 shadow-lg">
+                            <span class="text-indigo-600 font-bold text-2xl">L</span>
+                        </div>
+                        <div>
+                            <span class="text-3xl font-bold block">Loriva</span>
+                            <span class="text-gray-400 text-sm">Premium Shopping</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-6 leading-relaxed">
+                        Your trusted destination for premium quality products. Experience exceptional service and curated collections at Loriva.
+                    </p>
+                    <div class="flex space-x-3">
+                        <a href="#" class="social-icon w-12 h-12 bg-gray-700 rounded-xl flex items-center justify-center hover:bg-indigo-600">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-icon w-12 h-12 bg-gray-700 rounded-xl flex items-center justify-center hover:bg-pink-600">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-icon w-12 h-12 bg-gray-700 rounded-xl flex items-center justify-center hover:bg-blue-400">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-icon w-12 h-12 bg-gray-700 rounded-xl flex items-center justify-center hover:bg-red-600">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-6 flex items-center">
+                        <i class="fas fa-link text-indigo-400 mr-2"></i>
+                        Quick Links
+                    </h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors duration-300 flex items-center group">
+                            <i class="fas fa-chevron-right text-xs mr-3 text-indigo-400 group-hover:translate-x-1 transition-transform"></i>
+                            Home
+                        </a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors duration-300 flex items-center group">
+                            <i class="fas fa-chevron-right text-xs mr-3 text-indigo-400 group-hover:translate-x-1 transition-transform"></i>
+                            Shop All
+                        </a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors duration-300 flex items-center group">
+                            <i class="fas fa-chevron-right text-xs mr-3 text-indigo-400 group-hover:translate-x-1 transition-transform"></i>
+                            New Arrivals
+                        </a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors duration-300 flex items-center group">
+                            <i class="fas fa-chevron-right text-xs mr-3 text-indigo-400 group-hover:translate-x-1 transition-transform"></i>
+                            Best Sellers
+                        </a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors duration-300 flex items-center group">
+                            <i class="fas fa-chevron-right text-xs mr-3 text-indigo-400 group-hover:translate-x-1 transition-transform"></i>
+                            Sale & Deals
+                        </a></li>
+                    </ul>
+                </div>
+
+                <!-- Customer Service -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-6 flex items-center">
+                        <i class="fas fa-headset text-indigo-400 mr-2"></i>
+                        Customer Service
+                    </h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors duration-300 flex items-center group">
+                            <i class="fas fa-chevron-right text-xs mr-3 text-indigo-400 group-hover:translate-x-1 transition-transform"></i>
+                            Contact Us
+                        </a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors duration-300 flex items-center group">
+                            <i class="fas fa-chevron-right text-xs mr-3 text-indigo-400 group-hover:translate-x-1 transition-transform"></i>
+                            Shipping Info
+                        </a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors duration-300 flex items-center group">
+                            <i class="fas fa-chevron-right text-xs mr-3 text-indigo-400 group-hover:translate-x-1 transition-transform"></i>
+                            Returns & Exchanges
+                        </a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors duration-300 flex items-center group">
+                            <i class="fas fa-chevron-right text-xs mr-3 text-indigo-400 group-hover:translate-x-1 transition-transform"></i>
+                            Size Guide
+                        </a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors duration-300 flex items-center group">
+                            <i class="fas fa-chevron-right text-xs mr-3 text-indigo-400 group-hover:translate-x-1 transition-transform"></i>
+                            FAQ
+                        </a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact & Store Info -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-6 flex items-center">
+                        <i class="fas fa-store text-indigo-400 mr-2"></i>
+                        Visit Our Store
+                    </h3>
+                    <div class="store-card rounded-xl p-6 space-y-4">
+                        <div class="flex items-start">
+                            <i class="fas fa-map-marker-alt text-indigo-400 mt-1 mr-4 text-lg"></i>
+                            <div>
+                                <p class="font-semibold text-white">Salimuddin Market</p>
+                                <p class="text-gray-300">Mirpur 1, Dhaka</p>
+                                <p class="text-gray-400 text-sm">Bangladesh</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-phone-alt text-indigo-400 mr-4 text-lg"></i>
+                            <div>
+                                <p class="text-gray-300">+880 1XXX-XXXXXX</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-envelope text-indigo-400 mr-4 text-lg"></i>
+                            <div>
+                                <p class="text-gray-300">info@loriva.com</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-clock text-indigo-400 mt-1 mr-4 text-lg"></i>
+                            <div>
+                                <p class="text-gray-300">9:00 AM - 10:00 PM</p>
+                                <p class="text-gray-400 text-sm">7 Days a Week</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Middle Section - Payment & Security -->
+            <div class="border-t border-gray-700 py-8">
+                <div class="flex flex-col lg:flex-row justify-between items-center space-y-6 lg:space-y-0">
+                    <!-- Payment Methods -->
+                    <div class="text-center lg:text-left">
+                        <h4 class="text-sm font-semibold text-gray-300 mb-4">We Accept</h4>
+                        <div class="flex space-x-3 justify-center lg:justify-start">
+                            <div class="payment-method w-14 h-10 bg-white rounded-lg flex items-center justify-center shadow-md">
+                                <i class="fab fa-cc-visa text-blue-600 text-2xl"></i>
+                            </div>
+                            <div class="payment-method w-14 h-10 bg-white rounded-lg flex items-center justify-center shadow-md">
+                                <i class="fab fa-cc-mastercard text-red-600 text-2xl"></i>
+                            </div>
+                            <div class="payment-method w-14 h-10 bg-white rounded-lg flex items-center justify-center shadow-md">
+                                <i class="fab fa-cc-paypal text-blue-500 text-2xl"></i>
+                            </div>
+                            <div class="payment-method w-14 h-10 bg-white rounded-lg flex items-center justify-center shadow-md">
+                                <span class="text-sm font-bold text-gray-800">COD</span>
+                            </div>
+                            <div class="payment-method w-14 h-10 bg-white rounded-lg flex items-center justify-center shadow-md">
+                                <i class="fas fa-mobile-alt text-green-600 text-2xl"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Security Badges -->
+                    <div class="text-center">
+                        <h4 class="text-sm font-semibold text-gray-300 mb-4">Secure & Trusted</h4>
+                        <div class="flex space-x-4 justify-center">
+                            <div class="payment-method w-14 h-10 bg-white rounded-lg flex items-center justify-center shadow-md">
+                                <i class="fas fa-lock text-green-600 text-xl"></i>
+                            </div>
+                            <div class="payment-method w-14 h-10 bg-white rounded-lg flex items-center justify-center shadow-md">
+                                <i class="fas fa-shield-alt text-blue-500 text-xl"></i>
+                            </div>
+                            <div class="payment-method w-14 h-10 bg-white rounded-lg flex items-center justify-center shadow-md">
+                                <i class="fas fa-truck text-orange-500 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- App Download -->
+                    <div class="text-center lg:text-right">
+                        <h4 class="text-sm font-semibold text-gray-300 mb-4">Get Our Mobile App</h4>
+                        <div class="flex space-x-3 justify-center lg:justify-end">
+                            <button class="bg-black hover:bg-gray-800 text-white px-5 py-3 rounded-xl flex items-center space-x-3 transition-colors duration-300 shadow-md">
+                                <i class="fab fa-apple text-2xl"></i>
+                                <div class="text-left">
+                                    <div class="text-xs text-gray-300">Download on the</div>
+                                    <div class="text-sm font-semibold">App Store</div>
+                                </div>
+                            </button>
+                            <button class="bg-black hover:bg-gray-800 text-white px-5 py-3 rounded-xl flex items-center space-x-3 transition-colors duration-300 shadow-md">
+                                <i class="fab fa-google-play text-2xl"></i>
+                                <div class="text-left">
+                                    <div class="text-xs text-gray-300">Get it on</div>
+                                    <div class="text-sm font-semibold">Google Play</div>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Section -->
+            <div class="border-t border-gray-700 py-6">
+                <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+                    <div class="text-gray-400 text-sm">
+                        © 2024 <span class="text-white font-semibold">Loriva</span>. All rights reserved.
+                    </div>
+                    <div class="flex space-x-6 text-sm">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300 hover-lift">Privacy Policy</a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300 hover-lift">Terms of Service</a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300 hover-lift">Cookie Policy</a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300 hover-lift">Sitemap</a>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="footer-bottom">
-        <p>&copy; {% now "Y" %} ShopEase. All rights reserved.</p>
-    </div>
-</footer>
+    </footer>
 
-<style>
-    /* Add this CSS to your base.html's {% block extra_css %} or your main CSS file */
-    .main-footer {
-        background-color: var(--text-primary); /* Dark background for a professional look */
-        color: var(--bg-light); /* Light text on dark background */
-        padding: 2.5rem 1rem;
-        font-family: 'Inter', sans-serif;
-        border-top: 5px solid var(--primary); /* A line of your brand color */
-    }
+    <!-- WhatsApp Button - Positioned higher on mobile -->
+    <a href="https://wa.me/8801611170241"
+       class="whatsapp-mobile fixed bottom-6 right-6 md:bottom-6 md:right-6 w-14 h-14 bg-green-500 rounded-full flex items-center justify-center text-white shadow-lg hover-lift social-icon z-50"
+       title="Chat on WhatsApp">
+        <i class="fab fa-whatsapp text-2xl"></i>
+    </a>
 
-    .main-footer .footer-container {
-        max-width: 1100px;
-        margin: 0 auto;
-        display: flex;
-        flex-wrap: wrap; /* Allow wrapping on smaller screens */
-        justify-content: space-between;
-        gap: 2rem; /* Spacing between sections */
-    }
-
-    .main-footer .footer-section {
-        flex: 1; /* Distribute space evenly */
-        min-width: 250px; /* Minimum width before wrapping */
-    }
-
-    .main-footer .footer-heading {
-        font-size: 1.2rem;
-        font-weight: 600;
-        margin-bottom: 1.2rem;
-        color: white; /* Ensure headings stand out */
-    }
-
-    .main-footer p {
-        font-size: 0.9rem;
-        line-height: 1.6;
-        color: var(--secondary);
-    }
-
-    .main-footer .footer-links ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-
-    .main-footer .footer-links li {
-        margin-bottom: 0.7rem;
-    }
-
-    .main-footer .footer-links a {
-        color: var(--secondary);
-        text-decoration: none;
-        font-size: 0.9rem;
-        transition: color 0.3s ease;
-    }
-
-    .main-footer .footer-links a:hover {
-        color: var(--primary-light);
-    }
-
-    .main-footer .social-icons {
-        display: flex;
-        gap: 1rem;
-    }
-
-
-    .main-footer .social-icons a:hover {
-        color: var(--primary-light);
-    }
-
-    .main-footer .footer-bottom {
-        text-align: center;
-        margin-top: 2rem;
-        padding-top: 1.5rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .main-footer .footer-bottom p {
-        font-size: 0.8rem;
-        color: var(--secondary);
-    }
-
-    /* Responsive adjustments for mobile */
-    @media (max-width: 768px) {
-        .main-footer {
-            padding: 2rem 0.8rem;
-        }
-        .main-footer .footer-container {
-            flex-direction: column; /* Stack sections vertically */
-            align-items: center; /* Center items */
-            text-align: center;
-            gap: 1.5rem;
-        }
-        .main-footer .footer-section {
-            min-width: unset; /* Remove min-width to allow full width stacking */
-            width: 100%;
-            max-width: 300px; /* Constrain width for better readability on narrow screens */
-        }
-        .main-footer .footer-links ul {
-            display: flex; /* Make links inline for a compact look */
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 0.8rem; /* Spacing between inline links */
-        }
-        .main-footer .footer-links li {
-            margin-bottom: 0; /* Remove vertical margin */
-        }
-        .main-footer .social-icons {
-            justify-content: center; /* Center social icons */
-        }
-        .main-footer .footer-bottom {
-            margin-top: 1.5rem;
-            padding-top: 1rem;
-        }
-    }
-</style>
+</body>
+</html>
