@@ -16,15 +16,14 @@ def home(request):
 
 def single_product(request,pk):
     product = Product.objects.get(id=pk)
-    return render(request, 'store/single_product.html', {'product': product})
+    products = Product.objects.all()
+    return render(request, 'store/single_product.html', {'product': product,'products':products})
 
-def add_to_cart(request,pk):
+
+def add_to_cart(request, pk):
     quantity = int(request.GET.get('quantity'))
-    print(quantity)
-
-
     product = Product.objects.get(id=pk)
-    cart = request.session.get('cart',{})
+    cart = request.session.get('cart', {})
 
     if str(product.id) in cart:
         cart[str(product.id)] += quantity
@@ -32,9 +31,12 @@ def add_to_cart(request,pk):
     else:
         cart[str(product.id)] = quantity
         request.session['cart'] = cart
-    print(cart)
+
+    # Calculate total items
+    cart_count = sum(cart.values())
 
     return JsonResponse({
-        'success': True
+        'success': True,
+        'cart_count': cart_count  # Make sure this line is there
     })
 
