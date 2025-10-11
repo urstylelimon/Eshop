@@ -1,5 +1,3 @@
-:
-
 🛍️ Loriva E-commerce Platform
 
 A full-featured Django-based e-commerce system with inventory, orders, and profit/loss tracking — designed for business growth and management.
