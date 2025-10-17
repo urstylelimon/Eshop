@@ -7,22 +7,22 @@
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
                     <a href="#products">
-                        <img src="https://i.ibb.co.com/PzhDxfHH/Untitled-design-1.png" alt="Promotional Banner 1" class="w-full h-full object-cover">
+                        <img src="{% static 'slider/slider_1.png' %}" alt="Promotional Banner 1" class="w-full h-full object-cover">
                     </a>
                 </div>
                 <div class="swiper-slide">
                     <a href="#products">
-                        <img src="https://i.ibb.co.com/3G2wByt/Untitled-design-4.png" alt="Promotional Banner 2" class="w-full h-full object-cover">
+                        <img src="{% static 'slider/slider_2.png' %}" alt="Promotional Banner 2" class="w-full h-full object-cover">
                     </a>
                 </div>
                 <div class="swiper-slide">
                      <a href="#products">
-                        <img src="https://i.ibb.co.com/b0KCKF3/Untitled-design-2.png" alt="Promotional Banner 3" class="w-full h-full object-cover">
+                        <img src="{% static 'slider/slider_3.png' %}" alt="Promotional Banner 3" class="w-full h-full object-cover">
                     </a>
                 </div>
                 <div class="swiper-slide">
                      <a href="#products">
-                        <img src="https://i.ibb.co.com/CKSKPJyB/Gemini-Generated-Image-3lobdp3lobdp3lob.png" alt="Promotional Banner 4" class="w-full h-full object-cover">
+                        <img src="{% static 'slider/slider_4.png' %}" alt="Promotional Banner 4" class="w-full h-full object-cover">
                     </a>
                 </div>
             </div>
@@ -37,28 +37,28 @@
         <div class="container mx-auto px-4 sm:px-6">
             <h2 class="text-2xl sm:text-3xl font-bold text-center mb-8 sm:mb-12 text-gray-800">Shop by Category</h2>
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
-                <a href="#" class="category-card group relative rounded-lg overflow-hidden h-32 sm:h-48 shadow-md hover:shadow-lg transition-all">
+                <a href="#products" class="category-card group relative rounded-lg overflow-hidden h-32 sm:h-48 shadow-md hover:shadow-lg transition-all">
                     <img src="https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
                          alt="Men's Fashion" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     <div class="absolute inset-0 bg-gradient-to-t from-gray-900/60 to-transparent flex items-end p-3 sm:p-4">
                         <h3 class="text-white text-sm sm:text-lg font-medium">Men's Fashion</h3>
                     </div>
                 </a>
-                <a href="#" class="category-card group relative rounded-lg overflow-hidden h-32 sm:h-48 shadow-md hover:shadow-lg transition-all">
+                <a href="#products" class="category-card group relative rounded-lg overflow-hidden h-32 sm:h-48 shadow-md hover:shadow-lg transition-all">
                     <img src="https://images.unsplash.com/photo-1551232864-3f0890e580d9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80"
                          alt="Women's Fashion" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     <div class="absolute inset-0 bg-gradient-to-t from-gray-900/60 to-transparent flex items-end p-3 sm:p-4">
                         <h3 class="text-white text-sm sm:text-lg font-medium">Women's Fashion</h3>
                     </div>
                 </a>
-                <a href="#" class="category-card group relative rounded-lg overflow-hidden h-32 sm:h-48 shadow-md hover:shadow-lg transition-all">
+                <a href="#products" class="category-card group relative rounded-lg overflow-hidden h-32 sm:h-48 shadow-md hover:shadow-lg transition-all">
                     <img src="https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
                          alt="Home & Living" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     <div class="absolute inset-0 bg-gradient-to-t from-gray-900/60 to-transparent flex items-end p-3 sm:p-4">
                         <h3 class="text-white text-sm sm:text-lg font-medium">Home & Living</h3>
                     </div>
                 </a>
-                <a href="#" class="category-card group relative rounded-lg overflow-hidden h-32 sm:h-48 shadow-md hover:shadow-lg transition-all">
+                <a href="#products" class="category-card group relative rounded-lg overflow-hidden h-32 sm:h-48 shadow-md hover:shadow-lg transition-all">
                     <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
                          alt="Footwear" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     <div class="absolute inset-0 bg-gradient-to-t from-gray-900/60 to-transparent flex items-end p-3 sm:p-4">
@@ -180,8 +180,8 @@
     /* NEW Professional Swiper Slider Styles */
     .professional-swiper {
         width: 100%;
-        height: 250px; /* Mobile height */
-        padding-bottom: 40px !important; /* Space for pagination */
+        height: 160px; /* Mobile height */
+
     }
 
     @media (min-width: 640px) {
