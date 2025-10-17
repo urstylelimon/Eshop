@@ -1143,59 +1143,98 @@
 
 
         // Add to Cart Functionality
-const addToCartBtn = document.getElementById('add-to-cart');
+        const addToCartBtn = document.getElementById('add-to-cart');
 
-addToCartBtn.addEventListener('click', () => {
-    const productId = {{ product.id }};
+        addToCartBtn.addEventListener('click', () => {
+            const productId = {{ product.id }};
 
-    fetch(`/add_to_cart/${productId}/?quantity=${quantity}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                showToast('Item added to cart successfully!');
+            fetch(`/add_to_cart/${productId}/?quantity=${quantity}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showToast('Item added to cart successfully!');
 
-                // ADD THIS: Send cart update to header
-                window.dispatchEvent(new CustomEvent('cartUpdate', {
-                    detail: { count: data.cart_count }
-                }));
+                        // ADD THIS: Send cart update to header
+                        window.dispatchEvent(new CustomEvent('cartUpdate', {
+                            detail: { count: data.cart_count }
+                        }));
 
-            } else {
-                showToast('Failed to add item to cart');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            showToast('Error adding item to cart');
+                    } else {
+                        showToast('Failed to add item to cart');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    showToast('Error adding item to cart');
+                });
         });
-});
 
-// Do the same for recommended products
-const recommendedCartBtns = document.querySelectorAll('.add-to-cart-recommended');
-recommendedCartBtns.forEach(btn => {
-    btn.addEventListener('click', function() {
-        const productId = this.getAttribute('data-product-id');
+        // Do the same for recommended products
+        const recommendedCartBtns = document.querySelectorAll('.add-to-cart-recommended');
+        recommendedCartBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const productId = this.getAttribute('data-product-id');
 
-        fetch(`/add_to_cart/${productId}/?quantity=1`)
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    showToast('Item added to cart successfully!');
+                fetch(`/add_to_cart/${productId}/?quantity=1`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            showToast('Item added to cart successfully!');
 
-                    // ADD THIS: Send cart update to header
-                    window.dispatchEvent(new CustomEvent('cartUpdate', {
-                        detail: { count: data.cart_count }
-                    }));
+                            // ADD THIS: Send cart update to header
+                            window.dispatchEvent(new CustomEvent('cartUpdate', {
+                                detail: { count: data.cart_count }
+                            }));
 
-                } else {
-                    showToast('Failed to add item to cart');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                showToast('Error adding item to cart');
+                        } else {
+                            showToast('Failed to add item to cart');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        showToast('Error adding item to cart');
+                    });
             });
-    });
-});
+        });
+
+        // Add this to your extra_js block
+        // Image Gallery Functionality
+        const thumbnails = document.querySelectorAll('.thumbnail');
+        const mainImage = document.getElementById('main-product-image');
+
+        thumbnails.forEach(thumb => {
+            thumb.addEventListener('click', function() {
+                // Remove active class from all thumbnails
+                thumbnails.forEach(t => t.classList.remove('active'));
+                // Add active class to clicked thumbnail
+                this.classList.add('active');
+                // Update main image
+                const newImageSrc = this.getAttribute('data-image');
+                mainImage.src = newImageSrc;
+            });
+        });
+
+        // Tab Switching Functionality
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const tabId = this.getAttribute('data-tab');
+
+                // Remove active class from all tabs and contents
+                tabBtns.forEach(tb => tb.classList.remove('active'));
+                tabContents.forEach(tc => tc.classList.remove('active'));
+
+                // Add active class to current tab and content
+                this.classList.add('active');
+                document.getElementById(`${tabId}-tab`).classList.add('active');
+            });
+        });
+
+
+
+
     });
 </script>
 {% endblock %}
