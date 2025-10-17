@@ -2,71 +2,37 @@
 {% load static %}
 
 {% block content %}
-<div class="ecommerce-home bg-gray-50 pt-10"> <!-- Added pt-16 to account for fixed navbar -->
-    <!-- Hero Slider - Made more mobile-friendly -->
-    <div class="hero-slider relative h-64 sm:h-80 md:h-[500px] overflow-hidden w-full">
-        <div class="slider-container relative h-full w-full md:w-11/12 lg:w-5/6 xl:w-5/6 mx-auto">
-            <!-- Slide 1 -->
-            <div class="slide absolute inset-0 bg-cover bg-center flex items-center transition-opacity duration-1000 ease-in-out md:rounded-xl md:mx-4"
-                 style="background-image: linear-gradient(rgba(75,85,99,0.7), rgba(75,85,99,0.7)), url('https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2080&q=80')">
-                <div class="container mx-auto px-4 text-center">
-                    <div class="max-w-2xl mx-auto text-white transform transition-all duration-200">
-                        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-3">Autumn Collection 2023</h2>
-                        <p class="text-base sm:text-lg mb-4">Elegant styles for the modern wardrobe</p>
-                        <a href="#products" class="bg-gray-800 hover:bg-gray-900 text-white px-6 py-2 sm:px-8 sm:py-3 rounded-full font-medium inline-flex items-center transition-colors text-sm sm:text-base">
-                            Shop Now <i class="fas fa-arrow-right ml-2"></i>
-                        </a>
-                    </div>
+<div class="ecommerce-home bg-gray-50 pt-10"> <div class="hero-slider-container container mx-auto py-4 md:py-6">
+        <div class="swiper professional-swiper rounded-lg md:rounded-xl">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <a href="#products">
+                        <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1600&q=80" alt="Promotional Banner 1" class="w-full h-full object-cover">
+                    </a>
                 </div>
+                <div class="swiper-slide">
+                    <a href="#products">
+                        <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1600&q=80" alt="Promotional Banner 2" class="w-full h-full object-cover">
+                    </a>
                 </div>
-            </div>
-
-            <!-- Slide 2 -->
-            <div class="slide absolute inset-0 bg-cover bg-center flex items-center opacity-0 transition-opacity duration-1000 ease-in-out md:rounded-xl md:mx-4"
-                 style="background-image: linear-gradient(rgba(75,85,99,0.7), rgba(75,85,99,0.7)), url('https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')">
-                <div class="container mx-auto px-4 text-center">
-                    <div class="max-w-2xl mx-auto text-white transform transition-all duration-200">
-                        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-3">Seasonal Sale</h2>
-                        <p class="text-base sm:text-lg mb-4">Up to 40% off selected items</p>
-                        <a href="#products" class="bg-gray-800 hover:bg-gray-900 text-white px-6 py-2 sm:px-8 sm:py-3 rounded-full font-medium inline-flex items-center transition-colors text-sm sm:text-base">
-                            View Deals <i class="fas fa-tag ml-2"></i>
-                        </a>
-                    </div>
+                <div class="swiper-slide">
+                     <a href="#products">
+                        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1600&q=80" alt="Promotional Banner 3" class="w-full h-full object-cover">
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                     <a href="#products">
+                        <img src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1600&q=80" alt="Promotional Banner 4" class="w-full h-full object-cover">
+                    </a>
                 </div>
             </div>
+            <div class="swiper-pagination"></div>
 
-            <!-- Slide 3 -->
-            <div class="slide absolute inset-0 bg-cover bg-center flex items-center opacity-0 transition-opacity duration-1000 ease-in-out md:rounded-xl md:mx-4"
-                 style="background-image: linear-gradient(rgba(75,85,99,0.7), rgba(75,85,99,0.7)), url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')">
-                <div class="container mx-auto px-4 text-center">
-                    <div class="max-w-2xl mx-auto text-white transform transition-all duration-200">
-                        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-3">New Arrivals</h2>
-                        <p class="text-base sm:text-lg mb-4">Discover this week's additions</p>
-                        <a href="#products" class="bg-gray-800 hover:bg-gray-900 text-white px-6 py-2 sm:px-8 sm:py-3 rounded-full font-medium inline-flex items-center transition-colors text-sm sm:text-base">
-                            Explore <i class="fas fa-binoculars ml-2"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Navigation Arrows - Made smaller on mobile -->
-            <button class="slider-btn prev-btn absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 bg-gray-800/50 hover:bg-gray-800/80 text-white rounded-full w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center transition-all z-10">
-                <i class="fas fa-chevron-left text-xs sm:text-sm"></i>
-            </button>
-            <button class="slider-btn next-btn absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 bg-gray-800/50 hover:bg-gray-800/80 text-white rounded-full w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center transition-all z-10">
-                <i class="fas fa-chevron-right text-xs sm:text-sm"></i>
-            </button>
-
-            <!-- Dots Navigation - Adjusted for mobile -->
-            <div class="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-2 z-10">
-                <span class="dot w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-white/50 cursor-pointer transition-all hover:bg-white"></span>
-                <span class="dot w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-white/50 cursor-pointer transition-all hover:bg-white"></span>
-                <span class="dot w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-white/50 cursor-pointer transition-all hover:bg-white"></span>
-            </div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
         </div>
     </div>
 
-    <!-- Category Highlights - Improved mobile layout -->
     <section class="py-8 sm:py-12 bg-white">
         <div class="container mx-auto px-4 sm:px-6">
             <h2 class="text-2xl sm:text-3xl font-bold text-center mb-8 sm:mb-12 text-gray-800">Shop by Category</h2>
@@ -103,7 +69,6 @@
         </div>
     </section>
 
-    <!-- Products Section - Enhanced mobile layout -->
     <section id="products" class="py-8 sm:py-12 bg-gray-50">
         <div class="container mx-auto px-4 sm:px-6">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 sm:mb-8">
@@ -141,7 +106,6 @@
                             <span class="text-gray-500 text-xxs sm:text-xs ml-1">({{ product.reviews_count }})</span>
                         </div>
 
-                        <!-- Mobile layout: Price above full-width Order Now button -->
                         <div class="block sm:hidden mt-2">
                             <div class="text-xs font-bold text-gray-900 mb-1">${{ product.price }}</div>
                             <a href="{% url 'create_single_order' product.id %}" class="add-to-cart bg-gray-800 hover:bg-gray-900 text-white w-full py-2 rounded-md transition-colors text-xs flex items-center justify-center">
@@ -149,7 +113,6 @@
                             </a>
                         </div>
 
-                        <!-- Desktop layout: Price and button side by side -->
                         <div class="hidden sm:flex items-center justify-between bg-gray-100 rounded-lg p-2 sm:p-3 mt-2">
                             <span class="text-xs sm:text-sm md:text-base font-bold text-gray-900">${{ product.price }}</span>
                             <a href="{% url 'create_single_order' product.id %}" class="add-to-cart bg-gray-800 hover:bg-gray-900 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-md transition-colors text-xxs sm:text-xs flex items-center justify-center ml-2">
@@ -166,50 +129,27 @@
 {% endblock %}
 
 {% block extra_css %}
-<style>
-    /* Hero Slider Animation */
-    .slide {
-        opacity: 0;
-        transition: opacity 1s ease-in-out;
-    }
-    .slide.active {
-        opacity: 1;
-    }
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
 
-    /* Product Card Hover Effects */
+<style>
+    /* ORIGINAL STYLES */
     .product-card:hover {
         transform: translateY(-5px);
     }
-
-    /* Add to Cart Button Animation */
     .add-to-cart:hover {
         transform: translateY(-1px);
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
-
-    /* Category Card Hover */
     .category-card:hover img {
         transform: scale(1.05);
     }
-
-    /* Slider Navigation Buttons */
-    .slider-btn:hover {
-        background-color: rgba(31, 41, 55, 0.8) !important;
-        transform: scale(1.1);
-    }
-
-    /* Smooth transitions */
     .transition-all {
         transition: all 0.3s ease;
     }
-
-    /* Extra small text for mobile */
     .text-xxs {
         font-size: 0.65rem;
         line-height: 0.9rem;
     }
-
-    /* Fixed navbar styles - should be in base.html */
     .navbar {
         position: fixed;
         top: 0;
@@ -218,8 +158,6 @@
         z-index: 1000;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     }
-
-    /* Custom animation classes */
     @keyframes fade-in {
         from { opacity: 0; transform: translateY(10px); }
         to { opacity: 1; transform: translateY(0); }
@@ -234,94 +172,130 @@
     .animate-fade-out {
         animation: fade-out 0.3s ease-out forwards;
     }
-
-    /* New Order Now button styling */
     .product-card .add-to-cart {
         text-align: center;
         justify-content: center;
+    }
+
+    /* NEW Professional Swiper Slider Styles */
+    .professional-swiper {
+        width: 100%;
+        height: 250px; /* Mobile height */
+        padding-bottom: 40px !important; /* Space for pagination */
+    }
+
+    @media (min-width: 640px) {
+        .professional-swiper {
+            height: 350px;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .professional-swiper {
+            height: 450px;
+        }
+    }
+
+    .professional-swiper .swiper-slide {
+        overflow: hidden;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        background: #f0f0f0;
+        transition: transform 0.4s ease, opacity 0.4s ease;
+        transform: scale(0.9);
+        opacity: 0.7;
+    }
+
+    .professional-swiper .swiper-slide-active {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    .professional-swiper .swiper-slide img {
+        transition: transform 0.6s ease;
+    }
+
+    .professional-swiper .swiper-slide:hover img {
+        transform: scale(1.05);
+    }
+
+    /* Custom Swiper Navigation Buttons */
+    .professional-swiper .swiper-button-prev,
+    .professional-swiper .swiper-button-next {
+        background-color: rgba(255, 255, 255, 0.9);
+        color: #1f2937; /* text-gray-800 */
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .professional-swiper .swiper-button-prev:hover,
+    .professional-swiper .swiper-button-next:hover {
+        background-color: #ffffff;
+        transform: scale(1.1);
+    }
+
+    .professional-swiper .swiper-button-prev::after,
+    .professional-swiper .swiper-button-next::after {
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    /* Custom Swiper Pagination Dots */
+    .professional-swiper .swiper-pagination-bullet {
+        background: #9ca3af; /* gray-400 */
+        width: 10px;
+        height: 10px;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .professional-swiper .swiper-pagination-bullet-active {
+        background: #1f2937; /* gray-800 */
+        transform: scale(1.25);
     }
 </style>
 {% endblock %}
 
 {% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
 <script>
-    // Hero Slider Functionality with touch support for mobile
     document.addEventListener('DOMContentLoaded', function() {
-        const slides = document.querySelectorAll('.slide');
-        const dots = document.querySelectorAll('.dot');
-        let currentSlide = 0;
-        const slideInterval = 5000; // 5 seconds
-        let touchStartX = 0;
-        let touchEndX = 0;
-        const sliderContainer = document.querySelector('.slider-container');
-
-        function showSlide(n) {
-            slides.forEach(slide => slide.classList.remove('active'));
-            dots.forEach(dot => dot.classList.remove('active'));
-
-            currentSlide = (n + slides.length) % slides.length;
-            slides[currentSlide].classList.add('active');
-            dots[currentSlide].classList.add('active');
-        }
-
-        function nextSlide() {
-            showSlide(currentSlide + 1);
-        }
-
-        // Auto-play slider
-        let slideTimer = setInterval(nextSlide, slideInterval);
-
-        // Pause on hover
-        sliderContainer.addEventListener('mouseenter', () => clearInterval(slideTimer));
-        sliderContainer.addEventListener('mouseleave', () => slideTimer = setInterval(nextSlide, slideInterval));
-
-        // Navigation arrows
-        document.querySelector('.prev-btn').addEventListener('click', () => {
-            clearInterval(slideTimer);
-            showSlide(currentSlide - 1);
-            slideTimer = setInterval(nextSlide, slideInterval);
+        // NEW Swiper Slider Initialization
+        const swiper = new Swiper('.professional-swiper', {
+            loop: true,
+            centeredSlides: true,
+            effect: 'slide',
+            grabCursor: true,
+            autoplay: {
+                delay: 4000,
+                disableOnInteraction: false,
+            },
+            slidesPerView: 1.2,
+            spaceBetween: 15,
+            breakpoints: {
+                640: {
+                    slidesPerView: 1.5,
+                    spaceBetween: 20
+                },
+                1024: {
+                    slidesPerView: 1.8,
+                    spaceBetween: 30
+                }
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
         });
 
-        document.querySelector('.next-btn').addEventListener('click', () => {
-            clearInterval(slideTimer);
-            showSlide(currentSlide + 1);
-            slideTimer = setInterval(nextSlide, slideInterval);
-        });
-
-        // Dot navigation
-        dots.forEach((dot, index) => {
-            dot.addEventListener('click', () => {
-                clearInterval(slideTimer);
-                showSlide(index);
-                slideTimer = setInterval(nextSlide, slideInterval);
-            });
-        });
-
-        // Touch events for mobile swipe
-        sliderContainer.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-            clearInterval(slideTimer);
-        }, {passive: true});
-
-        sliderContainer.addEventListener('touchend', (e) => {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-            slideTimer = setInterval(nextSlide, slideInterval);
-        }, {passive: true});
-
-        function handleSwipe() {
-            const threshold = 50; // Minimum swipe distance
-            if (touchEndX < touchStartX - threshold) {
-                // Swipe left - next slide
-                showSlide(currentSlide + 1);
-            } else if (touchEndX > touchStartX + threshold) {
-                // Swipe right - previous slide
-                showSlide(currentSlide - 1);
-            }
-        }
-
-
-        // Wishlist functionality
+        // ORIGINAL Wishlist functionality (unchanged)
         document.querySelectorAll('.wishlist-btn').forEach(button => {
             button.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -338,9 +312,6 @@
                 }
             });
         });
-
-        // Initialize first slide
-        showSlide(0);
     });
 </script>
 {% endblock %}
