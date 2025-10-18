@@ -3,13 +3,16 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>ShopEase - Professional E-commerce Navigation</title>
+  <title>Loriva - Professional E-commerce</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+    body {
+      padding-top: 56px; /* Mobile-first default padding (h-14) */
+      font-family: 'Inter', sans-serif;
+    }
+
     /* Professional animations and effects */
     .nav-link {
       position: relative;
@@ -20,7 +23,8 @@
       width: 0;
       height: 2px;
       bottom: -4px;
-      left: 0;
+      left: 50%;
+      transform: translateX(-50%);
       background-color: #4f46e5;
       transition: width 0.3s ease;
     }
@@ -31,65 +35,27 @@
     /* Enhanced cart badge */
     .cart-count {
       position: absolute;
-      top: -8px;
-      right: -12px;
+      top: -6px;
+      right: -10px;
       background: linear-gradient(135deg, #4f46e5, #7c3aed);
       color: white;
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       font-weight: 700;
-      padding: 2px 6px;
+      padding: 2px 5px;
       border-radius: 9999px;
-      min-width: 20px;
+      min-width: 18px;
       text-align: center;
       line-height: 1;
       box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .cart-count:hover {
-      transform: scale(1.1);
-      box-shadow: 0 3px 8px rgba(79, 70, 229, 0.3);
     }
 
     /* Professional icon interactions */
     .nav-icon {
       color: #4b5563;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: color 0.3s ease;
       position: relative;
-      display: inline-flex;
-      align-items: center;
     }
     .nav-icon:hover {
-      color: #4f46e5;
-      transform: translateY(-2px);
-    }
-
-    /* Search bar enhancements */
-    .search-container {
-      position: relative;
-      transition: all 0.3s ease;
-    }
-    .search-container:focus-within {
-      transform: scale(1.02);
-    }
-    .search-input {
-      transition: all 0.3s ease;
-      padding-left: 2.5rem;
-    }
-    .search-input:focus {
-      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
-    }
-    .search-icon {
-      transition: color 0.3s ease;
-    }
-    .search-input:focus + .search-icon {
-      color: #4f46e5;
-    }
-
-    /* Mobile menu button */
-    .mobile-menu-button {
-      transition: all 0.3s ease;
-    }
-    .mobile-menu-button:hover {
       color: #4f46e5;
     }
 
@@ -98,7 +64,7 @@
       opacity: 0;
       visibility: hidden;
       transform: translateY(10px);
-      transition: all 0.3s ease;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .dropdown:hover .dropdown-menu {
       opacity: 1;
@@ -106,167 +72,25 @@
       transform: translateY(0);
     }
 
-    /* Sticky navbar effect */
-    .navbar {
-      transition: all 0.3s ease;
+    /* Mobile menu */
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: white;
+      z-index: 60;
+      overflow-y: auto;
+      transform: translateX(-100%);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    .navbar.scrolled {
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
+    .mobile-menu.active {
+      transform: translateX(0);
     }
 
-    /* Mobile bottom navigation */
-    @media (max-width: 767px) {
-      .navbar {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        top: auto;
-        z-index: 50;
-        border-top: 1px solid #e5e7eb;
-        border-bottom: none;
-        box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1);
-        height: auto;
-      }
-
-      .navbar > .max-w-7xl {
-        padding: 0;
-        max-width: 100%;
-      }
-
-      .navbar .flex.justify-between {
-        display: none;
-      }
-
-      /* Mobile bottom nav items */
-      .mobile-bottom-nav {
-        display: flex;
-        justify-content: space-around;
-        width: 100%;
-        padding: 0.5rem 0;
-        background: white;
-      }
-
-      .mobile-bottom-nav-item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 0.5rem;
-        font-size: 0.75rem;
-        color: #4b5563;
-        flex: 1;
-        position: relative;
-        text-decoration: none;
-      }
-
-      .mobile-bottom-nav-item.active {
-        color: #4f46e5;
-      }
-
-      .mobile-bottom-nav-item i {
-        font-size: 1.25rem;
-        margin-bottom: 0.25rem;
-      }
-
-      .mobile-bottom-badge {
-        position: absolute;
-        top: 2px;
-        right: 20%;
-        background: #7c3aed;
-        color: white;
-        font-size: 0.7rem;
-        border-radius: 50%;
-        width: 18px;
-        height: 18px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      /* Adjust main content to account for fixed bottom nav */
-      body {
-        padding-bottom: 70px;
-      }
-
-      /* Mobile menu */
-      .mobile-menu {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: white;
-        z-index: 60;
-        overflow-y: auto;
-        transform: translateX(-100%);
-        transition: transform 0.3s ease;
-      }
-
-      .mobile-menu.active {
-        transform: translateX(0);
-      }
-
-      .mobile-menu-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 1rem;
-        border-bottom: 1px solid #e5e7eb;
-      }
-
-      .mobile-menu-close {
-        font-size: 1.5rem;
-        background: none;
-        border: none;
-        color: #4b5563;
-      }
-
-      .mobile-menu-content {
-        padding: 1rem;
-      }
-
-      .mobile-menu-search {
-        position: relative;
-        margin-bottom: 1rem;
-      }
-
-      .mobile-menu-search input {
-        width: 100%;
-        padding: 0.75rem 1rem 0.75rem 2.5rem;
-        border: 1px solid #d1d5db;
-        border-radius: 0.375rem;
-      }
-
-      .mobile-menu-search i {
-        position: absolute;
-        left: 0.75rem;
-        top: 50%;
-        transform: translateY(-50%);
-        color: #9ca3af;
-      }
-
-      .mobile-menu-links {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-      }
-
-      .mobile-menu-link {
-        padding: 0.75rem 1rem;
-        border-radius: 0.375rem;
-        color: #374151;
-        text-decoration: none;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      }
-
-      .mobile-menu-link:hover {
-        background: #f3f4f6;
-      }
-
-      .overlay {
+    .overlay {
         position: fixed;
         top: 0;
         left: 0;
@@ -274,250 +98,118 @@
         bottom: 0;
         background: rgba(0, 0, 0, 0.5);
         z-index: 55;
-        display: none;
-      }
-
-      .overlay.active {
-        display: block;
-      }
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease;
     }
 
-    /* Desktop styles */
-    @media (min-width: 768px) {
-      .mobile-bottom-nav {
-        display: none;
-      }
+    .overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
 
-      .mobile-menu-button {
-        display: none;
+    /* MODIFIED: Added this media query for the taller desktop navbar */
+    @media (min-width: 768px) {
+      body {
+        padding-top: 64px; /* Corresponds to h-16 for desktop */
       }
     }
   </style>
 </head>
-<body class="bg-gray-50 font-sans">
+<body class="bg-gray-50">
 
-  <!-- Navbar -->
-  <nav class="navbar bg-white sticky top-0 z-50 border-b border-gray-100">
+  <nav class="bg-white fixed top-0 left-0 right-0 z-50 border-b border-gray-200 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between h-16 items-center">
+      <div class="flex justify-between items-center h-14 md:h-16">
 
-        <!-- Left section (Logo + Desktop menu) -->
         <div class="flex items-center">
+          <div class="flex-shrink-0">
+            <a href="/" class="flex items-center">
+              <img class="h-10 w-auto" src="{% static 'images/logo.png' %}" alt="Loriva Logo">
+            </a>
+          </div>
 
-            <div class="flex-shrink-0">
-              <a href="/" class="flex items-center">
-                <img
-                  class="h-12 w-auto"
-                  src="{% static 'images/logo.png' %}"
-                  alt="Loriva Logo"
-                >
-              </a>
-            </div>
-
-          <!-- Desktop Menu -->
           <div class="hidden md:ml-10 md:flex md:space-x-8">
             <div class="dropdown relative">
-              <button class="nav-link text-gray-700 hover:text-indigo-600 px-3 py-2 text-sm font-medium flex items-center">
+              <a href="#products" class="nav-link text-gray-700 hover:text-indigo-600 px-3 py-2 text-sm font-medium flex items-center">
                 Shop <i class="fas fa-chevron-down ml-1 text-xs"></i>
-              </button>
+              </a>
               <div class="dropdown-menu absolute z-10 left-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 py-1">
                 <a href="#products" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">All Products</a>
-                <a href="#products" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Featured</a>
+                <a href="#products" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">New Arrivals</a>
                 <a href="#products" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Bestsellers</a>
-                <a href="#products" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Discounts</a>
               </div>
             </div>
-
-            <div class="dropdown relative">
-              <button class="nav-link text-gray-700 hover:text-indigo-600 px-3 py-2 text-sm font-medium flex items-center">
-                Categories <i class="fas fa-chevron-down ml-1 text-xs"></i>
-              </button>
-              <div class="dropdown-menu absolute z-10 left-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 py-1">
-                <a href="#products" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Electronics</a>
-                <a href="#products" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Fashion</a>
-                <a href="#products" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Home & Garden</a>
-                <a href="#products" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Beauty</a>
-                <a href="#products" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sports</a>
-              </div>
-            </div>
-
-            <a href="#products" class="nav-link text-gray-700 hover:text-indigo-600 px-3 py-2 text-sm font-medium">New Arrivals</a>
             <a href="#products" class="nav-link text-gray-700 hover:text-indigo-600 px-3 py-2 text-sm font-medium">Deals</a>
             <a href="#products" class="nav-link text-gray-700 hover:text-indigo-600 px-3 py-2 text-sm font-medium">About</a>
           </div>
         </div>
 
-        <!-- Right section (Search + Icons) -->
         <div class="flex items-center">
-          <!-- Search Bar -->
-          <div class="search-container hidden md:block mr-4">
-            <div class="relative">
-              <input
-                type="text"
-                placeholder="Search products..."
-                class="search-input w-64 pl-10 pr-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:border-indigo-500 text-sm"
-                aria-label="Search products"
-              />
-              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <i class="fas fa-search search-icon text-gray-400"></i>
-              </div>
-            </div>
-          </div>
 
-          <!-- Icons -->
-          <div class="flex items-center space-x-5">
+          <div class="hidden md:flex items-center space-x-5">
+            <a href="#products" class="nav-icon" aria-label="Search" title="Search">
+                <i class="fas fa-search text-lg"></i>
+            </a>
             <a href="#products" class="nav-icon" aria-label="Account" title="Account">
               <i class="far fa-user text-lg"></i>
             </a>
-
-            <a href="#products" class="nav-icon relative" aria-label="Wishlist" title="Wishlist">
+            <a href="#products" class="nav-icon" aria-label="Wishlist" title="Wishlist">
               <i class="far fa-heart text-lg"></i>
-              <span class="cart-count">0</span>
             </a>
-
-            <a href="{% url 'create_confirm_order' %}"
-               class="nav-icon relative"
-               aria-label="Shopping Cart"
-               title="Cart"
-               onclick="return checkCartAndNavigate(event)">
-                <i class="fas fa-shopping-cart text-lg"></i>
-                <span class="cart-count">{{ cart_item_count|default:0 }}</span>
+            <a href="{% url 'create_confirm_order' %}" class="nav-icon relative" aria-label="Shopping Cart" title="Cart" onclick="return checkCartAndNavigate(event)">
+              <i class="fas fa-shopping-cart text-lg"></i>
+              <span class="cart-count">{{ cart_item_count|default:0 }}</span>
             </a>
-
-            <!-- Hidden toast message -->
-            <div id="desktop-cart-message"
-                 style="display:none; position:fixed; top:20px; right:20px; background:#f56565;
-                        color:white; padding:12px 18px; border-radius:8px; font-size:14px;
-                        font-weight:500; box-shadow:0 4px 10px rgba(0,0,0,0.2);
-                        z-index:2000; opacity:0; transition:opacity 0.5s ease;">
-              <i class="fas fa-info-circle mr-2"></i> Your cart is empty, please add items first.
-            </div>
-
           </div>
 
-          <!-- Mobile menu button -->
-          <div class="md:hidden ml-4">
-            <button class="mobile-menu-button inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-indigo-600 focus:outline-none">
+          <div class="md:hidden flex items-center space-x-4">
+             <button class="nav-icon" aria-label="Search" title="Search" id="mobile-search-btn">
+                <i class="fas fa-search text-xl"></i>
+            </button>
+            <a href="{% url 'create_confirm_order' %}" class="nav-icon relative" aria-label="Shopping Cart" title="Cart" onclick="return checkCartAndNavigate(event)">
+              <i class="fas fa-shopping-cart text-xl"></i>
+              <span class="cart-count">{{ cart_item_count|default:0 }}</span>
+            </a>
+            <button class="mobile-menu-button nav-icon" aria-label="Menu">
               <i class="fas fa-bars text-xl"></i>
             </button>
           </div>
         </div>
       </div>
     </div>
-
-    <!-- Mobile Bottom Navigation (visible only on mobile) -->
-    <div class="mobile-bottom-nav md:hidden">
-      <a href="/" class="mobile-bottom-nav-item active">
-        <i class="fas fa-home"></i>
-        <span>Home</span>
-      </a>
-      <a href="#" class="mobile-bottom-nav-item" id="mobile-search-btn">
-        <i class="fas fa-search"></i>
-        <span>Search</span>
-      </a>
-
-      <a href="{% url 'create_confirm_order' %}"
-         class="mobile-bottom-nav-item"
-         onclick="return checkCartAndNavigate(event)">
-          <i class="fas fa-shopping-cart"></i>
-          <span>Cart</span>
-          {% if cart_item_count > 0 %}
-          <span class="mobile-bottom-badge">{{ cart_item_count }}</span>
-          {% endif %}
-      </a>
-
-      <!-- Toast-style popup message -->
-      <div id="cart-message"
-           style="display:none; position:fixed; bottom:80px; left:50%; transform:translateX(-50%);
-                  background:#f56565; color:white; padding:10px 15px; border-radius:20px;
-                  font-size:14px; box-shadow:0 2px 6px rgba(0,0,0,0.2); z-index:1000;">
-        Your cart is empty, please add items first.
-      </div>
-
-      <a href="#products" class="mobile-bottom-nav-item">
-        <i class="far fa-heart"></i>
-        <span>Wishlist</span>
-        <span class="mobile-bottom-badge">0</span>
-      </a>
-      <button class="mobile-bottom-nav-item mobile-menu-button">
-        <i class="fas fa-bars"></i>
-        <span>Menu</span>
-      </button>
-    </div>
-
-    <!-- Mobile menu (hidden by default) -->
-    <div class="mobile-menu md:hidden">
-      <div class="mobile-menu-header">
-        <a href="/" class="flex items-center">
-          <svg class="h-8 w-8 text-indigo-600" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm0 14a6 6 0 110-12 6 6 0 010 12z" />
-            <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-          </svg>
-          <span class="ml-2 text-xl font-bold text-gray-900">ShopEase</span>
-        </a>
-        <button class="mobile-menu-close">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-
-      <div class="mobile-menu-content">
-        <div class="mobile-menu-search">
-          <input type="text" placeholder="Search products...">
-          <i class="fas fa-search"></i>
-        </div>
-
-        <div class="mobile-menu-links">
-          <a href="#" class="mobile-menu-link">
-            <span>Shop</span>
-            <i class="fas fa-chevron-right text-sm"></i>
-          </a>
-          <a href="#" class="mobile-menu-link">
-            <span>Categories</span>
-            <i class="fas fa-chevron-right text-sm"></i>
-          </a>
-          <a href="#" class="mobile-menu-link">
-            <span>New Arrivals</span>
-            <i class="fas fa-chevron-right text-sm"></i>
-          </a>
-          <a href="#" class="mobile-menu-link">
-            <span>Deals</span>
-            <i class="fas fa-chevron-right text-sm"></i>
-          </a>
-          <a href="#" class="mobile-menu-link">
-            <span>About Us</span>
-            <i class="fas fa-chevron-right text-sm"></i>
-          </a>
-          <a href="#" class="mobile-menu-link">
-            <span>My Account</span>
-            <i class="fas fa-chevron-right text-sm"></i>
-          </a>
-          <a href="#products" class="mobile-menu-link">
-            <span>Wishlist</span>
-            <i class="fas fa-chevron-right text-sm"></i>
-          </a>
-          <a href="{% url 'create_confirm_order' %}" class="mobile-menu-link" onclick="return checkCartAndNavigate(event)">
-            <span>Shopping Cart</span>
-            <i class="fas fa-chevron-right text-sm"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <div class="overlay"></div>
   </nav>
 
-  <script>
-    // Add scroll effect to navbar
-    window.addEventListener('scroll', function() {
-      const navbar = document.querySelector('.navbar');
-      if (window.scrollY > 10) {
-        navbar.classList.add('scrolled');
-      } else {
-        navbar.classList.remove('scrolled');
-      }
-    });
+  <div class="mobile-menu md:hidden">
+      <div class="flex justify-between items-center p-4 border-b">
+        <h2 class="font-bold text-lg">Menu</h2>
+        <button class="mobile-menu-close text-2xl">&times;</button>
+      </div>
+      <div class="p-4">
+        <div class="relative mb-4">
+          <input type="text" placeholder="Search products..." class="w-full pl-10 pr-4 py-2 border rounded-full">
+          <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+        </div>
+        <a href="#products" class="block py-2 px-3 hover:bg-gray-100 rounded">Shop</a>
+        <a href="#products" class="block py-2 px-3 hover:bg-gray-100 rounded">Deals</a>
+        <a href="#products" class="block py-2 px-3 hover:bg-gray-100 rounded">About Us</a>
+        <hr class="my-4">
+        <a href="#products" class="block py-2 px-3 hover:bg-gray-100 rounded">My Account</a>
+        <a href="#products" class="block py-2 px-3 hover:bg-gray-100 rounded">Wishlist</a>
+      </div>
+  </div>
 
-    // Mobile menu toggle
+  <div class="overlay"></div>
+
+  <div id="desktop-cart-message" style="display:none; position:fixed; top:80px; right:20px; background:#dc2626; color:white; padding:1rem; border-radius:8px; font-weight:500; box-shadow:0 4px 10px rgba(0,0,0,0.2); z-index:2000; opacity:0; transition:opacity 0.3s ease-out, transform 0.3s ease-out; transform: translateY(-20px);">
+      Your cart is empty. Please add items first.
+  </div>
+  <div id="mobile-cart-message" style="display:none; position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:#dc2626; color:white; padding:0.75rem 1rem; border-radius:9999px; font-size:14px; box-shadow:0 2px 6px rgba(0,0,0,0.2); z-index:1000; opacity:0; transition:opacity 0.3s ease-out, transform 0.3s ease-out; transform: translateY(20px);">
+      Your cart is empty.
+  </div>
+
+  <script>
+    // Mobile menu toggle logic
     const mobileMenuButton = document.querySelector('.mobile-menu-button');
     const mobileMenu = document.querySelector('.mobile-menu');
     const mobileMenuClose = document.querySelector('.mobile-menu-close');
@@ -535,113 +227,69 @@
       document.body.style.overflow = 'auto';
     }
 
-    mobileMenuButton.addEventListener('click', openMobileMenu);
-    mobileMenuClose.addEventListener('click', closeMobileMenu);
-    overlay.addEventListener('click', closeMobileMenu);
+    if (mobileMenuButton) mobileMenuButton.addEventListener('click', openMobileMenu);
+    if (mobileMenuClose) mobileMenuClose.addEventListener('click', closeMobileMenu);
+    if (overlay) overlay.addEventListener('click', closeMobileMenu);
 
-    // Close menu when clicking on links
-    const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
-    mobileMenuLinks.forEach(link => {
-      link.addEventListener('click', closeMobileMenu);
-    });
-
-    // Search functionality for mobile
+    // Open mobile menu and focus search when mobile search icon is clicked
     const mobileSearchBtn = document.getElementById('mobile-search-btn');
     if (mobileSearchBtn) {
       mobileSearchBtn.addEventListener('click', function(e) {
         e.preventDefault();
         openMobileMenu();
-        // Focus on search input after a small delay
         setTimeout(() => {
-          const searchInput = document.querySelector('.mobile-menu-search input');
+          const searchInput = mobileMenu.querySelector('input[type="text"]');
           if (searchInput) searchInput.focus();
         }, 300);
       });
     }
 
-    // Handle escape key to close menu
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') {
-        closeMobileMenu();
-      }
-    });
+    // Function to show toast messages
+    function showToast(id) {
+        const toast = document.getElementById(id);
+        if (!toast) return;
 
-    function desktopshowEmptyCartMessage() {
-        let msg = document.getElementById("desktop-cart-message");
-        msg.style.display = "block";
-
-        // Trigger fade-in
-        setTimeout(() => {
-            msg.style.opacity = "1";
+        toast.style.display = "block";
+        setTimeout(() => { // Allow display block to apply before transitioning
+            toast.style.opacity = "1";
+            toast.style.transform = "translateX(-50%) translateY(0)"; // Adjust for mobile
+            if(id === 'desktop-cart-message') toast.style.transform = "translateY(0)";
         }, 50);
 
-        // Hide after 3s with fade-out
         setTimeout(() => {
-            msg.style.opacity = "0";
-            setTimeout(() => { msg.style.display = "none"; }, 500);
+            toast.style.opacity = "0";
+            toast.style.transform = (id === 'desktop-cart-message') ? "translateY(-20px)" : "translateX(-50%) translateY(20px)";
+            setTimeout(() => { toast.style.display = "none"; }, 300);
         }, 3000);
-    }
-
-    function showEmptyCartMessage() {
-        let msg = document.getElementById("cart-message");
-        msg.style.display = "block";
-        setTimeout(() => {
-            msg.style.display = "none";
-        }, 3000); // hide after 3 seconds
     }
 
     // Check cart and navigate function
     function checkCartAndNavigate(event) {
-        // Get the current cart count from the DOM (updated by our cartUpdate event)
         const cartCountElement = document.querySelector('a[aria-label="Shopping Cart"] .cart-count');
         const currentCartCount = parseInt(cartCountElement.textContent) || 0;
 
         if (currentCartCount === 0) {
-            // Prevent navigation and show message
             event.preventDefault();
             event.stopPropagation();
-
-            // Show appropriate message based on device
             if (window.innerWidth >= 768) {
-                desktopshowEmptyCartMessage();
+                showToast('desktop-cart-message');
             } else {
-                showEmptyCartMessage();
+                showToast('mobile-cart-message');
             }
             return false;
         }
-        // If cart has items, allow normal navigation
         return true;
     }
 
     // Listen for cart updates from any page
     window.addEventListener('cartUpdate', function(event) {
         const newCount = event.detail.count;
-
-        // Update ONLY cart counts (not wishlist)
-        const cartIcons = document.querySelectorAll('a[aria-label="Shopping Cart"] .cart-count');
-        cartIcons.forEach(element => {
+        const cartCountElements = document.querySelectorAll('.cart-count');
+        cartCountElements.forEach(element => {
             element.textContent = newCount;
         });
-
-        // Update mobile bottom nav CART badge only
-        const mobileCartItem = document.querySelector('.mobile-bottom-nav-item:nth-child(3)');
-        let mobileCartBadge = mobileCartItem.querySelector('.mobile-bottom-badge');
-
-        if (newCount > 0) {
-            if (!mobileCartBadge) {
-                // Create badge if it doesn't exist
-                mobileCartBadge = document.createElement('span');
-                mobileCartBadge.className = 'mobile-bottom-badge';
-                mobileCartItem.appendChild(mobileCartBadge);
-            }
-            mobileCartBadge.textContent = newCount;
-            mobileCartBadge.style.display = 'flex';
-        } else if (mobileCartBadge) {
-            // Hide badge if count is 0
-            mobileCartBadge.style.display = 'none';
-        }
     });
-
   </script>
+
 </body>
 </html>
