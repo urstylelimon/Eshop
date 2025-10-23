@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Checkout - ShopEase{% endblock %}
+{% block title %}Checkout - Loriva{% endblock %}
 
 {% block extra_css %}
 <style>
@@ -9,7 +9,7 @@
      * Professional & Responsive Checkout Page
      */
     :root {
-        --primary: #5b3699;
+        --primary: #000000;
         --primary-light: #7a5eb2;
         --secondary: #cccccc;
         --text-primary: #1a202c;
@@ -444,7 +444,7 @@
                 </div>
 
                 <div class="checkout-actions">
-                    <a href="#" class="btn btn-back"><i class="fas fa-arrow-left"></i> Back to Cart</a>
+                    <a href="{% url 'home' %}" class="btn btn-back"><i class="fas fa-arrow-left"></i> Back to Home</a>
                     <button type="submit" class="btn btn-confirm">Confirm Your Order <i class="fas fa-arrow-right"></i></button>
                 </div>
             </form>
