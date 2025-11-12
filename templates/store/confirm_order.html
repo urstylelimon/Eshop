@@ -483,16 +483,18 @@
 </div>
 {% endblock %}
 
+
 {% block extra_js %}
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // --- EXISTING CODE FOR TOTALS UPDATE ---
         const locationSelect = document.getElementById('location');
         const deliveryChargeSpan = document.getElementById('delivery-charge');
         const grandTotalSpan = document.getElementById('grand-total');
 
         // Ensure these values are correctly passed from your Django context
         // and are numbers for calculations.
-        const subtotal = parseFloat('{{ total_price|default:"0.00" }}');
+        const subtotal = parseFloat('{{ total_price|default:"0.00" }}'); // Subtotal from Django
 
         const deliveryCharges = {
             'inside': 60,
@@ -501,17 +503,59 @@
 
         function updateTotals() {
             const selectedLocation = locationSelect.value;
-            const deliveryCharge = deliveryCharges[selectedLocation] || 60; // Default to 60 if value is unexpected
+            const deliveryCharge = deliveryCharges[selectedLocation] || 60; // Default to 60
             const grandTotal = subtotal + deliveryCharge;
 
             deliveryChargeSpan.textContent = `৳${deliveryCharge}`;
             grandTotalSpan.textContent = `৳${grandTotal.toFixed(2)}`;
+
+            // NOTE: We update the Grand Total here, but the final tracking uses the current DOM value.
         }
 
         locationSelect.addEventListener('change', updateTotals);
 
         // Initial update when the page loads
         updateTotals();
+
+        // --- NEW META PIXEL PURCHASE EVENT INTEGRATION ---
+
+        // 1. Prepare the contents array for detailed tracking (uses Django template loop)
+        const orderContents = [
+            {% for item in product_list %}
+                {
+                    // CRITICAL: Use your unique identifier (SKU or ID)
+                    id: '{{ item.product.sku|default:item.product.id }}',
+                    quantity: {{ item.quantity }}
+                }{% if not forloop.last %},{% endif %}
+            {% endfor %}
+        ];
+
+        // 2. Find the form and listen for successful submission
+        const checkoutForm = document.querySelector('.checkout-form');
+
+        if (checkoutForm) {
+            checkoutForm.addEventListener('submit', function(event) {
+                // Get the final, dynamically calculated Grand Total from the DOM
+                const grandTotalText = grandTotalSpan.textContent.replace('৳', '');
+                const finalGrandTotal = parseFloat(grandTotalText);
+
+                // Check if the total is a valid number before firing the event
+                if (!isNaN(finalGrandTotal) && typeof fbq === 'function') {
+                    // Fire the Purchase event
+                    fbq('track', 'Purchase', {
+                        value: finalGrandTotal.toFixed(2), // The calculated total
+                        currency: 'BDT', // Set your currency
+                        contents: orderContents,
+                        content_type: 'product',
+                        // Note: For best practice, include the unique Order ID here
+                        // if you can access it before the form submits (e.g., as a hidden input).
+                    });
+                }
+
+                // Allow the form to submit to the Django view for processing
+            });
+        }
+        // --- END META PIXEL PURCHASE EVENT INTEGRATION ---
     });
 </script>
 {% endblock %}
