@@ -1,42 +1,59 @@
 from django.http import JsonResponse
-from django.shortcuts import render, redirect, get_object_or_404
-from .models import Category,Product
-from django.contrib import messages
-# Create your views here.
+from django.shortcuts import render, get_object_or_404
+from .models import Category, Product
 
 
 def home(request):
-    products = Product.objects.all()
+    products = Product.objects.all().order_by('-id')
     categories = Category.objects.all()
+
     context = {
         'categories': categories,
-        'products': products
+        'products': products,
     }
+
     return render(request, 'store/home.html', context)
 
-def single_product(request,pk):
-    product = Product.objects.get(id=pk)
-    products = Product.objects.all()
-    return render(request, 'store/single_product.html', {'product': product,'products':products})
+
+def single_product(request, pk):
+    product = get_object_or_404(Product, id=pk)
+
+    products = Product.objects.exclude(id=pk).order_by('-id')[:8]
+
+    context = {
+        'product': product,
+        'products': products,
+    }
+
+    return render(request, 'store/single_product.html', context)
 
 
 def add_to_cart(request, pk):
-    quantity = int(request.GET.get('quantity'))
-    product = Product.objects.get(id=pk)
+    product = get_object_or_404(Product, id=pk)
+
+    try:
+        quantity = int(request.GET.get('quantity', 1))
+    except ValueError:
+        quantity = 1
+
+    if quantity < 1:
+        quantity = 1
+
     cart = request.session.get('cart', {})
 
-    if str(product.id) in cart:
-        cart[str(product.id)] += quantity
-        request.session['cart'] = cart
-    else:
-        cart[str(product.id)] = quantity
-        request.session['cart'] = cart
+    product_id = str(product.id)
 
-    # Calculate total items
+    if product_id in cart:
+        cart[product_id] += quantity
+    else:
+        cart[product_id] = quantity
+
+    request.session['cart'] = cart
+    request.session.modified = True
+
     cart_count = sum(cart.values())
 
     return JsonResponse({
         'success': True,
-        'cart_count': cart_count  # Make sure this line is there
+        'cart_count': cart_count,
     })
-

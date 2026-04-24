@@ -17,8 +17,8 @@ A full-featured Django-based e-commerce system with inventory, orders, and profi
 
 Installation Guide
 
-python3 -m venv venv
-source venv/bin/activate
+python -m venv venv
+.\venv\Scripts\activate
 
 pip install -r requirements.txt
 
