@@ -286,6 +286,10 @@
         font-size: 15px;
     }
 
+    .quantity-selector button:hover {
+        background: #f1f5f9;
+    }
+
     .quantity-selector input {
         width: 58px;
         height: 46px;
@@ -462,6 +466,11 @@
         transition: all 0.25s ease;
     }
 
+    .recommendation-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+    }
+
     .card-image {
         position: relative;
         aspect-ratio: 4 / 5;
@@ -473,6 +482,11 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
+        transition: transform 0.35s ease;
+    }
+
+    .recommendation-card:hover .card-image img {
+        transform: scale(1.06);
     }
 
     .card-badge {
@@ -550,10 +564,18 @@
         color: #ffffff;
     }
 
+    .card-btn-primary:hover {
+        background: #7c3aed;
+    }
+
     .card-btn-secondary {
         background: #f8fafc;
         color: #0f172a;
         border: 1px solid #e2e8f0;
+    }
+
+    .card-btn-secondary:hover {
+        background: #f1f5f9;
     }
 
     .toast-container {
@@ -791,7 +813,7 @@
                     </div>
 
                     <div class="action-buttons">
-                        <a href="{% url 'create_single_order' product.id %}" class="btn-main btn-buy" id="buy-now-btn">
+                        <a href="{% url 'create_single_order' product.id %}?quantity=1" class="btn-main btn-buy" id="buy-now-btn">
                             <i class="fas fa-bag-shopping"></i>
                             Buy Now
                         </a>
@@ -859,7 +881,7 @@
                         </div>
 
                         <div class="card-actions">
-                            <a href="{% url 'create_single_order' recommended_product.id %}" class="card-btn card-btn-primary">
+                            <a href="{% url 'create_single_order' recommended_product.id %}?quantity=1" class="card-btn card-btn-primary">
                                 <i class="fas fa-bag-shopping"></i>
                                 Buy Now
                             </a>
@@ -911,28 +933,37 @@
         const quantityInput = document.getElementById("quantity");
         const buyNowBtn = document.getElementById("buy-now-btn");
 
-        let quantity = parseInt(quantityInput.value) || 1;
+        let quantity = 1;
+
+        function getCurrentQuantity() {
+            const currentQuantity = parseInt(quantityInput.value, 10);
+            return isNaN(currentQuantity) || currentQuantity < 1 ? 1 : currentQuantity;
+        }
 
         function updateBuyNowUrl() {
-            if (!buyNowBtn) return;
+            if (!buyNowBtn || !quantityInput) return;
 
-            const currentQuantity = parseInt(quantityInput.value) || 1;
+            const currentQuantity = getCurrentQuantity();
             const baseUrl = "{% url 'create_single_order' product.id %}";
 
             buyNowBtn.href = `${baseUrl}?quantity=${currentQuantity}`;
         }
 
         if (decreaseBtn && increaseBtn && quantityInput) {
+            quantity = getCurrentQuantity();
+
             decreaseBtn.addEventListener("click", function () {
+                quantity = getCurrentQuantity();
+
                 if (quantity > 1) {
-                    quantity--;
+                    quantity -= 1;
                     quantityInput.value = quantity;
                     updateBuyNowUrl();
                 }
             });
 
             increaseBtn.addEventListener("click", function () {
-                quantity++;
+                quantity = getCurrentQuantity() + 1;
                 quantityInput.value = quantity;
                 updateBuyNowUrl();
             });
@@ -945,11 +976,12 @@
         if (addToCartBtn) {
             addToCartBtn.addEventListener("click", function () {
                 const productId = "{{ product.id }}";
+                const selectedQuantity = getCurrentQuantity();
 
                 addToCartBtn.disabled = true;
                 addToCartBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Adding...';
 
-                fetch(`/add_to_cart/${productId}/?quantity=${quantity}`)
+                fetch(`/add_to_cart/${productId}/?quantity=${selectedQuantity}`)
                     .then(response => response.json())
                     .then(data => {
                         if (data.success) {
@@ -986,6 +1018,7 @@
                     .then(data => {
                         if (data.success) {
                             showToast("Item added to cart successfully!");
+
                             window.dispatchEvent(new CustomEvent("cartUpdate", {
                                 detail: { count: data.cart_count }
                             }));
@@ -1026,6 +1059,25 @@
 
                     mainImage.src = newImageSrc;
                 }, 220);
+            });
+        });
+
+        const tabBtns = document.querySelectorAll(".tab-btn");
+        const tabContents = document.querySelectorAll(".tab-content");
+
+        tabBtns.forEach(function (btn) {
+            btn.addEventListener("click", function () {
+                const tabId = this.getAttribute("data-tab");
+
+                tabBtns.forEach(tb => tb.classList.remove("active"));
+                tabContents.forEach(tc => tc.classList.remove("active"));
+
+                this.classList.add("active");
+
+                const selectedTab = document.getElementById(`${tabId}-tab`);
+                if (selectedTab) {
+                    selectedTab.classList.add("active");
+                }
             });
         });
 

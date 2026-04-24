@@ -301,6 +301,14 @@
         white-space: nowrap;
     }
 
+    .unit-price {
+        display: block;
+        color: #9ca3af;
+        font-size: 11px;
+        font-weight: 600;
+        margin-top: 3px;
+    }
+
     .totals {
         margin-top: 18px;
         padding-top: 18px;
@@ -438,6 +446,9 @@
             <form method="post" class="checkout-card checkout-form">
                 {% csrf_token %}
 
+                <!-- This is important for single product Buy Now quantity -->
+                <input type="hidden" name="quantity" value="{{ quantity|default:1 }}">
+
                 <div class="card-header">
                     <h2>Delivery Details</h2>
                     <p>Please provide accurate information for delivery confirmation.</p>
@@ -547,9 +558,10 @@
                             <div class="item-details">
                                 <span class="item-name">{{ item.product.name }}</span>
                                 <span class="item-qty">Qty: {{ item.quantity }}</span>
+                                <span class="unit-price">Unit: ৳{{ item.product.price|floatformat:2 }}</span>
                             </div>
 
-                            <span class="item-price">৳{{ item.product.price|floatformat:2 }}</span>
+                            <span class="item-price">৳{{ item.item_total|floatformat:2 }}</span>
                         </li>
                         {% empty %}
                         <li style="text-align:center; color:#6b7280; padding:24px 0;">
@@ -619,32 +631,11 @@
 
         updateTotals();
 
-        const orderContents = [
-            {% for item in product_list %}
-            {
-                id: '{{ item.product.sku|default:item.product.id }}',
-                quantity: {{ item.quantity }}
-            }{% if not forloop.last %},{% endif %}
-            {% endfor %}
-        ];
-
         if (checkoutForm) {
             checkoutForm.addEventListener('submit', function () {
                 if (confirmBtn) {
                     confirmBtn.disabled = true;
                     confirmBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
-                }
-
-                const grandTotalText = grandTotalSpan.textContent.replace('৳', '').trim();
-                const finalGrandTotal = parseFloat(grandTotalText);
-
-                if (!isNaN(finalGrandTotal) && typeof fbq === 'function') {
-                    fbq('track', 'Purchase', {
-                        value: finalGrandTotal.toFixed(2),
-                        currency: 'BDT',
-                        contents: orderContents,
-                        content_type: 'product'
-                    });
                 }
             });
         }

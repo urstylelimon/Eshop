@@ -120,6 +120,13 @@ def create_single_order(request, pk):
         str(product.id): quantity
     }
 
+    context = {
+        'product_list': product_list,
+        'total_price': total_amount,
+        'all_price': final_grand_total,
+        'quantity': quantity,
+    }
+
     if request.method == 'POST':
         full_name = request.POST.get('full_name', '').strip()
         contact_number = request.POST.get('contact_number', '').strip()
@@ -128,12 +135,7 @@ def create_single_order(request, pk):
 
         if not all([full_name, contact_number, location, address]):
             messages.error(request, "Please fill in all required fields.")
-            return render(request, 'store/confirm_order.html', {
-                'product_list': product_list,
-                'total_price': total_amount,
-                'all_price': final_grand_total,
-                'quantity': quantity,
-            })
+            return render(request, 'store/confirm_order.html', context)
 
         with transaction.atomic():
             Order.objects.create(
@@ -148,12 +150,8 @@ def create_single_order(request, pk):
         messages.success(request, "Order placed successfully!")
         return redirect('home')
 
-    return render(request, 'store/confirm_order.html', {
-        'product_list': product_list,
-        'total_price': total_amount,
-        'all_price': final_grand_total,
-        'quantity': quantity,
-    })
+    return render(request, 'store/confirm_order.html', context)
+
 
 
 def order_home(request):
