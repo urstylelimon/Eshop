@@ -595,6 +595,28 @@
 {% endblock %}
 
 {% block extra_js %}
+
+<!-- Meta Pixel Code: Only for Confirm Order Page -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+
+fbq('init', '1472408406705438');
+fbq('track', 'PageView');
+</script>
+
+<noscript>
+    <img height="1" width="1" style="display:none"
+         src="https://www.facebook.com/tr?id=1472408406705438&ev=PageView&noscript=1"/>
+</noscript>
+<!-- End Meta Pixel Code -->
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const locationSelect = document.getElementById('location');
@@ -610,8 +632,16 @@
             outside: 60
         };
 
+        let isSubmitting = false;
+
         function formatBDT(amount) {
             return `৳${Number(amount).toFixed(2)}`;
+        }
+
+        function getPurchaseValue() {
+            const selectedLocation = locationSelect ? locationSelect.value : 'inside';
+            const deliveryCharge = deliveryCharges[selectedLocation] || 60;
+            return subtotal + deliveryCharge;
         }
 
         function updateTotals() {
@@ -625,6 +655,20 @@
             grandTotalSpan.textContent = formatBDT(grandTotal);
         }
 
+        function trackFacebookPurchaseEvent() {
+            const purchaseValue = getPurchaseValue();
+
+            if (typeof fbq === 'function') {
+                fbq('track', 'Purchase', {
+                    value: purchaseValue,
+                    currency: 'BDT',
+                    content_type: 'product'
+                });
+            } else {
+                console.warn('Facebook Pixel is not loaded.');
+            }
+        }
+
         if (locationSelect) {
             locationSelect.addEventListener('change', updateTotals);
         }
@@ -632,13 +676,30 @@
         updateTotals();
 
         if (checkoutForm) {
-            checkoutForm.addEventListener('submit', function () {
+            checkoutForm.addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                if (isSubmitting) {
+                    return;
+                }
+
+                isSubmitting = true;
+
+                // Facebook Pixel Purchase Event when user clicks Confirm Order
+                trackFacebookPurchaseEvent();
+
                 if (confirmBtn) {
                     confirmBtn.disabled = true;
                     confirmBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
                 }
+
+                // Small delay so Meta Pixel can send the event before redirect
+                setTimeout(function () {
+                    HTMLFormElement.prototype.submit.call(checkoutForm);
+                }, 300);
             });
         }
     });
 </script>
+
 {% endblock %}
